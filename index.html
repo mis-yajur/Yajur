@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yajur Automation Dashboard</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-gold: #D4AF37;
+            --secondary-gold: #FFD700;
+            --dark-bg: #0a0e17;
+            --card-bg: rgba(19, 23, 42, 0.8);
+            --accent-purple: #8A2BE2;
+            --accent-blue: #4169E1;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0a0e17 0%, #1a1f38 100%);
+            font-family: 'Poppins', sans-serif;
+            color: #f0f2f5;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 10% 20%, rgba(212, 175, 55, 0.05) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(65, 105, 225, 0.05) 0%, transparent 20%),
+                radial-gradient(circle at 50% 50%, rgba(138, 43, 226, 0.03) 0%, transparent 50%);
+            z-index: -1;
+        }
+
+        .content {
+            display: none;
+            animation: fadeIn 0.8s ease-in-out;
+        }
+
+        .page-header {
+            text-align: center;
+            padding: 4rem 0 3rem 0;
+            position: relative;
+        }
+        
+        .page-header h1 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            font-size: 3.5rem;
+            background: linear-gradient(45deg, var(--primary-gold), var(--secondary-gold));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 1rem;
+            text-shadow: 0 0 30px rgba(212, 175, 55, 0.3);
+        }
+        
+        .page-header p {
+            font-weight: 300;
+            color: #bdc3c7;
+            max-width: 600px;
+            margin: 0 auto;
+            font-size: 1.1rem;
+        }
+
+        /* Luxurious Card Design */
+        .luxury-card {
+            position: relative;
+            background: var(--card-bg);
+            border-radius: 1.5rem;
+            padding: 2.5rem 2rem;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(15px);
+            cursor: pointer;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            height: 100%;
+            box-shadow: 
+                0 10px 30px rgba(0, 0, 0, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        }
+
+        .luxury-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--primary-gold), transparent);
+        }
+
+        .luxury-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.03) 0%, rgba(65, 105, 225, 0.03) 100%);
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .luxury-card:hover {
+            transform: translateY(-15px) scale(1.02);
+            box-shadow: 
+                0 20px 40px rgba(0, 0, 0, 0.4),
+                0 0 0 1px rgba(212, 175, 55, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        }
+
+        .luxury-card:hover::after {
+            opacity: 1;
+        }
+
+        /* Animated Border Effect */
+        .luxury-card .border-effect {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 1.5rem;
+            padding: 2px;
+            background: linear-gradient(135deg, var(--primary-gold), var(--accent-purple), var(--accent-blue));
+            -webkit-mask: 
+                linear-gradient(#fff 0 0) content-box, 
+                linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .luxury-card:hover .border-effect {
+            opacity: 1;
+            animation: rotate 3s linear infinite;
+        }
+
+        .card-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .card-icon {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(45deg, var(--primary-gold), var(--secondary-gold));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            filter: drop-shadow(0 5px 15px rgba(212, 175, 55, 0.3));
+            transition: transform 0.4s ease;
+        }
+
+        .luxury-card:hover .card-icon {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .card-title {
+            font-weight: 600;
+            color: #fff;
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .card-description {
+            color: #a0a7b8;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        /* Sub Cards for inner pages */
+        .sub-card {
+            position: relative;
+            background: var(--card-bg);
+            border-radius: 1.2rem;
+            padding: 2rem 1.5rem;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(15px);
+            cursor: pointer;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            height: 100%;
+            box-shadow: 
+                0 8px 25px rgba(0, 0, 0, 0.25),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        }
+
+        .sub-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--accent-blue), transparent);
+        }
+
+        .sub-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 
+                0 15px 35px rgba(0, 0, 0, 0.35),
+                0 0 0 1px rgba(65, 105, 225, 0.1);
+        }
+
+        .sub-card .border-effect {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 1.2rem;
+            padding: 2px;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+            -webkit-mask: 
+                linear-gradient(#fff 0 0) content-box, 
+                linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .sub-card:hover .border-effect {
+            opacity: 1;
+        }
+
+        .sub-card-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, var(--accent-blue), var(--accent-purple));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            filter: drop-shadow(0 5px 15px rgba(65, 105, 225, 0.3));
+            transition: transform 0.4s ease;
+        }
+
+        .sub-card:hover .sub-card-icon {
+            transform: scale(1.1);
+        }
+
+        .sub-card-title {
+            font-weight: 600;
+            color: #fff;
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .sub-card-description {
+            color: #a0a7b8;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        /* Back Button */
+        .luxury-back-btn {
+            margin-bottom: 2rem;
+            display: inline-flex;
+            align-items: center;
+            font-weight: 500;
+            background: rgba(255, 255, 255, 0.05);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 0.7rem 1.5rem;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .luxury-back-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            transform: translateX(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Logo Styling */
+        .logo-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+        
+        .logo {
+            height: 100px;
+            width: 100px;
+            margin-right: 20px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid transparent;
+            background: linear-gradient(135deg, var(--primary-gold), var(--accent-purple)) padding-box,
+                        linear-gradient(135deg, var(--primary-gold), var(--accent-purple)) border-box;
+            box-shadow: 0 0 30px rgba(212, 175, 55, 0.3);
+            transition: transform 0.4s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.05) rotate(5deg);
+        }
+
+        /* Floating Elements */
+        .floating-elements {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .floating-element {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: var(--primary-gold);
+            border-radius: 50%;
+            opacity: 0.3;
+            animation: float 15s infinite linear;
+        }
+
+        .floating-element:nth-child(1) {
+            top: 10%;
+            left: 10%;
+            animation-delay: 0s;
+            width: 8px;
+            height: 8px;
+        }
+
+        .floating-element:nth-child(2) {
+            top: 70%;
+            left: 80%;
+            animation-delay: 2s;
+            width: 12px;
+            height: 12px;
+            background: var(--accent-purple);
+        }
+
+        .floating-element:nth-child(3) {
+            top: 40%;
+            left: 85%;
+            animation-delay: 4s;
+            width: 6px;
+            height: 6px;
+            background: var(--accent-blue);
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0) translateX(0) rotate(0deg);
+                opacity: 0.3;
+            }
+            25% {
+                transform: translateY(-20px) translateX(10px) rotate(90deg);
+                opacity: 0.6;
+            }
+            50% {
+                transform: translateY(-10px) translateX(20px) rotate(180deg);
+                opacity: 0.8;
+            }
+            75% {
+                transform: translateY(10px) translateX(10px) rotate(270deg);
+                opacity: 0.6;
+            }
+            100% {
+                transform: translateY(0) translateX(0) rotate(360deg);
+                opacity: 0.3;
+            }
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .page-header h1 {
+                font-size: 2.5rem;
+            }
+            
+            .logo {
+                height: 80px;
+                width: 80px;
+            }
+            
+            .luxury-card {
+                padding: 2rem 1.5rem;
+            }
+            
+            .sub-card {
+                padding: 1.5rem 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="floating-elements">
+        <div class="floating-element"></div>
+        <div class="floating-element"></div>
+        <div class="floating-element"></div>
+    </div>
+
+    <div class="container">
+        <!-- Home Screen (Main Menu) -->
+        <div id="home" class="content">
+            <div class="page-header">
+                <div class="logo-container">
+                    <img src="https://i.ibb.co/KxMxh3Hw/logo.png" alt="Yajur Automation Logo" class="logo">
+                    <div>
+                        <h1>Yajur Automation</h1>
+                        
+                    </div>
+                </div>
+            </div>
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+                <div class="col">
+                    <div class="luxury-card h-100" onclick="showContent('task-delegation-page')">
+                        <div class="border-effect"></div>
+                        <div class="card-content">
+                            <i class="bi bi-people-fill card-icon"></i>
+                            <h5 class="card-title">Task Delegation</h5>
+                            
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="luxury-card h-100" onclick="showContent('check-list-page')">
+                        <div class="border-effect"></div>
+                        <div class="card-content">
+                            <i class="bi bi-list-check card-icon"></i>
+                            <h5 class="card-title">Check List</h5>
+                            
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="luxury-card h-100" onclick="showContent('fms-page')">
+                        <div class="border-effect"></div>
+                        <div class="card-content">
+                            <i class="bi bi-folder-fill card-icon"></i>
+                            <h5 class="card-title">FMS</h5>
+                            
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="luxury-card h-100" onclick="showContent('ims-page')">
+                        <div class="border-effect"></div>
+                        <div class="card-content">
+                            <i class="bi bi-database-fill card-icon"></i>
+                            <h5 class="card-title">IMS</h5>
+                            
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="luxury-card h-100" onclick="showContent('pms-page')">
+                        <div class="border-effect"></div>
+                        <div class="card-content">
+                            <i class="bi bi-clipboard-data-fill card-icon"></i>
+                            <h5 class="card-title">PMS</h5>
+                            
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="luxury-card h-100" onclick="showContent('test-page')">
+                        <div class="border-effect"></div>
+                        <div class="card-content">
+                            <i class="bi bi-gear-fill card-icon"></i>
+                            <h5 class="card-title">TEST</h5>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Task Delegation Page -->
+        <div id="task-delegation-page" class="content">
+            <div class="page-header">
+                <button class="btn luxury-back-btn" onclick="goBack()"><i class="bi bi-arrow-left me-2"></i> Back to Dashboard</button>
+                <h1>Task Delegation</h1>
+                
+            </div>
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+                <div class="col">
+                    <div class="sub-card h-100" onclick="showContent('add-new-task-page')">
+                        <div class="border-effect"></div>
+                        <div class="card-content">
+                            <i class="bi bi-plus-circle-fill sub-card-icon"></i>
+                            <h5 class="sub-card-title">Add New Task</h5>
+                            
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="sub-card h-100" onclick="showContent('doer-response-page')">
+                        <div class="border-effect"></div>
+                        <div class="card-content">
+                            <i class="bi bi-chat-dots-fill sub-card-icon"></i>
+                            <h5 class="sub-card-title">Doer Response</h5>
+                            
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+    <div class="sub-card h-100" onclick="window.location.href='https://script.google.com/macros/s/AKfycbyVYyB9JhtXbnGJlOvvmfQaM_sQbwAe17Q4L0KxmfcFfrN5PUY-meQ-Fg7YG0PpiZU7/exec'">
+        <div class="border-effect"></div>
+        <div class="card-content">
+            <i class="bi bi-person-gear sub-card-icon"></i>
+            <h5 class="sub-card-title">Delegation Master</h5>
+        </div>
+    </div>
+</div>
+
+                <div class="col">
+    <div class="sub-card h-100" onclick="window.location.href='https://script.google.com/a/macros/yajurfibres.com/s/AKfycbzTDp0TZtM8sJEii0TtH4DaMpPOroJzV7hgo9JFWVFOpQqSx4UQSAjHopT_5y0trS2N/exec'">
+        <div class="border-effect"></div>
+        <div class="card-content">
+            <i class="bi bi-person-plus-fill sub-card-icon"></i>
+            <h5 class="sub-card-title">Add Doer</h5>
+        </div>
+    </div>
+</div>
+
+                <div class="col">
+    <div class="sub-card h-100" onclick="window.location.href='https://script.google.com/macros/s/AKfycbw0ThwIThQ0L2yD9G6LwjolRkyr4psJzyFhNf0BeeVw3tYIQnevJMKo-3Gphm6Nmy2G/exec'">
+        <div class="border-effect"></div>
+        <div class="card-content">
+            <i class="bi bi-graph-up-arrow sub-card-icon"></i>
+            <h5 class="sub-card-title">Score Card</h5>
+        </div>
+    </div>
+</div>
+
+
+        <!-- Task Delegation Sub-Pages -->
+        <div id="add-new-task-page" class="content">
+    <div class="page-header">
+        <button class="btn luxury-back-btn" onclick="goBack()">
+            <i class="bi bi-arrow-left me-2"></i> Back
+        </button>
+    </div>
+
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+        <div class="col">
+            <div class="sub-card h-100" onclick="window.location.href='https://script.google.com/macros/s/AKfycbykym0_t0K1fuk-K2KsS2gQr9DxvpP53wcY5x1N4syflvrPDYItzd9oR00Q5-V7_Swr/exec'" style="display: flex; align-items: center; justify-content: center; cursor: pointer;">
+                <div class="border-effect"></div>
+                <div class="card-content text-center">
+                    <i class="bi bi-plus-circle sub-card-icon"></i>
+                    <h1 class="sub-card-title">Add New Task</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+        <!-- Other Main Pages with Card Layouts -->
+        <div id="check-list-page" class="content">
+            <div class="page-header">
+                <button class="btn luxury-back-btn" onclick="goBack()"><i class="bi bi-arrow-left me-2"></i> Back to Dashboard</button>
+                <h1>Check List</h1>
+                <p>Manage and track completion of all checklists across projects</p>
+            </div>
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+                <div class="col">
+                    <div class="sub-card h-100">
+                        <div class="border-effect"></div>
+                        <div class="card-content">
+                            <i class="bi bi-plus-circle sub-card-icon"></i>
+                            <h5 class="sub-card-title">Create Checklist</h5>
+                            
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="sub-card h-100">
+                        <div class="border-effect"></div>
+                        <div class="card-content">
+                            <i class="bi bi-list-task sub-card-icon"></i>
+                            <h5 class="sub-card-title">Manage Templates</h5>
+                            
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="sub-card h-100">
+                        <div class="border-effect"></div>
+                        <div class="card-content">
+                            <i class="bi bi-bar-chart sub-card-icon"></i>
+                            <h5 class="sub-card-title">Progress Tracking</h5>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="fms-page" class="content">
+            <div class="page-header">
+                <button class="btn luxury-back-btn" onclick="goBack()"><i class="bi bi-arrow-left me-2"></i> Back to Dashboard</button>
+                <h1>FMS</h1>
+                
+            </div>
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+                <div class="col">
+                    <div class="sub-card h-100">
+                        <div class="border-effect"></div>
+                        <div class="card-content">
+                            <i class="bi bi-upload sub-card-icon"></i>
+                            <h5 class="sub-card-title">Upload Files</h5>
+                            <p class="sub-card-description">Add new documents to the system</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="sub-card h-100">
+                        <div class="border-effect"></div>
+                        <div class="card-content">
+                            <i class="bi bi-folder-symlink sub-card-icon"></i>
+                            <h5 class="sub-card-title">Organize</h5>
+                            <p class="sub-card-description">Categorize and structure files</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="sub-card h-100">
+                        <div class="border-effect"></div>
+                        <div class="card-content">
+                            <i class="bi bi-search sub-card-icon"></i>
+                            <h5 class="sub-card-title">Search & Find</h5>
+                            <p class="sub-card-description">Quickly locate documents</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Additional pages follow the same pattern -->
+        <div id="ims-page" class="content">
+            <div class="page-header">
+                <button class="btn luxury-back-btn" onclick="goBack()"><i class="bi bi-arrow-left me-2"></i> Back to Dashboard</button>
+                <h1>Inventory Management</h1>
+                <p>Track and manage all organizational assets</p>
+            </div>
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+                <div class="col">
+                    <div class="sub-card h-100">
+                        <div class="border-effect"></div>
+                        <div class="card-content">
+                            <i class="bi bi-box-seam sub-card-icon"></i>
+                            <h5 class="sub-card-title">Stock Management</h5>
+                            <p class="sub-card-description">Track inventory levels</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="sub-card h-100">
+                        <div class="border-effect"></div>
+                        <div class="card-content">
+                            <i class="bi bi-arrow-left-right sub-card-icon"></i>
+                            <h5 class="sub-card-title">Transactions</h5>
+                            <p class="sub-card-description">Monitor inventory movements</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="sub-card h-100">
+                        <div class="border-effect"></div>
+                        <div class="card-content">
+                            <i class="bi bi-clipboard-data sub-card-icon"></i>
+                            <h5 class="sub-card-title">Reports</h5>
+                            <p class="sub-card-description">Generate inventory analytics</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Add remaining pages (PMS, TEST) with similar card layouts -->
+        <div id="pms-page" class="content">
+            <div class="page-header">
+                <button class="btn luxury-back-btn" onclick="goBack()"><i class="bi bi-arrow-left me-2"></i> Back to Dashboard</button>
+                <h1>Project Management</h1>
+                <p>Monitor project progress and milestones</p>
+            </div>
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+                <div class="col">
+                    <div class="sub-card h-100">
+                        <div class="border-effect"></div>
+                        <div class="card-content">
+                            <i class="bi bi-kanban sub-card-icon"></i>
+                            <h5 class="sub-card-title">Project Planning</h5>
+                            <p class="sub-card-description">Create and manage project plans</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="sub-card h-100">
+                        <div class="border-effect"></div>
+                        <div class="card-content">
+                            <i class="bi bi-gantt-chart sub-card-icon"></i>
+                            <h5 class="sub-card-title">Timeline</h5>
+                            <p class="sub-card-description">Track project milestones</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="sub-card h-100">
+                        <div class="border-effect"></div>
+                        <div class="card-content">
+                            <i class="bi bi-people sub-card-icon"></i>
+                            <h5 class="sub-card-title">Team Management</h5>
+                            <p class="sub-card-description">Coordinate project teams</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="test-page" class="content">
+            <div class="page-header">
+                <button class="btn luxury-back-btn" onclick="goBack()"><i class="bi bi-arrow-left me-2"></i> Back to Dashboard</button>
+                <h1>Testing & Validation</h1>
+                <p>Quality assurance and validation processes</p>
+            </div>
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+                <div class="col">
+                    <div class="sub-card h-100">
+                        <div class="border-effect"></div>
+                        <div class="card-content">
+                            <i class="bi bi-bug sub-card-icon"></i>
+                            <h5 class="sub-card-title">Test Cases</h5>
+                            <p class="sub-card-description">Create and manage test scenarios</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="sub-card h-100">
+                        <div class="border-effect"></div>
+                        <div class="card-content">
+                            <i class="bi bi-check-all sub-card-icon"></i>
+                            <h5 class="sub-card-title">Validation</h5>
+                            <p class="sub-card-description">Verify system functionality</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="sub-card h-100">
+                        <div class="border-effect"></div>
+                        <div class="card-content">
+                            <i class="bi bi-clipboard-check sub-card-icon"></i>
+                            <h5 class="sub-card-title">Quality Reports</h5>
+                            <p class="sub-card-description">Generate QA documentation</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Add other sub-pages for task delegation -->
+        <div id="doer-response-page" class="content">
+            <div class="page-header">
+                <button class="btn luxury-back-btn" onclick="goBack()"><i class="bi bi-arrow-left me-2"></i> Back</button>
+                <h1>Doer Response</h1>
+                <p>Track responses and progress from task doers</p>
+            </div>
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-2 g-4">
+    <!-- Card 1 with link -->
+    <div class="col">
+        <a href="https://script.google.com/macros/s/AKfycbw5-oiWOfVwdxwtNKTXzsxOM3TLuRpX3BSAMYuunciA5q0idw1ZhLYNblSSP_VJAHRt/exec" style="text-decoration: none; color: inherit;">
+            <div class="sub-card h-100">
+                <div class="border-effect"></div>
+                <div class="card-content">
+                    <i class="bi bi-chat-left-text sub-card-icon"></i>
+                    <h5 class="sub-card-title">L1 Response Tracking</h5>
+                    <p class="sub-card-description">Monitor team member responses</p>
+                </div>
+            </div>
+        </a>
+    </div>
+
+    <!-- Card 2 -->
+    <div class="col">
+        <div class="sub-card h-100">
+            <div class="border-effect"></div>
+            <div class="card-content">
+                <i class="bi bi-clock sub-card-icon"></i>
+                <h5 class="sub-card-title">All LevelStatus Updates</h5>
+                <p class="sub-card-description">Track task progress in real-time</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+        <!-- Add other task delegation sub-pages similarly -->
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        // Array to store the history of visited pages for the back button
+        let pageHistory = ['home'];
+
+        function showContent(pageId) {
+            // Hide all content sections
+            document.querySelectorAll('.content').forEach(page => {
+                page.style.display = 'none';
+            });
+
+            // Show the requested section
+            const targetPage = document.getElementById(pageId);
+            if (targetPage) {
+                targetPage.style.display = 'block';
+                // Add the new page to history if it's not the same as the last one
+                if (pageHistory[pageHistory.length - 1] !== pageId) {
+                    pageHistory.push(pageId);
+                }
+            }
+        }
+
+        function goBack() {
+            // If there's more than one page in history, remove the current one
+            if (pageHistory.length > 1) {
+                pageHistory.pop();
+            }
+            // Get the previous page ID
+            const previousPageId = pageHistory[pageHistory.length - 1];
+            showContent(previousPageId);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            showContent('home');
+        });
+    </script>
+</body>
+</html>
