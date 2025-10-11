@@ -971,7 +971,7 @@
                 </a>
                 <a href="#" class="sidebar-nav-item" data-page="test-page">
                     <i class="bi bi-gear-fill"></i>
-                    <span>TEST</span>
+                    <span>HR</span>
                 </a>
             </nav>
         </aside>
@@ -1049,14 +1049,30 @@
                                 </div>
                             </div>
                         </div>
-                        <p class="card-description">Create and manage comprehensive checklists for quality assurance and process standardization</p>
+
+                        <!-- NEW CONTENT FOR CHECK LIST CARD -->
+                        <div class="task-summary-grid">
+                            <div class="task-summary-item">
+                                <span class="label">Total Checks</span>
+                                <span class="value" id="totalChecks">...</span>
+                            </div>
+                            <div class="task-summary-item">
+                                <span class="label">Pending</span>
+                                <span class="value" id="pendingChecks">...</span>
+                            </div>
+                            <div class="task-summary-item">
+                                <span class="label">Done</span>
+                                <span class="value" id="doneChecks">...</span>
+                            </div>
+                        </div>
+                        <!-- END NEW CONTENT -->
+                        
                         <div class="card-footer">
                             <span class="card-link">
                                 Explore Module <i class="bi bi-arrow-right"></i>
                             </span>
                         </div>
                     </div>
-
                     <div class="main-card" onclick="showContent('fms-page', 'FMS')">
                         <div class="card-header">
                             <div class="icon-box">
@@ -1069,7 +1085,24 @@
                                 </div>
                             </div>
                         </div>
-                        <p class="card-description">Centralized file management system with advanced organization and search capabilities</p>
+
+                        <!-- NEW CONTENT FOR FMS CARD -->
+                        <div class="task-summary-grid">
+                            <div class="task-summary-item">
+                                <span class="label">Total Files</span>
+                                <span class="value" id="totalFiles">...</span>
+                            </div>
+                            <div class="task-summary-item">
+                                <span class="label">Used Space</span>
+                                <span class="value" id="usedSpace">...</span>
+                            </div>
+                            <div class="task-summary-item">
+                                <span class="label">Free Space</span>
+                                <span class="value" id="freeSpace">...</span>
+                            </div>
+                        </div>
+                        <!-- END NEW CONTENT -->
+                        
                         <div class="card-footer">
                             <span class="card-link">
                                 Explore Module <i class="bi bi-arrow-right"></i>
@@ -1089,7 +1122,7 @@
                                 </div>
                             </div>
                         </div>
-                        <p class="card-description">Comprehensive inventory management with real-time stock tracking and analytics</p>
+                        
                         <div class="card-footer">
                             <span class="card-link">
                                 Explore Module <i class="bi bi-arrow-right"></i>
@@ -1109,7 +1142,7 @@
                                 </div>
                             </div>
                         </div>
-                        <p class="card-description">Advanced project management with timeline tracking and team collaboration tools</p>
+                        
                         <div class="card-footer">
                             <span class="card-link">
                                 Explore Module <i class="bi bi-arrow-right"></i>
@@ -1123,13 +1156,13 @@
                                 <i class="bi bi-gear-fill card-icon"></i>
                             </div>
                             <div class="card-body">
-                                <h3 class="card-title">TEST</h3>
+                                <h3 class="card-title">HR</h3>
                                 <div class="card-meta">
                                     <span class="badge">QA</span>
                                 </div>
                             </div>
                         </div>
-                        <p class="card-description">Quality assurance and testing suite for comprehensive system validation</p>
+                        
                         <div class="card-footer">
                             <span class="card-link">
                                 Explore Module <i class="bi bi-arrow-right"></i>
@@ -1156,7 +1189,7 @@
                             <i class="bi bi-plus-circle-fill sub-card-icon"></i>
                         </div>
                         <h4 class="sub-card-title">Add New Task</h4>
-                        <p class="sub-card-description">Create and assign new tasks to team members with detailed parameters</p>
+                        
                     </div>
 
                     <div class="sub-card" onclick="showContent('doer-response-page', 'Doer Response')">
@@ -1164,7 +1197,7 @@
                             <i class="bi bi-chat-dots-fill sub-card-icon"></i>
                         </div>
                         <h4 class="sub-card-title">Doer Response</h4>
-                        <p class="sub-card-description">Monitor responses and feedback from assignees in real-time</p>
+                       
                     </div>
 
                     <a href="https://script.google.com/macros/s/AKfycbyVYyB9JhtXbnGJlOvvmfQaM_sQbwAe17Q4L0KxmfcFfrN5PUY-meQ-Fg7YG0PpiZU7/exec" class="sub-card" target="_blank">
@@ -1172,7 +1205,7 @@
                             <i class="bi bi-person-gear sub-card-icon"></i>
                         </div>
                         <h4 class="sub-card-title">Delegation Master</h4>
-                        <p class="sub-card-description">Master control panel for comprehensive task delegation management</p>
+                        
                     </a>
 
                     <a href="https://script.google.com/a/macros/yajurfibres.com/s/AKfycbzTDp0TZtM8sJEii0TtH4DaMpPOroJzV7hgo9JFWVFOpQqSx4UQSAjHopT_5y0trS2N/exec" class="sub-card" target="_blank">
@@ -1180,7 +1213,7 @@
                             <i class="bi bi-person-plus-fill sub-card-icon"></i>
                         </div>
                         <h4 class="sub-card-title">Add Doer</h4>
-                        <p class="sub-card-description">Register new team members and configure their roles</p>
+                       
                     </a>
 
                     <a href="https://script.google.com/macros/s/AKfycbw0ThwIThQ0L2yD9G6LwjolRkyr4psJzyFhNf0BeeVw3tYIQnevJMKo-3Gphm6Nmy2G/exec" class="sub-card" target="_blank">
@@ -1188,7 +1221,7 @@
                             <i class="bi bi-graph-up-arrow sub-card-icon"></i>
                         </div>
                         <h4 class="sub-card-title">Score Card</h4>
-                        <p class="sub-card-description">Performance analytics and comprehensive scoring system</p>
+                        
                     </a>
                 </div>
             </div>
@@ -1210,7 +1243,7 @@
                             <i class="bi bi-plus-circle sub-card-icon"></i>
                         </div>
                         <h4 class="sub-card-title">Create Task</h4>
-                        <p class="sub-card-description">Click to open the comprehensive task creation interface</p>
+                        
                         <div class="action-badge">
                             <i class="bi bi-box-arrow-up-right"></i>
                             <span>Launch Tool</span>
@@ -1227,7 +1260,7 @@
                         <span>Back</span>
                     </a>
                     <h1>Doer Response</h1>
-                    <p>Track responses and progress from task doers</p>
+                    
                 </div>
 
                 <div class="card-grid">
@@ -1236,7 +1269,7 @@
                             <i class="bi bi-chat-left-text sub-card-icon"></i>
                         </div>
                         <h4 class="sub-card-title">L1 Response Tracking</h4>
-                        <p class="sub-card-description">Monitor team member responses and feedback across all tasks</p>
+                       
                     </a>
 
                     <div class="sub-card">
@@ -1244,7 +1277,7 @@
                             <i class="bi bi-clock-history sub-card-icon"></i>
                         </div>
                         <h4 class="sub-card-title">All Level Status Updates</h4>
-                        <p class="sub-card-description">Track task progress in real-time across all organizational levels</p>
+                        
                     </div>
                 </div>
             </div>
@@ -1265,24 +1298,24 @@
                         <div class="sub-icon-box">
                             <i class="bi bi-plus-circle sub-card-icon"></i>
                         </div>
-                        <h4 class="sub-card-title">Create Checklist</h4>
-                        <p class="sub-card-description">Design custom checklists tailored to your workflow requirements</p>
+                        <h4 class="sub-card-title">Master</h4>
+                        
                     </div>
 
                     <div class="sub-card">
                         <div class="sub-icon-box">
                             <i class="bi bi-list-task sub-card-icon"></i>
                         </div>
-                        <h4 class="sub-card-title">Manage Templates</h4>
-                        <p class="sub-card-description">Create and edit reusable checklist templates for efficiency</p>
+                        <h4 class="sub-card-title">Response</h4>
+                        
                     </div>
 
                     <div class="sub-card">
                         <div class="sub-icon-box">
                             <i class="bi bi-bar-chart-line sub-card-icon"></i>
                         </div>
-                        <h4 class="sub-card-title">Progress Tracking</h4>
-                        <p class="sub-card-description">Monitor completion rates with detailed analytics and insights</p>
+                        <h4 class="sub-card-title">Score Card</h4>
+                        
                     </div>
                 </div>
             </div>
@@ -1304,7 +1337,7 @@
                             <i class="bi bi-cloud-upload sub-card-icon"></i>
                         </div>
                         <h4 class="sub-card-title">Upload Files</h4>
-                        <p class="sub-card-description">Securely add new documents to the centralized system</p>
+                        
                     </div>
 
                     <div class="sub-card">
@@ -1312,7 +1345,7 @@
                             <i class="bi bi-folder-symlink sub-card-icon"></i>
                         </div>
                         <h4 class="sub-card-title">Organize</h4>
-                        <p class="sub-card-description">Categorize and structure files with intelligent organization</p>
+                        
                     </div>
 
                     <div class="sub-card">
@@ -1320,7 +1353,7 @@
                             <i class="bi bi-search sub-card-icon"></i>
                         </div>
                         <h4 class="sub-card-title">Search & Find</h4>
-                        <p class="sub-card-description">Quickly locate documents with advanced search algorithms</p>
+                        
                     </div>
                 </div>
             </div>
@@ -1342,7 +1375,7 @@
                             <i class="bi bi-box-seam sub-card-icon"></i>
                         </div>
                         <h4 class="sub-card-title">Stock Management</h4>
-                        <p class="sub-card-description">Monitor inventory levels and track all stock movements</p>
+                        
                     </div>
 
                     <div class="sub-card">
@@ -1350,7 +1383,7 @@
                             <i class="bi bi-arrow-left-right sub-card-icon"></i>
                         </div>
                         <h4 class="sub-card-title">Transactions</h4>
-                        <p class="sub-card-description">Track all inventory movements and inter-department transfers</p>
+                        
                     </div>
 
                     <div class="sub-card">
@@ -1358,7 +1391,7 @@
                             <i class="bi bi-clipboard-data sub-card-icon"></i>
                         </div>
                         <h4 class="sub-card-title">Reports</h4>
-                        <p class="sub-card-description">Generate comprehensive inventory analytics and insights</p>
+                        
                     </div>
                 </div>
             </div>
@@ -1380,7 +1413,7 @@
                             <i class="bi bi-kanban sub-card-icon"></i>
                         </div>
                         <h4 class="sub-card-title">Project Planning</h4>
-                        <p class="sub-card-description">Create and manage comprehensive project plans with milestones</p>
+                        
                     </div>
 
                     <div class="sub-card">
@@ -1388,7 +1421,7 @@
                             <i class="bi bi-calendar-event sub-card-icon"></i>
                         </div>
                         <h4 class="sub-card-title">Timeline</h4>
-                        <p class="sub-card-description">Track project milestones and manage critical deadlines</p>
+                        
                     </div>
 
                     <div class="sub-card">
@@ -1396,51 +1429,87 @@
                             <i class="bi bi-people sub-card-icon"></i>
                         </div>
                         <h4 class="sub-card-title">Team Management</h4>
-                        <p class="sub-card-description">Coordinate project teams and optimize resource allocation</p>
+                        
                     </div>
                 </div>
             </div>
 
             <!-- TEST Page -->
-            <div id="test-page" class="content">
-                <div class="page-header">
-                    <a href="#" class="back-button" onclick="goBack(); return false;">
-                        <i class="bi bi-arrow-left"></i>
-                        <span>Back to Dashboard</span>
-                    </a>
-                    <h1>Testing & Validation</h1>
-                    <p>Quality assurance for all systems</p>
-                </div>
-
-                <div class="card-grid">
-                    <div class="sub-card">
-                        <div class="sub-icon-box">
-                            <i class="bi bi-bug sub-card-icon"></i>
-                        </div>
-                        <h4 class="sub-card-title">Test Cases</h4>
-                        <p class="sub-card-description">Create and manage comprehensive test scenarios and suites</p>
-                    </div>
-
-                    <div class="sub-card">
-                        <div class="sub-icon-box">
-                            <i class="bi bi-check-all sub-card-icon"></i>
-                        </div>
-                        <h4 class="sub-card-title">Validation</h4>
-                        <p class="sub-card-description">Verify system functionality and performance benchmarks</p>
-                    </div>
-
-                    <div class="sub-card">
-                        <div class="sub-icon-box">
-                            <i class="bi bi-clipboard-check sub-card-icon"></i>
-                        </div>
-                        <h4 class="sub-card-title">Quality Reports</h4>
-                        <p class="sub-card-description">Generate detailed QA documentation and audit trails</p>
-                    </div>
-                </div>
-            </div>
-        </main>
+           <div id="test-page" class="content">
+    <div class="page-header">
+        <a href="#" class="back-button" onclick="goBack(); return false;">
+            <i class="bi bi-arrow-left"></i>
+            <span>Back to Dashboard</span>
+        </a>
+        <h1>Testing & Validation</h1>
+        <p>Quality assurance for all systems</p>
     </div>
 
+    <div class="card-grid">
+        <div class="sub-card">
+            <div class="sub-icon-box">
+                <i class="bi bi-bug sub-card-icon"></i>
+            </div>
+            <h4 class="sub-card-title">HIRING</h4>
+        </div>
+
+        <div class="sub-card">
+            <div class="sub-icon-box">
+                <i class="bi bi-check-all sub-card-icon"></i>
+            </div>
+            <h4 class="sub-card-title">COMPLAINTS</h4>
+        </div>
+
+        <div class="sub-card">
+            <div class="sub-icon-box">
+                <i class="bi bi-clipboard-check sub-card-icon"></i>
+            </div>
+            <h4 class="sub-card-title">CHECKLIST</h4>
+        </div>
+
+        <div class="sub-card">
+            <div class="sub-icon-box">
+                <i class="bi bi-bug sub-card-icon"></i>
+            </div>
+            <h4 class="sub-card-title">GATEPASS</h4>
+        </div>
+
+        <div class="sub-card">
+            <div class="sub-icon-box">
+                <i class="bi bi-check-all sub-card-icon"></i>
+            </div>
+            <h4 class="sub-card-title">VISITOR PASS</h4>
+        </div>
+
+        <div class="sub-card">
+            <div class="sub-icon-box">
+                <i class="bi bi-clipboard-check sub-card-icon"></i>
+            </div>
+            <h4 class="sub-card-title">LEAVE APPLICATION</h4>
+        </div>
+
+        <div class="sub-card">
+            <div class="sub-icon-box">
+                <i class="bi bi-bug sub-card-icon"></i>
+            </div>
+            <h4 class="sub-card-title">VEHICLE REFULING</h4>
+        </div>
+
+        <div class="sub-card">
+            <div class="sub-icon-box">
+                <i class="bi bi-check-all sub-card-icon"></i>
+            </div>
+            <h4 class="sub-card-title">LINEUP MANPOWER</h4>
+        </div>
+
+        <div class="sub-card">
+            <div class="sub-icon-box">
+                <i class="bi bi-clipboard-check sub-card-icon"></i>
+            </div>
+            <h4 class="sub-card-title">HR COMMITTEE MEETING</h4>
+        </div>
+    </div>
+</div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
     <script>
