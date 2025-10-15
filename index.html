@@ -1282,43 +1282,40 @@
                 </div>
             </div>
 
-            <!-- Check List Page -->
-            <div id="check-list-page" class="content">
-                <div class="page-header">
-                    <a href="#" class="back-button" onclick="goBack(); return false;">
-                        <i class="bi bi-arrow-left"></i>
-                        <span>Back to Dashboard</span>
-                    </a>
-                    <h1>Check List</h1>
-                    <p>Manage and track completion of all checklists</p>
-                </div>
+           <!-- Check List Page -->
+<div id="check-list-page" class="content">
+    <div class="page-header">
+        <a href="#" class="back-button" onclick="goBack(); return false;">
+            <i class="bi bi-arrow-left"></i>
+            <span>Back to Dashboard</span>
+        </a>
+        <h1>Check List</h1>
+        <p>Manage and track completion of all checklists</p>
+    </div>
 
-                <div class="card-grid">
-                    <div class="sub-card">
-                        <div class="sub-icon-box">
-                            <i class="bi bi-plus-circle sub-card-icon"></i>
-                        </div>
-                        <h4 class="sub-card-title">Master</h4>
-                        
-                    </div>
-
-                    <div class="sub-card">
-                        <div class="sub-icon-box">
-                            <i class="bi bi-list-task sub-card-icon"></i>
-                        </div>
-                        <h4 class="sub-card-title">Response</h4>
-                        
-                    </div>
-
-                    <div class="sub-card">
-                        <div class="sub-icon-box">
-                            <i class="bi bi-bar-chart-line sub-card-icon"></i>
-                        </div>
-                        <h4 class="sub-card-title">Score Card</h4>
-                        
-                    </div>
-                </div>
+    <div class="card-grid">
+        <a href="https://script.google.com/macros/s/AKfycbwMKiKrNvWAqDuLBRGnWB97_vcIlhLKJiyUFguSUQOeetM6d6ai3quXphmSvug8SnJyFw/exec" class="sub-card" target="_blank">
+            <div class="sub-icon-box">
+                <i class="bi bi-chat-left-text sub-card-icon"></i>
             </div>
+            <h4 class="sub-card-title">Master</h4>
+        </a>
+
+        <a href="https://script.google.com/macros/s/AKfycbzSBJ6j0aSUNFOjuwlMbBCJWQdldtLYxagDZVbOF67BzAX2fHTPweFrGRt10sa7T70RHQ/exec" class="sub-card" target="_blank">
+            <div class="sub-icon-box">
+                <i class="bi bi-chat-left-text sub-card-icon"></i>
+            </div>
+            <h4 class="sub-card-title">Respose</h4>
+        </a>
+
+        <a href="https://script.google.com/macros/s/AKfycbwHji23MFxT56TRvrT3poSbB3lDSlCtlyOssTMNRfgSoeVsIc835N01PWgmjGMloDn6/exec" class="sub-card" target="_blank">
+            <div class="sub-icon-box">
+                <i class="bi bi-chat-left-text sub-card-icon"></i>
+            </div>
+            <h4 class="sub-card-title">Score</h4>
+        </a>
+    </div>
+</div>
 
             <!-- FMS Page -->
             <div id="fms-page" class="content">
@@ -1607,7 +1604,7 @@
             }
         }
 
-        // Fetch data from Google Sheets
+        // Fetch data from Google Sheets Task Deligation
         function fetchTaskData() {
             const sheetId = '1aq7CXHNkpkWoJLhTDWkYG9CrszsRAY0v4ssWZC6fYE';
             const sheetName = 'Task-Data';
@@ -1653,6 +1650,47 @@
                 });
         }
 
+        // Fetch data from Google Sheets Check List
+        function fetchCheckListData() {
+            const url = `https://sheets.googleapis.com/v4/spreadsheets/1fGudRr5zZy_3qDGloCptok3VtXbR3L5pK1fBHC4tb8c/values/Task-Data!A2:C2?key=AIzaSyAriKmI0OQAzmO3uH3EAK7598TkQBYT52I`;
+
+            fetch(url)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Check List API Response:', data);
+                    
+                    if (data.values && data.values.length > 0) {
+                        const row = data.values[0];
+                        document.getElementById('totalChecks').innerText = row[0] || '0';
+                        document.getElementById('pendingChecks').innerText = row[1] || '0';
+                        document.getElementById('doneChecks').innerText = row[2] || '0';
+                    } else {
+                        console.log('No data found in the specified range.');
+                        document.getElementById('totalChecks').innerText = 'N/A';
+                        document.getElementById('pendingChecks').innerText = 'N/A';
+                        document.getElementById('doneChecks').innerText = 'N/A';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching check list data from Google Sheets:', error);
+                    document.getElementById('totalChecks').innerText = 'Error';
+                    document.getElementById('pendingChecks').innerText = 'Error';
+                    document.getElementById('doneChecks').innerText = 'Error';
+                    
+                    // Fallback to static data if API fails
+                    setTimeout(() => {
+                        document.getElementById('totalChecks').innerText = '8';
+                        document.getElementById('pendingChecks').innerText = '3';
+                        document.getElementById('doneChecks').innerText = '5';
+                    }, 2000);
+                });
+        }
+
         // Mobile Sidebar Toggle
         function toggleMobileSidebar() {
             const sidebar = document.getElementById('sidebar');
@@ -1679,10 +1717,11 @@
         }
 
         // Initialize everything when DOM is loaded
-        document.addEventListener('DOMContentLoaded', () => {
+         document.addEventListener('DOMContentLoaded', () => {
             createParticles();
             showContent('home');
-            fetchTaskData(); // Fetch data from Google Sheets
+            fetchTaskData(); 
+            fetchCheckListData();
 
             // Attach event listeners to sidebar navigation items
             document.querySelectorAll('.sidebar-nav-item').forEach(item => {
