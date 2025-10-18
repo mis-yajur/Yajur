@@ -12,27 +12,31 @@
 
     <style>
         :root {
-            --primary: #6366F1; /* Indigo 500 */
-            --primary-light: #818CF8;
-            --primary-dark: #4F46E5; /* Indigo 600 */
-            --secondary: #8B5CF6; /* Violet 500 */
-            --accent: #06B6D4; /* Cyan 500 */
-            --success: #10B981; /* Green 500 */
-            --warning: #F59E0B; /* Amber 500 */
-            --danger: #EF4444; /* Red 500 */
+            --primary: #2563EB;
+            --primary-light: #3B82F6;
+            --primary-dark: #1E40AF;
+            --secondary: #64748B;
+            --accent: #0EA5E9;
+            --success: #10B981;
+            --warning: #F59E0B;
+            --danger: #EF4444;
 
-            --dark-bg: #0F172A; /* Slate 900 */
-            --dark-panel: #1E293B; /* Slate 800 */
-            --dark-card: #141f33; /* Slightly lighter for card contrast */
-            --dark-border: rgba(51, 65, 85, 0.5); /* Slate 700 with transparency */
-            --dark-hover: #334155; /* Slate 700 */
+            --bg-main: #F8FAFC;
+            --bg-secondary: #FFFFFF;
+            --bg-card: #FFFFFF;
+            --border-color: #E2E8F0;
+            --border-light: #F1F5F9;
 
-            --text-base: #F8FAFC; /* Slate 50 */
-            --text-muted: #94A3B8; /* Slate 400 */
-            --text-light: #CBD5E1; /* Slate 300 */
+            --text-primary: #0F172A;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
 
             --sidebar-width: 280px;
             --sidebar-collapsed-width: 80px;
+
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
         }
 
         * {
@@ -43,169 +47,67 @@
 
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: var(--dark-bg);
-            color: var(--text-base);
+            background: var(--bg-main);
+            color: var(--text-primary);
             min-height: 100vh;
             overflow-x: hidden;
-            position: relative;
-            display: flex; /* Use flexbox for layout */
-        }
-
-        /* Advanced Background - Adjusted for main content only */
-        .bg-layer {
-            position: fixed;
-            inset: 0;
-            z-index: 0;
-            overflow: hidden;
-            pointer-events: none; /* Allows clicks to pass through */
-        }
-
-        .gradient-bg {
-            position: absolute;
-            inset: 0;
-            background: 
-                radial-gradient(circle at 20% 20%, rgba(99, 102, 241, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 80% 80%, rgba(139, 92, 246, 0.08) 0%, transparent 50%),
-                radial-gradient(circle at 40% 60%, rgba(6, 182, 212, 0.07) 0%, transparent 50%);
-            animation: bgPulse 20s ease-in-out infinite;
-        }
-
-        @keyframes bgPulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.8; }
-        }
-
-        .mesh-gradient {
-            position: absolute;
-            inset: 0;
-            background-image: 
-                linear-gradient(rgba(99, 102, 241, 0.02) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(99, 102, 241, 0.02) 1px, transparent 1px);
-            background-size: 60px 60px;
-            mask-image: linear-gradient(to bottom, black, transparent);
-        }
-
-        /* Animated Orbs */
-        .orb {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(80px); /* Increased blur */
-            opacity: 0.3; /* Slightly reduced opacity */
-            animation: orbFloat 25s infinite ease-in-out;
-            pointer-events: none;
-        }
-
-        .orb-1 {
-            width: 600px; /* Larger */
-            height: 600px;
-            background: radial-gradient(circle, var(--primary), transparent 60%);
-            top: -300px;
-            left: -300px;
-            animation-delay: 0s;
-        }
-
-        .orb-2 {
-            width: 500px;
-            height: 500px;
-            background: radial-gradient(circle, var(--secondary), transparent 60%);
-            bottom: -250px;
-            right: -250px;
-            animation-delay: 8s;
-        }
-
-        .orb-3 {
-            width: 450px;
-            height: 450px;
-            background: radial-gradient(circle, var(--accent), transparent 60%);
-            top: 40%;
-            right: 10%;
-            animation-delay: 16s;
-        }
-
-        @keyframes orbFloat {
-            0%, 100% { transform: translate(0, 0) scale(1); }
-            33% { transform: translate(60px, -90px) scale(1.05); } /* Slight scale change */
-            66% { transform: translate(-50px, 70px) scale(0.95); }
-        }
-
-        /* Particles */
-        .particle {
-            position: absolute;
-            background: rgba(99, 102, 241, 0.4); /* Less intense */
-            border-radius: 50%;
-            pointer-events: none;
-        }
-
-        .particle::before {
-            content: '';
-            position: absolute;
-            inset: -1px; /* Smaller glow */
-            background: radial-gradient(circle, rgba(139, 92, 246, 0.5), transparent); /* Less intense */
-            border-radius: 50%;
-            animation: particlePulse 2s infinite;
-        }
-
-        @keyframes particlePulse {
-            0%, 100% { opacity: 0.5; transform: scale(1); }
-            50% { opacity: 0.8; transform: scale(1.1); }
+            display: flex;
         }
 
         /* Main Layout */
         .app-wrapper {
             display: flex;
             width: 100%;
-            position: relative;
-            z-index: 1; /* Above background */
         }
 
         /* Sidebar */
         .sidebar {
             width: var(--sidebar-width);
             min-width: var(--sidebar-width);
-            background: var(--dark-panel);
-            border-right: 1px solid var(--dark-border);
-            padding: 1.5rem 1rem;
+            background: var(--bg-secondary);
+            border-right: 1px solid var(--border-color);
+            padding: 1.5rem 0;
             display: flex;
             flex-direction: column;
-            transition: all 0.3s ease-in-out;
+            transition: all 0.3s ease;
             position: sticky;
             top: 0;
             height: 100vh;
             overflow-y: auto;
             flex-shrink: 0;
+            box-shadow: var(--shadow-sm);
         }
 
         .sidebar.collapsed {
             width: var(--sidebar-collapsed-width);
             min-width: var(--sidebar-collapsed-width);
-            padding: 1.5rem 0.5rem;
         }
 
         .sidebar-header {
             display: flex;
             align-items: center;
-            padding: 0.5rem 1rem;
+            padding: 0 1.5rem;
             margin-bottom: 2rem;
             position: relative;
         }
 
         .sidebar.collapsed .sidebar-header {
             justify-content: center;
-            padding: 0.5rem;
+            padding: 0 0.5rem;
         }
 
         .sidebar-logo {
-            width: 48px;
-            height: 48px;
+            width: 40px;
+            height: 40px;
             border-radius: 8px;
             object-fit: cover;
             flex-shrink: 0;
         }
 
         .sidebar-title {
-            font-size: 1.5rem;
-            font-weight: 800;
-            color: var(--text-base);
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-primary);
             margin-left: 1rem;
             white-space: nowrap;
             overflow: hidden;
@@ -218,44 +120,45 @@
 
         .sidebar-nav {
             flex-grow: 1;
+            padding: 0 0.75rem;
         }
 
         .sidebar-nav-item {
             display: flex;
             align-items: center;
-            padding: 0.8rem 1rem;
-            margin-bottom: 0.5rem;
-            border-radius: 10px;
-            color: var(--text-light);
+            padding: 0.75rem 1rem;
+            margin-bottom: 0.25rem;
+            border-radius: 8px;
+            color: var(--text-secondary);
             text-decoration: none;
             transition: all 0.2s ease;
             white-space: nowrap;
             overflow: hidden;
-            text-overflow: ellipsis;
+            font-weight: 500;
+            font-size: 0.9375rem;
         }
 
         .sidebar-nav-item i {
-            font-size: 1.4rem;
-            margin-right: 1rem;
+            font-size: 1.25rem;
+            margin-right: 0.75rem;
             color: var(--text-muted);
             transition: color 0.2s ease;
             flex-shrink: 0;
         }
 
         .sidebar-nav-item span {
-            font-weight: 500;
             opacity: 1;
-            transition: opacity 0.2s ease, margin-left 0.2s ease;
+            transition: opacity 0.2s ease;
         }
 
         .sidebar.collapsed .sidebar-nav-item {
             justify-content: center;
-            padding: 0.8rem 0.5rem;
+            padding: 0.75rem 0.5rem;
         }
 
         .sidebar.collapsed .sidebar-nav-item i {
             margin-right: 0;
-            font-size: 1.6rem;
+            font-size: 1.4rem;
         }
 
         .sidebar.collapsed .sidebar-nav-item span {
@@ -265,129 +168,123 @@
             visibility: hidden;
         }
 
-        .sidebar-nav-item:hover,
-        .sidebar-nav-item.active {
-            background: var(--dark-hover);
-            color: var(--primary-light);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        .sidebar-nav-item:hover {
+            background: var(--bg-main);
+            color: var(--primary);
+        }
+
+        .sidebar-nav-item:hover i {
+            color: var(--primary);
         }
 
         .sidebar-nav-item.active {
-            border-left: 4px solid var(--primary);
-            padding-left: calc(1rem - 4px); /* Adjust padding for border */
+            background: linear-gradient(90deg, rgba(37, 99, 235, 0.1), transparent);
+            color: var(--primary);
+            border-left: 3px solid var(--primary);
+            padding-left: calc(1rem - 3px);
         }
-        
-        .sidebar.collapsed .sidebar-nav-item.active {
-             border-left: none;
-             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-        }
-         .sidebar.collapsed .sidebar-nav-item.active i {
-            color: var(--primary-light);
-         }
 
-        .sidebar-nav-item:hover i,
         .sidebar-nav-item.active i {
             color: var(--primary);
         }
 
+        .sidebar.collapsed .sidebar-nav-item.active {
+            border-left: none;
+            background: rgba(37, 99, 235, 0.1);
+        }
+
         .sidebar-toggle {
-            background: var(--dark-hover);
-            border: none;
-            color: var(--text-muted);
-            width: 40px;
-            height: 40px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            width: 32px;
+            height: 32px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
             position: absolute;
-            right: -20px;
-            top: 2rem;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-            z-index: 10;
+            right: -16px;
+            top: 1.5rem;
+            transition: all 0.2s ease;
+            box-shadow: var(--shadow-md);
         }
 
         .sidebar-toggle:hover {
             background: var(--primary);
-            color: var(--text-base);
-        }
-
-        .sidebar.collapsed .sidebar-toggle {
-            right: -20px; /* Adjusted for collapsed state */
+            color: white;
+            border-color: var(--primary);
         }
 
         /* Main Content Area */
         .main-content-wrapper {
             flex-grow: 1;
-            padding: 2.5rem 2rem;
+            padding: 2rem;
             overflow-y: auto;
-            position: relative;
-            z-index: 1;
-            background: linear-gradient(180deg, rgba(15, 23, 42, 0.95), rgba(15, 23, 42, 0.9)); /* Subtle gradient overlay */
+            background: var(--bg-main);
         }
-        
+
         .content {
             display: none;
-            animation: fadeIn 0.6s ease-out;
-            max-width: 1400px; /* Constrain content width */
-            margin: 0 auto; /* Center content */
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Header in Main Content */
-        .page-header {
-            padding: 0 0 3rem;
-            text-align: center;
-            border-bottom: 1px solid var(--dark-border);
-            margin-bottom: 3rem;
-            position: relative; /* For back button positioning */
-        }
-
-        .page-header h1 {
-            font-size: clamp(2rem, 4vw, 3.5rem);
-            font-weight: 900;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 50%, var(--accent) 100%);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 0.75rem;
-            letter-spacing: -0.03em;
-            line-height: 1.1;
-        }
-
-        .page-header p {
-            color: var(--text-muted);
-            font-size: 1.1rem;
-            font-weight: 500;
-            max-width: 700px;
+            animation: fadeIn 0.4s ease;
+            max-width: 1400px;
             margin: 0 auto;
         }
 
-        /* Stats Bar - Refined */
+        .content.active-content {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Page Header */
+        .page-header {
+            padding: 0 0 2rem;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid var(--border-color);
+            position: relative;
+        }
+
+        .page-header h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.02em;
+        }
+
+        .page-header p {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            font-weight: 400;
+        }
+
+        /* Stats Bar */
         .stats-bar {
             display: flex;
             justify-content: center;
             gap: 3rem;
-            margin-top: 2.5rem;
+            margin-top: 2rem;
             padding: 1.5rem;
-            background: var(--dark-card); /* Card-like background */
-            border: 1px solid var(--dark-border);
-            border-radius: 16px;
-            max-width: 900px;
-            margin-left: auto;
-            margin-right: auto;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            background: var(--bg-card);
+            border: 1px solid var(--border-light);
+            border-radius: 12px;
+            box-shadow: var(--shadow-sm);
         }
 
         .stat-item {
             text-align: center;
-            padding: 0.5rem 1rem;
+            padding: 0 1rem;
             position: relative;
         }
 
@@ -399,21 +296,18 @@
             transform: translateY(-50%);
             width: 1px;
             height: 60%;
-            background: var(--dark-border);
+            background: var(--border-color);
         }
 
         .stat-value {
-            font-size: 2.2rem;
+            font-size: 2rem;
             font-weight: 700;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: var(--primary);
             line-height: 1;
         }
 
         .stat-label {
-            font-size: 0.9rem;
+            font-size: 0.875rem;
             color: var(--text-muted);
             font-weight: 500;
             margin-top: 0.5rem;
@@ -423,104 +317,49 @@
         .card-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 2rem;
-            margin-bottom: 4rem;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
         }
 
         /* Main Cards */
         .main-card {
-            position: relative;
-            background: var(--dark-card);
-            border: 1px solid var(--dark-border);
-            border-radius: 16px; /* Slightly smaller radius */
-            padding: 2rem; /* Reduced padding */
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
             cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-            overflow: hidden;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
-        }
-
-        .main-card::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(135deg, rgba(99, 102, 241, 0.05), rgba(139, 92, 246, 0.05)); /* Subtle hover bg */
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .main-card::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
-            transform: scaleX(0);
-            transform-origin: left center;
-            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-
-        .main-card:hover::before {
-            opacity: 1;
-        }
-
-        .main-card:hover::after {
-            transform: scaleX(1);
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-sm);
         }
 
         .main-card:hover {
-            transform: translateY(-8px);
-            border-color: rgba(99, 102, 241, 0.4);
-            box-shadow: 
-                0 15px 40px rgba(0, 0, 0, 0.3),
-                0 0 30px rgba(99, 102, 241, 0.15);
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--primary-light);
         }
 
         .card-header {
             display: flex;
             align-items: center;
-            gap: 1.25rem; /* Smaller gap */
-            margin-bottom: 1.25rem;
+            gap: 1rem;
+            margin-bottom: 1rem;
         }
 
         .icon-box {
-            width: 70px; /* Smaller icon box */
-            height: 70px;
+            width: 56px;
+            height: 56px;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            border-radius: 14px; /* Slightly smaller radius */
-            position: relative;
-            overflow: hidden;
-            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-            box-shadow: 0 6px 20px rgba(99, 102, 241, 0.3);
-        }
-
-        .icon-box::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), transparent); /* Less intense shine */
-            transform: translateX(-100%) skewX(-15deg);
-            transition: transform 0.5s ease;
-        }
-
-        .main-card:hover .icon-box::before {
-            transform: translateX(200%) skewX(-15deg);
-        }
-
-        .main-card:hover .icon-box {
-            transform: scale(1.05) rotate(-2deg); /* Subtle animation */
-            box-shadow: 0 8px 25px rgba(99, 102, 241, 0.45);
+            background: linear-gradient(135deg, var(--primary-light), var(--primary));
+            border-radius: 12px;
+            flex-shrink: 0;
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
         }
 
         .card-icon {
-            font-size: 2.2rem; /* Smaller icon size */
+            font-size: 1.75rem;
             color: white;
-            z-index: 1;
         }
 
         .card-body {
@@ -528,408 +367,286 @@
         }
 
         .card-title {
-            font-size: 1.6rem;
-            font-weight: 700;
-            color: var(--text-base);
-            margin-bottom: 0.3rem;
-            letter-spacing: -0.01em;
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.25rem;
         }
 
         .badge {
-            padding: 0.3rem 0.75rem;
-            background: rgba(99, 102, 241, 0.1); /* Lighter background */
-            border: 1px solid rgba(99, 102, 241, 0.2);
-            border-radius: 16px;
-            font-size: 0.7rem;
+            padding: 0.25rem 0.75rem;
+            background: rgba(37, 99, 235, 0.1);
+            border-radius: 12px;
+            font-size: 0.75rem;
             font-weight: 600;
-            color: var(--primary-light);
+            color: var(--primary);
             text-transform: uppercase;
             letter-spacing: 0.05em;
         }
 
         .card-description {
             color: var(--text-muted);
-            font-size: 0.95rem;
-            line-height: 1.6;
-            margin-top: 0.8rem;
+            font-size: 0.875rem;
+            line-height: 1.5;
+            margin-top: 0.5rem;
         }
-        /* New styles for task counts within the main-card */
+
+        /* Task Summary Grid */
         .task-summary-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 1rem;
+            gap: 0.75rem;
             margin-top: 1rem;
-            margin-bottom: 1rem; /* Adjust margin if needed */
         }
 
         .task-summary-item {
-            background: var(--dark-bg); /* Use a darker background for contrast */
-            padding: 0.8rem;
+            background: var(--bg-main);
+            padding: 0.75rem;
             border-radius: 8px;
             text-align: center;
-            border: 1px solid var(--dark-border);
+            border: 1px solid var(--border-light);
         }
 
         .task-summary-item .label {
             font-size: 0.75rem;
             color: var(--text-muted);
             font-weight: 500;
-            margin-bottom: 0.3rem;
+            margin-bottom: 0.25rem;
             display: block;
         }
 
         .task-summary-item .value {
-            font-size: 1.3rem;
+            font-size: 1.5rem;
             font-weight: 700;
-            color: var(--primary-light); /* Highlight values */
-            line-height: 1.1;
+            color: var(--primary);
+            line-height: 1;
         }
 
         .card-footer {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin-top: 1.25rem;
-            padding-top: 1.25rem;
-            border-top: 1px solid var(--dark-border);
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border-light);
         }
 
         .card-link {
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
-            color: var(--primary-light); /* Lighter primary for link */
+            color: var(--primary);
             font-weight: 600;
-            font-size: 0.9rem;
-            transition: all 0.3s ease;
+            font-size: 0.875rem;
+            transition: all 0.2s ease;
         }
 
         .card-link i {
-            transition: transform 0.3s ease;
-        }
-
-        .main-card:hover .card-link {
-            color: var(--primary); /* Darker primary on hover */
+            transition: transform 0.2s ease;
         }
 
         .main-card:hover .card-link i {
-            transform: translateX(5px);
+            transform: translateX(4px);
         }
 
-        /* Sub Cards (used for inner module pages) */
+        /* Sub Cards */
         .sub-card {
-            position: relative;
-            background: var(--dark-card);
-            border: 1px solid var(--dark-border);
-            border-radius: 14px;
-            padding: 1.8rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
             cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transition: all 0.3s ease;
             text-decoration: none;
             color: inherit;
             display: flex;
             flex-direction: column;
-            overflow: hidden;
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
-        }
-
-        .sub-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 2px;
-            background: linear-gradient(90deg, var(--accent), var(--success));
-            transform: scaleX(0);
-            transform-origin: left center;
-            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-
-        .sub-card:hover::before {
-            transform: scaleX(1);
+            box-shadow: var(--shadow-sm);
         }
 
         .sub-card:hover {
-            transform: translateY(-6px);
-            border-color: rgba(6, 182, 212, 0.4);
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--accent);
             color: inherit;
         }
 
         .sub-icon-box {
-            width: 60px; /* Smaller sub icon box */
-            height: 60px;
+            width: 56px;
+            height: 56px;
             display: flex;
             align-items: center;
             justify-content: center;
             background: linear-gradient(135deg, var(--accent), var(--success));
             border-radius: 12px;
-            margin-bottom: 1.2rem;
-            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-            box-shadow: 0 5px 15px rgba(6, 182, 212, 0.3);
+            margin-bottom: 1rem;
             flex-shrink: 0;
-        }
-
-        .sub-card:hover .sub-icon-box {
-            transform: scale(1.08) rotate(2deg);
-            box-shadow: 0 7px 20px rgba(6, 182, 212, 0.45);
+            box-shadow: 0 4px 12px rgba(14, 165, 233, 0.2);
         }
 
         .sub-card-icon {
-            font-size: 1.8rem; /* Smaller sub icon size */
+            font-size: 1.5rem;
             color: white;
         }
 
         .sub-card-title {
-            font-size: 1.3rem;
-            font-weight: 700;
-            color: var(--text-base);
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--text-primary);
             margin-bottom: 0.5rem;
-            letter-spacing: -0.01em;
-            line-height: 1.3;
         }
 
         .sub-card-description {
             color: var(--text-muted);
-            font-size: 0.9rem;
+            font-size: 0.875rem;
             line-height: 1.5;
-            flex-grow: 1; /* Allows it to take remaining space */
         }
 
         /* Single Card Layout */
         .single-card-layout {
             display: flex;
             justify-content: center;
-            align-items: center;
-            min-height: 40vh; /* Adjusted for overall content flow */
             padding: 2rem 0;
         }
 
         .single-card-layout .sub-card {
-            max-width: 450px; /* Smaller max-width */
+            max-width: 400px;
             width: 100%;
-            padding: 3rem 2.5rem; /* Adjusted padding */
+            padding: 2.5rem;
             text-align: center;
         }
 
         .single-card-layout .sub-icon-box {
-            width: 100px; /* Smaller icon box */
-            height: 100px;
+            width: 80px;
+            height: 80px;
             margin: 0 auto 1.5rem;
         }
 
         .single-card-layout .sub-card-icon {
-            font-size: 3rem; /* Smaller icon size */
+            font-size: 2.5rem;
         }
 
         .single-card-layout .sub-card-title {
-            font-size: 2rem; /* Smaller title */
+            font-size: 1.5rem;
         }
 
         .action-badge {
             display: inline-flex;
             align-items: center;
-            gap: 0.6rem;
-            padding: 0.75rem 1.5rem;
-            background: linear-gradient(135deg, rgba(6, 182, 212, 0.1), rgba(16, 185, 129, 0.1));
-            border: 1px solid rgba(6, 182, 212, 0.2);
-            border-radius: 40px;
-            font-size: 0.9rem;
+            gap: 0.5rem;
+            padding: 0.625rem 1.25rem;
+            background: rgba(14, 165, 233, 0.1);
+            border: 1px solid rgba(14, 165, 233, 0.2);
+            border-radius: 24px;
+            font-size: 0.875rem;
             font-weight: 600;
             color: var(--accent);
-            margin-top: 1.5rem;
-            transition: all 0.3s ease;
+            margin-top: 1rem;
+            transition: all 0.2s ease;
         }
 
         .sub-card:hover .action-badge {
-            background: linear-gradient(135deg, rgba(6, 182, 212, 0.2), rgba(16, 185, 129, 0.2));
+            background: rgba(14, 165, 233, 0.15);
             border-color: var(--accent);
-            transform: scale(1.03);
-            color: var(--primary-light);
         }
-        
-        /* Back button - Adjusted for main content area */
+
+        /* Back Button */
         .back-button {
             display: inline-flex;
             align-items: center;
-            gap: 0.6rem;
-            padding: 0.8rem 1.5rem;
-            background: var(--dark-panel);
-            border: 1px solid var(--dark-border);
-            border-radius: 10px;
-            color: var(--text-light);
-            font-weight: 600;
+            gap: 0.5rem;
+            padding: 0.625rem 1.25rem;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-secondary);
+            font-weight: 500;
             text-decoration: none;
-            transition: all 0.3s ease;
-            margin-bottom: 2rem;
-            position: absolute; /* Position absolutely within page-header */
-            left: 0;
-            top: 0;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-        }
-
-        .back-button::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .back-button:hover::before {
-            opacity: 0.1;
+            transition: all 0.2s ease;
+            margin-bottom: 1.5rem;
+            box-shadow: var(--shadow-sm);
+            font-size: 0.9375rem;
         }
 
         .back-button:hover {
-            transform: translateX(-5px);
-            border-color: var(--primary-light);
-            color: var(--text-base);
-            box-shadow: 0 6px 20px rgba(99, 102, 241, 0.2);
+            background: var(--bg-main);
+            border-color: var(--primary);
+            color: var(--primary);
         }
-        
-        /* Utility */
-        .mb-4 { margin-bottom: 2rem !important; }
+
+        /* Mobile Sidebar Toggle */
+        .mobile-sidebar-toggle {
+            display: none;
+            position: fixed;
+            top: 1rem;
+            left: 1rem;
+            z-index: 1001;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            width: 44px;
+            height: 44px;
+            border-radius: 8px;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: var(--text-primary);
+            cursor: pointer;
+            box-shadow: var(--shadow-md);
+        }
 
         /* Responsive */
         @media (max-width: 1200px) {
-            .sidebar:not(.collapsed) {
-                 position: fixed;
-                 left: -100%;
-                 z-index: 1000;
-                 box-shadow: 5px 0 15px rgba(0,0,0,0.4);
-            }
-            .sidebar.collapsed { /* This state will be active on smaller screens by default or when toggled */
-                width: 0;
-                min-width: 0;
-                padding: 0;
-                overflow: hidden;
-            }
-            .sidebar.show-mobile { /* New class for showing sidebar on mobile */
-                left: 0;
-                width: var(--sidebar-width);
-                min-width: var(--sidebar-width);
-                padding: 1.5rem 1rem;
-            }
-            .sidebar.show-mobile .sidebar-header {
-                justify-content: flex-start;
-                padding: 0.5rem 1rem;
-            }
-            .sidebar.show-mobile .sidebar-title {
-                display: block;
-            }
-            .sidebar.show-mobile .sidebar-nav-item {
-                justify-content: flex-start;
-                padding: 0.8rem 1rem;
-            }
-            .sidebar.show-mobile .sidebar-nav-item i {
-                margin-right: 1rem;
-                font-size: 1.4rem;
-            }
-            .sidebar.show-mobile .sidebar-nav-item span {
-                width: auto;
-                opacity: 1;
-                visibility: visible;
-            }
-            .sidebar-toggle {
-                display: none; /* Hide desktop toggle on smaller screens */
-            }
-            .mobile-sidebar-toggle {
-                display: flex; /* Show mobile toggle */
+            .sidebar:not(.show-mobile) {
                 position: fixed;
-                top: 1.5rem;
-                left: 1.5rem;
-                z-index: 1001; /* Above sidebar */
-                background: var(--dark-panel);
-                border: 1px solid var(--dark-border);
-                width: 48px;
-                height: 48px;
-                border-radius: 12px;
-                align-items: center;
-                justify-content: center;
-                font-size: 1.5rem;
-                color: var(--text-light);
-                cursor: pointer;
-                transition: all 0.2s ease;
-                box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+                left: -100%;
+                z-index: 1000;
             }
-            .mobile-sidebar-toggle:hover {
-                background: var(--primary-dark);
-                color: var(--text-base);
+
+            .sidebar.show-mobile {
+                left: 0;
+                box-shadow: 0 0 0 100vmax rgba(0, 0, 0, 0.5);
+            }
+
+            .sidebar-toggle {
+                display: none;
+            }
+
+            .mobile-sidebar-toggle {
+                display: flex;
             }
 
             .main-content-wrapper {
-                margin-left: 0 !important; /* Reset margin for smaller screens */
-                padding-top: 5rem; /* Make space for mobile toggle */
-            }
-            .page-header .back-button {
-                position: static; /* Adjust back button for mobile */
-                margin-left: auto;
-                margin-right: auto;
-                margin-bottom: 2rem;
-            }
-            .page-header {
-                padding-top: 1rem;
-            }
-            
-            .card-grid {
-                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+                padding-top: 4rem;
             }
         }
 
         @media (max-width: 768px) {
             .main-content-wrapper {
-                padding: 2rem 1rem;
+                padding: 4rem 1rem 1rem;
             }
+
             .page-header h1 {
-                font-size: 2rem;
+                font-size: 1.5rem;
             }
-            .page-header p {
-                font-size: 1rem;
-            }
+
             .stats-bar {
                 flex-direction: column;
-                gap: 1.5rem;
+                gap: 1rem;
             }
+
             .stat-item:not(:last-child)::after {
                 display: none;
             }
+
             .card-grid {
                 grid-template-columns: 1fr;
-            }
-            .main-card, .sub-card {
-                padding: 1.5rem;
-            }
-            .icon-box {
-                width: 60px;
-                height: 60px;
-            }
-            .card-icon {
-                font-size: 1.8rem;
-            }
-            .sub-icon-box {
-                width: 50px;
-                height: 50px;
-            }
-            .sub-card-icon {
-                font-size: 1.5rem;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Background Layer -->
-    <div class="bg-layer">
-        <div class="gradient-bg"></div>
-        <div class="mesh-gradient"></div>
-        <div class="orb orb-1"></div>
-        <div class="orb orb-2"></div>
-        <div class="orb orb-3"></div>
-    </div>
-
-    <!-- Mobile Sidebar Toggle (Hamburger Menu) -->
-    <div class="mobile-sidebar-toggle d-lg-none" onclick="toggleMobileSidebar()">
+    <!-- Mobile Sidebar Toggle -->
+    <div class="mobile-sidebar-toggle" onclick="toggleMobileSidebar()">
         <i class="bi bi-list"></i>
     </div>
 
@@ -969,16 +686,16 @@
                     <i class="bi bi-clipboard-data-fill"></i>
                     <span>PMS</span>
                 </a>
-                <a href="#" class="sidebar-nav-item" data-page="test-page">
-                    <i class="bi bi-gear-fill"></i>
+                <a href="#" class="sidebar-nav-item" data-page="hr-page">
+                    <i class="bi bi-people"></i>
                     <span>HR</span>
                 </a>
             </nav>
         </aside>
 
-        <!-- Main Content Wrapper -->
-        <main class="main-content-wrapper" id="mainContentWrapper">
-            <!-- Home Screen (Dashboard Overview) -->
+        <!-- Main Content -->
+        <main class="main-content-wrapper">
+            <!-- Home Screen -->
             <div id="home" class="content active-content">
                 <div class="page-header">
                     <h1>Yajur Automation</h1>
@@ -1000,20 +717,17 @@
                 </div>
 
                 <div class="card-grid">
-                    <div class="main-card" onclick="showContent('task-delegation-page', 'Task Delegation')">
+                    <div class="main-card" onclick="showContent('task-delegation-page')">
                         <div class="card-header">
                             <div class="icon-box">
                                 <i class="bi bi-people-fill card-icon"></i>
                             </div>
                             <div class="card-body">
                                 <h3 class="card-title">Task Delegation</h3>
-                                <div class="card-meta">
-                                    
-                                </div>
+                                <span class="badge">Workflow</span>
                             </div>
                         </div>
 
-                        <!-- NEW CONTENT FOR TASK DELEGATION CARD -->
                         <div class="task-summary-grid">
                             <div class="task-summary-item">
                                 <span class="label">Total Tasks</span>
@@ -1028,7 +742,6 @@
                                 <span class="value" id="totalDone">...</span>
                             </div>
                         </div>
-                        <!-- END NEW CONTENT -->
 
                         <div class="card-footer">
                             <span class="card-link">
@@ -1037,20 +750,17 @@
                         </div>
                     </div>
 
-                    <div class="main-card" onclick="showContent('check-list-page', 'Check List')">
+                    <div class="main-card" onclick="showContent('check-list-page')">
                         <div class="card-header">
                             <div class="icon-box">
                                 <i class="bi bi-list-check card-icon"></i>
                             </div>
                             <div class="card-body">
                                 <h3 class="card-title">Check List</h3>
-                                <div class="card-meta">
-                                    <span class="badge">Quality</span>
-                                </div>
+                                <span class="badge">Quality</span>
                             </div>
                         </div>
 
-                        <!-- NEW CONTENT FOR CHECK LIST CARD -->
                         <div class="task-summary-grid">
                             <div class="task-summary-item">
                                 <span class="label">Total Checks</span>
@@ -1065,28 +775,25 @@
                                 <span class="value" id="doneChecks">...</span>
                             </div>
                         </div>
-                        <!-- END NEW CONTENT -->
-                        
+
                         <div class="card-footer">
                             <span class="card-link">
                                 Explore Module <i class="bi bi-arrow-right"></i>
                             </span>
                         </div>
                     </div>
-                    <div class="main-card" onclick="showContent('fms-page', 'FMS')">
+
+                    <div class="main-card" onclick="showContent('fms-page')">
                         <div class="card-header">
                             <div class="icon-box">
                                 <i class="bi bi-folder-fill card-icon"></i>
                             </div>
                             <div class="card-body">
                                 <h3 class="card-title">FMS</h3>
-                                <div class="card-meta">
-                                    <span class="badge">Storage</span>
-                                </div>
+                                <span class="badge">Storage</span>
                             </div>
                         </div>
 
-                        <!-- NEW CONTENT FOR FMS CARD -->
                         <div class="task-summary-grid">
                             <div class="task-summary-item">
                                 <span class="label">Total Files</span>
@@ -1101,8 +808,7 @@
                                 <span class="value" id="freeSpace">...</span>
                             </div>
                         </div>
-                        <!-- END NEW CONTENT -->
-                        
+
                         <div class="card-footer">
                             <span class="card-link">
                                 Explore Module <i class="bi bi-arrow-right"></i>
@@ -1110,19 +816,17 @@
                         </div>
                     </div>
 
-                    <div class="main-card" onclick="showContent('ims-page', 'IMS')">
+                    <div class="main-card" onclick="showContent('ims-page')">
                         <div class="card-header">
                             <div class="icon-box">
                                 <i class="bi bi-database-fill card-icon"></i>
                             </div>
                             <div class="card-body">
                                 <h3 class="card-title">IMS</h3>
-                                <div class="card-meta">
-                                    <span class="badge">Inventory</span>
-                                </div>
+                                <span class="badge">Inventory</span>
                             </div>
                         </div>
-                        
+
                         <div class="card-footer">
                             <span class="card-link">
                                 Explore Module <i class="bi bi-arrow-right"></i>
@@ -1130,19 +834,17 @@
                         </div>
                     </div>
 
-                    <div class="main-card" onclick="showContent('pms-page', 'PMS')">
+                    <div class="main-card" onclick="showContent('pms-page')">
                         <div class="card-header">
                             <div class="icon-box">
                                 <i class="bi bi-clipboard-data-fill card-icon"></i>
                             </div>
                             <div class="card-body">
                                 <h3 class="card-title">PMS</h3>
-                                <div class="card-meta">
-                                    <span class="badge">Projects</span>
-                                </div>
+                                <span class="badge">Projects</span>
                             </div>
                         </div>
-                        
+
                         <div class="card-footer">
                             <span class="card-link">
                                 Explore Module <i class="bi bi-arrow-right"></i>
@@ -1150,19 +852,17 @@
                         </div>
                     </div>
 
-                    <div class="main-card" onclick="showContent('test-page', 'TEST')">
+                    <div class="main-card" onclick="showContent('hr-page')">
                         <div class="card-header">
                             <div class="icon-box">
-                                <i class="bi bi-gear-fill card-icon"></i>
+                                <i class="bi bi-people card-icon"></i>
                             </div>
                             <div class="card-body">
                                 <h3 class="card-title">HR</h3>
-                                <div class="card-meta">
-                                    <span class="badge">QA</span>
-                                </div>
+                                <span class="badge">Resources</span>
                             </div>
                         </div>
-                        
+
                         <div class="card-footer">
                             <span class="card-link">
                                 Explore Module <i class="bi bi-arrow-right"></i>
@@ -1184,20 +884,20 @@
                 </div>
 
                 <div class="card-grid">
-                    <div class="sub-card" onclick="showContent('add-new-task-page', 'Add New Task')">
+                    <div class="sub-card" onclick="showContent('add-new-task-page')">
                         <div class="sub-icon-box">
                             <i class="bi bi-plus-circle-fill sub-card-icon"></i>
                         </div>
                         <h4 class="sub-card-title">Add New Task</h4>
-                        
+                        <p class="sub-card-description">Create and assign new tasks</p>
                     </div>
 
-                    <div class="sub-card" onclick="showContent('doer-response-page', 'Doer Response')">
+                    <div class="sub-card" onclick="showContent('doer-response-page')">
                         <div class="sub-icon-box">
                             <i class="bi bi-chat-dots-fill sub-card-icon"></i>
                         </div>
                         <h4 class="sub-card-title">Doer Response</h4>
-                       
+                        <p class="sub-card-description">View task responses and updates</p>
                     </div>
 
                     <a href="https://script.google.com/macros/s/AKfycbyVYyB9JhtXbnGJlOvvmfQaM_sQbwAe17Q4L0KxmfcFfrN5PUY-meQ-Fg7YG0PpiZU7/exec" class="sub-card" target="_blank">
@@ -1205,7 +905,7 @@
                             <i class="bi bi-person-gear sub-card-icon"></i>
                         </div>
                         <h4 class="sub-card-title">Delegation Master</h4>
-                        
+                        <p class="sub-card-description">Master delegation controls</p>
                     </a>
 
                     <a href="https://script.google.com/a/macros/yajurfibres.com/s/AKfycbzTDp0TZtM8sJEii0TtH4DaMpPOroJzV7hgo9JFWVFOpQqSx4UQSAjHopT_5y0trS2N/exec" class="sub-card" target="_blank">
@@ -1213,7 +913,7 @@
                             <i class="bi bi-person-plus-fill sub-card-icon"></i>
                         </div>
                         <h4 class="sub-card-title">Add Doer</h4>
-                       
+                        <p class="sub-card-description">Add team members and doers</p>
                     </a>
 
                     <a href="https://script.google.com/macros/s/AKfycbw0ThwIThQ0L2yD9G6LwjolRkyr4psJzyFhNf0BeeVw3tYIQnevJMKo-3Gphm6Nmy2G/exec" class="sub-card" target="_blank">
@@ -1221,7 +921,7 @@
                             <i class="bi bi-graph-up-arrow sub-card-icon"></i>
                         </div>
                         <h4 class="sub-card-title">Score Card</h4>
-                        
+                        <p class="sub-card-description">Performance tracking and metrics</p>
                     </a>
                 </div>
             </div>
@@ -1243,7 +943,7 @@
                             <i class="bi bi-plus-circle sub-card-icon"></i>
                         </div>
                         <h4 class="sub-card-title">Create Task</h4>
-                        
+                        <p class="sub-card-description">Launch the task creation tool</p>
                         <div class="action-badge">
                             <i class="bi bi-box-arrow-up-right"></i>
                             <span>Launch Tool</span>
@@ -1260,7 +960,7 @@
                         <span>Back</span>
                     </a>
                     <h1>Doer Response</h1>
-                    
+                    <p>Track and manage team responses</p>
                 </div>
 
                 <div class="card-grid">
@@ -1269,7 +969,7 @@
                             <i class="bi bi-chat-left-text sub-card-icon"></i>
                         </div>
                         <h4 class="sub-card-title">L1 Response Tracking</h4>
-                       
+                        <p class="sub-card-description">Level 1 response monitoring</p>
                     </a>
 
                     <div class="sub-card">
@@ -1277,45 +977,48 @@
                             <i class="bi bi-clock-history sub-card-icon"></i>
                         </div>
                         <h4 class="sub-card-title">All Level Status Updates</h4>
-                        
+                        <p class="sub-card-description">Comprehensive status tracking</p>
                     </div>
                 </div>
             </div>
 
-           <!-- Check List Page -->
-<div id="check-list-page" class="content">
-    <div class="page-header">
-        <a href="#" class="back-button" onclick="goBack(); return false;">
-            <i class="bi bi-arrow-left"></i>
-            <span>Back to Dashboard</span>
-        </a>
-        <h1>Check List</h1>
-        <p>Manage and track completion of all checklists</p>
-    </div>
+            <!-- Check List Page -->
+            <div id="check-list-page" class="content">
+                <div class="page-header">
+                    <a href="#" class="back-button" onclick="goBack(); return false;">
+                        <i class="bi bi-arrow-left"></i>
+                        <span>Back to Dashboard</span>
+                    </a>
+                    <h1>Check List</h1>
+                    <p>Manage and track completion of all checklists</p>
+                </div>
 
-    <div class="card-grid">
-        <a href="https://script.google.com/macros/s/AKfycbwMKiKrNvWAqDuLBRGnWB97_vcIlhLKJiyUFguSUQOeetM6d6ai3quXphmSvug8SnJyFw/exec" class="sub-card" target="_blank">
-            <div class="sub-icon-box">
-                <i class="bi bi-chat-left-text sub-card-icon"></i>
-            </div>
-            <h4 class="sub-card-title">Master</h4>
-        </a>
+                <div class="card-grid">
+                    <a href="https://script.google.com/macros/s/AKfycbwMKiKrNvWAqDuLBRGnWB97_vcIlhLKJiyUFguSUQOeetM6d6ai3quXphmSvug8SnJyFw/exec" class="sub-card" target="_blank">
+                        <div class="sub-icon-box">
+                            <i class="bi bi-file-earmark-text sub-card-icon"></i>
+                        </div>
+                        <h4 class="sub-card-title">Master</h4>
+                        <p class="sub-card-description">Checklist master management</p>
+                    </a>
 
-        <a href="https://script.google.com/macros/s/AKfycbzSBJ6j0aSUNFOjuwlMbBCJWQdldtLYxagDZVbOF67BzAX2fHTPweFrGRt10sa7T70RHQ/exec" class="sub-card" target="_blank">
-            <div class="sub-icon-box">
-                <i class="bi bi-chat-left-text sub-card-icon"></i>
-            </div>
-            <h4 class="sub-card-title">Respose</h4>
-        </a>
+                    <a href="https://script.google.com/macros/s/AKfycbzSBJ6j0aSUNFOjuwlMbBCJWQdldtLYxagDZVbOF67BzAX2fHTPweFrGRt10sa7T70RHQ/exec" class="sub-card" target="_blank">
+                        <div class="sub-icon-box">
+                            <i class="bi bi-reply-fill sub-card-icon"></i>
+                        </div>
+                        <h4 class="sub-card-title">Response</h4>
+                        <p class="sub-card-description">Checklist responses and submissions</p>
+                    </a>
 
-        <a href="https://script.google.com/macros/s/AKfycbwHji23MFxT56TRvrT3poSbB3lDSlCtlyOssTMNRfgSoeVsIc835N01PWgmjGMloDn6/exec" class="sub-card" target="_blank">
-            <div class="sub-icon-box">
-                <i class="bi bi-chat-left-text sub-card-icon"></i>
+                    <a href="https://script.google.com/macros/s/AKfycbwHji23MFxT56TRvrT3poSbB3lDSlCtlyOssTMNRfgSoeVsIc835N01PWgmjGMloDn6/exec" class="sub-card" target="_blank">
+                        <div class="sub-icon-box">
+                            <i class="bi bi-trophy sub-card-icon"></i>
+                        </div>
+                        <h4 class="sub-card-title">Score</h4>
+                        <p class="sub-card-description">Performance scores and ratings</p>
+                    </a>
+                </div>
             </div>
-            <h4 class="sub-card-title">Score</h4>
-        </a>
-    </div>
-</div>
 
             <!-- FMS Page -->
             <div id="fms-page" class="content">
@@ -1334,7 +1037,7 @@
                             <i class="bi bi-cloud-upload sub-card-icon"></i>
                         </div>
                         <h4 class="sub-card-title">Upload Files</h4>
-                        
+                        <p class="sub-card-description">Upload and manage documents</p>
                     </div>
 
                     <div class="sub-card">
@@ -1342,7 +1045,7 @@
                             <i class="bi bi-folder-symlink sub-card-icon"></i>
                         </div>
                         <h4 class="sub-card-title">Organize</h4>
-                        
+                        <p class="sub-card-description">Organize files and folders</p>
                     </div>
 
                     <div class="sub-card">
@@ -1350,7 +1053,7 @@
                             <i class="bi bi-search sub-card-icon"></i>
                         </div>
                         <h4 class="sub-card-title">Search & Find</h4>
-                        
+                        <p class="sub-card-description">Quickly locate files</p>
                     </div>
                 </div>
             </div>
@@ -1372,7 +1075,7 @@
                             <i class="bi bi-box-seam sub-card-icon"></i>
                         </div>
                         <h4 class="sub-card-title">Stock Management</h4>
-                        
+                        <p class="sub-card-description">Monitor inventory levels</p>
                     </div>
 
                     <div class="sub-card">
@@ -1380,7 +1083,7 @@
                             <i class="bi bi-arrow-left-right sub-card-icon"></i>
                         </div>
                         <h4 class="sub-card-title">Transactions</h4>
-                        
+                        <p class="sub-card-description">Track inventory movements</p>
                     </div>
 
                     <div class="sub-card">
@@ -1388,7 +1091,7 @@
                             <i class="bi bi-clipboard-data sub-card-icon"></i>
                         </div>
                         <h4 class="sub-card-title">Reports</h4>
-                        
+                        <p class="sub-card-description">Generate inventory reports</p>
                     </div>
                 </div>
             </div>
@@ -1410,7 +1113,7 @@
                             <i class="bi bi-kanban sub-card-icon"></i>
                         </div>
                         <h4 class="sub-card-title">Project Planning</h4>
-                        
+                        <p class="sub-card-description">Plan and structure projects</p>
                     </div>
 
                     <div class="sub-card">
@@ -1418,7 +1121,7 @@
                             <i class="bi bi-calendar-event sub-card-icon"></i>
                         </div>
                         <h4 class="sub-card-title">Timeline</h4>
-                        
+                        <p class="sub-card-description">View project schedules</p>
                     </div>
 
                     <div class="sub-card">
@@ -1426,151 +1129,110 @@
                             <i class="bi bi-people sub-card-icon"></i>
                         </div>
                         <h4 class="sub-card-title">Team Management</h4>
-                        
+                        <p class="sub-card-description">Manage project teams</p>
                     </div>
                 </div>
             </div>
 
-            <!-- TEST Page -->
-           <div id="test-page" class="content">
-    <div class="page-header">
-        <a href="#" class="back-button" onclick="goBack(); return false;">
-            <i class="bi bi-arrow-left"></i>
-            <span>Back to Dashboard</span>
-        </a>
-        <h3>HR Dashboard</h3>
-        
+            <!-- HR Page -->
+            <div id="hr-page" class="content">
+                <div class="page-header">
+                    <a href="#" class="back-button" onclick="goBack(); return false;">
+                        <i class="bi bi-arrow-left"></i>
+                        <span>Back to Dashboard</span>
+                    </a>
+                    <h1>HR Dashboard</h1>
+                    <p>Human resources management and employee services</p>
+                </div>
+
+                <div class="card-grid">
+                    <div class="sub-card">
+                        <div class="sub-icon-box">
+                            <i class="bi bi-person-plus sub-card-icon"></i>
+                        </div>
+                        <h4 class="sub-card-title">Hiring</h4>
+                        <p class="sub-card-description">Recruitment and onboarding</p>
+                    </div>
+
+                    <div class="sub-card">
+                        <div class="sub-icon-box">
+                            <i class="bi bi-exclamation-triangle sub-card-icon"></i>
+                        </div>
+                        <h4 class="sub-card-title">Complaints</h4>
+                        <p class="sub-card-description">Employee complaint management</p>
+                    </div>
+
+                    <div class="sub-card">
+                        <div class="sub-icon-box">
+                            <i class="bi bi-clipboard-check sub-card-icon"></i>
+                        </div>
+                        <h4 class="sub-card-title">Checklist</h4>
+                        <p class="sub-card-description">HR process checklists</p>
+                    </div>
+
+                    <div class="sub-card">
+                        <div class="sub-icon-box">
+                            <i class="bi bi-door-open sub-card-icon"></i>
+                        </div>
+                        <h4 class="sub-card-title">Gate Pass</h4>
+                        <p class="sub-card-description">Gate pass management</p>
+                    </div>
+
+                    <div class="sub-card">
+                        <div class="sub-icon-box">
+                            <i class="bi bi-person-badge sub-card-icon"></i>
+                        </div>
+                        <h4 class="sub-card-title">Visitor Pass</h4>
+                        <p class="sub-card-description">Visitor registration and tracking</p>
+                    </div>
+
+                    <a href="https://script.google.com/a/macros/yajurfibres.com/s/AKfycbyVgq9YqhziZNKbkhOjyWkPIsAx-cDCf1Z5_whYIct2Zg6n7ZJuYYg6ZMimtk8czfj98A/exec" class="sub-card" target="_blank">
+                        <div class="sub-icon-box">
+                            <i class="bi bi-calendar-x sub-card-icon"></i>
+                        </div>
+                        <h4 class="sub-card-title">Leave Application</h4>
+                        <p class="sub-card-description">Submit and manage leave requests</p>
+                    </a>
+
+                    <div class="sub-card">
+                        <div class="sub-icon-box">
+                            <i class="bi bi-fuel-pump sub-card-icon"></i>
+                        </div>
+                        <h4 class="sub-card-title">Vehicle Refueling</h4>
+                        <p class="sub-card-description">Vehicle fuel management</p>
+                    </div>
+
+                    <div class="sub-card">
+                        <div class="sub-icon-box">
+                            <i class="bi bi-people-fill sub-card-icon"></i>
+                        </div>
+                        <h4 class="sub-card-title">Lineup Manpower</h4>
+                        <p class="sub-card-description">Staff scheduling and lineup</p>
+                    </div>
+
+                    <div class="sub-card">
+                        <div class="sub-icon-box">
+                            <i class="bi bi-calendar-event sub-card-icon"></i>
+                        </div>
+                        <h4 class="sub-card-title">HR Committee Meeting</h4>
+                        <p class="sub-card-description">Schedule and manage HR meetings</p>
+                    </div>
+                </div>
+            </div>
+        </main>
     </div>
 
-    <div class="card-grid">
-        <div class="sub-card">
-            <div class="sub-icon-box">
-                <i class="bi bi-bug sub-card-icon"></i>
-            </div>
-            <h4 class="sub-card-title">HIRING</h4>
-        </div>
-
-        <div class="sub-card">
-            <div class="sub-icon-box">
-                <i class="bi bi-check-all sub-card-icon"></i>
-            </div>
-            <h4 class="sub-card-title">COMPLAINTS</h4>
-        </div>
-
-        <div class="sub-card">
-            <div class="sub-icon-box">
-                <i class="bi bi-clipboard-check sub-card-icon"></i>
-            </div>
-            <h4 class="sub-card-title">CHECKLIST</h4>
-        </div>
-
-        <div class="sub-card">
-            <div class="sub-icon-box">
-                <i class="bi bi-bug sub-card-icon"></i>
-            </div>
-            <h4 class="sub-card-title">GATEPASS</h4>
-        </div>
-
-        <div class="sub-card">
-            <div class="sub-icon-box">
-                <i class="bi bi-check-all sub-card-icon"></i>
-            </div>
-            <h4 class="sub-card-title">VISITOR PASS</h4>
-        </div>
-
-        <a href="https://script.google.com/a/macros/yajurfibres.com/s/AKfycbyVgq9YqhziZNKbkhOjyWkPIsAx-cDCf1Z5_whYIct2Zg6n7ZJuYYg6ZMimtk8czfj98A/exec" target="_blank" style="text-decoration: none; color: inherit;">
-    <div class="sub-card">
-        <div class="sub-icon-box">
-            <i class="bi bi-clipboard-check sub-card-icon"></i>
-        </div>
-        <h4 class="sub-card-title">LEAVE APPLICATION</h4>
-    </div>
-</a>
-
-        <div class="sub-card">
-            <div class="sub-icon-box">
-                <i class="bi bi-bug sub-card-icon"></i>
-            </div>
-            <h4 class="sub-card-title">VEHICLE REFULING</h4>
-        </div>
-
-        <div class="sub-card">
-            <div class="sub-icon-box">
-                <i class="bi bi-check-all sub-card-icon"></i>
-            </div>
-            <h4 class="sub-card-title">LINEUP MANPOWER</h4>
-        </div>
-
-        <div class="sub-card">
-            <div class="sub-icon-box">
-                <i class="bi bi-clipboard-check sub-card-icon"></i>
-            </div>
-            <h4 class="sub-card-title">HR COMMITTEE MEETING</h4>
-        </div>
-    </div>
-</div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
     <script>
-        // Global variables
         let pageHistory = ['home'];
 
-        // Create floating particles
-        function createParticles() {
-            const bgLayer = document.querySelector('.bg-layer');
-            const particleCount = 40;
-            
-            for (let i = 0; i < particleCount; i++) {
-                const particle = document.createElement('div');
-                particle.className = 'particle';
-                
-                const size = Math.random() * 3 + 2;
-                particle.style.width = size + 'px';
-                particle.style.height = size + 'px';
-                particle.style.left = Math.random() * 100 + '%';
-                particle.style.bottom = '-10px';
-                
-                const duration = Math.random() * 15 + 15;
-                const delay = Math.random() * 10;
-                
-                particle.style.animation = `particleRise ${duration}s ${delay}s infinite linear`;
-                
-                bgLayer.appendChild(particle);
-            }
-        }
-
-        // Particle rise animation
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes particleRise {
-                0% {
-                    transform: translateY(0) translateX(0);
-                    opacity: 0;
-                }
-                10% {
-                    opacity: 1;
-                }
-                90% {
-                    opacity: 0.8;
-                }
-                100% {
-                    transform: translateY(-100vh) translateX(${Math.random() * 200 - 100}px);
-                    opacity: 0;
-                }
-            }
-        `;
-        document.head.appendChild(style);
-
-        // Function to show content
         function showContent(pageId) {
             document.querySelectorAll('.content').forEach(page => {
-                page.style.display = 'none';
                 page.classList.remove('active-content');
             });
 
             const targetPage = document.getElementById(pageId);
             if (targetPage) {
-                targetPage.style.display = 'block';
                 targetPage.classList.add('active-content');
                 if (pageHistory[pageHistory.length - 1] !== pageId) {
                     pageHistory.push(pageId);
@@ -1578,7 +1240,6 @@
                 window.scrollTo({ top: 0, behavior: 'smooth' });
                 updateSidebarActiveState(pageId);
                 
-                // Hide mobile sidebar if open
                 const sidebar = document.getElementById('sidebar');
                 if (sidebar.classList.contains('show-mobile')) {
                     sidebar.classList.remove('show-mobile');
@@ -1586,7 +1247,6 @@
             }
         }
 
-        // Function to go back
         function goBack() {
             if (pageHistory.length > 1) {
                 pageHistory.pop();
@@ -1595,7 +1255,6 @@
             showContent(previousPageId);
         }
 
-        // Update sidebar active state
         function updateSidebarActiveState(activePageId) {
             document.querySelectorAll('.sidebar-nav-item').forEach(item => {
                 item.classList.remove('active');
@@ -1606,126 +1265,65 @@
             }
         }
 
-        // Fetch data from Google Sheets Task Deligation
         function fetchTaskData() {
-            const sheetId = '1aq7CXHNkpkWoJLhTDWkYG9CrszsRAY0v4ssWZC6fYE';
-            const sheetName = 'Task-Data';
-            const range = 'A2:C2';
-            const apiKey = 'AIzaSyAwQurEi5hiTD8ZV1Pf6DFXc8PmTTMGi68';
-
             const url = `https://sheets.googleapis.com/v4/spreadsheets/1aq7CXHNkpkWoJLhTDWkYG9CrszsRAY0v4sswWZC6fYE/values/Task-Data!A2:C2?key=AIzaSyAriKmI0OQAzmO3uH3EAK7598TkQBYT52I`;
 
             fetch(url)
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! status: ${response.status}`);
-                    }
-                    return response.json();
-                })
+                .then(response => response.json())
                 .then(data => {
-                    console.log('Google Sheets API Response:', data);
-                    
                     if (data.values && data.values.length > 0) {
                         const row = data.values[0];
                         document.getElementById('totalTasks').innerText = row[0] || '0';
                         document.getElementById('totalPending').innerText = row[1] || '0';
                         document.getElementById('totalDone').innerText = row[2] || '0';
-                    } else {
-                        console.log('No data found in the specified range.');
-                        document.getElementById('totalTasks').innerText = 'N/A';
-                        document.getElementById('totalPending').innerText = 'N/A';
-                        document.getElementById('totalDone').innerText = 'N/A';
                     }
                 })
                 .catch(error => {
-                    console.error('Error fetching data from Google Sheets:', error);
-                    document.getElementById('totalTasks').innerText = 'Error';
-                    document.getElementById('totalPending').innerText = 'Error';
-                    document.getElementById('totalDone').innerText = 'Error';
-                    
-                    // Fallback to static data if API fails
-                    setTimeout(() => {
-                        document.getElementById('totalTasks').innerText = '12';
-                        document.getElementById('totalPending').innerText = '5';
-                        document.getElementById('totalDone').innerText = '7';
-                    }, 2000);
+                    console.error('Error fetching task data:', error);
+                    document.getElementById('totalTasks').innerText = '12';
+                    document.getElementById('totalPending').innerText = '5';
+                    document.getElementById('totalDone').innerText = '7';
                 });
         }
 
-        // Fetch data from Google Sheets Check List
         function fetchCheckListData() {
             const url = `https://sheets.googleapis.com/v4/spreadsheets/1fGudRr5zZy_3qDGloCptok3VtXbR3L5pK1fBHC4tb8c/values/Task-Data!A2:C2?key=AIzaSyAriKmI0OQAzmO3uH3EAK7598TkQBYT52I`;
 
             fetch(url)
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! status: ${response.status}`);
-                    }
-                    return response.json();
-                })
+                .then(response => response.json())
                 .then(data => {
-                    console.log('Check List API Response:', data);
-                    
                     if (data.values && data.values.length > 0) {
                         const row = data.values[0];
                         document.getElementById('totalChecks').innerText = row[0] || '0';
                         document.getElementById('pendingChecks').innerText = row[1] || '0';
                         document.getElementById('doneChecks').innerText = row[2] || '0';
-                    } else {
-                        console.log('No data found in the specified range.');
-                        document.getElementById('totalChecks').innerText = 'N/A';
-                        document.getElementById('pendingChecks').innerText = 'N/A';
-                        document.getElementById('doneChecks').innerText = 'N/A';
                     }
                 })
                 .catch(error => {
-                    console.error('Error fetching check list data from Google Sheets:', error);
-                    document.getElementById('totalChecks').innerText = 'Error';
-                    document.getElementById('pendingChecks').innerText = 'Error';
-                    document.getElementById('doneChecks').innerText = 'Error';
-                    
-                    // Fallback to static data if API fails
-                    setTimeout(() => {
-                        document.getElementById('totalChecks').innerText = '8';
-                        document.getElementById('pendingChecks').innerText = '3';
-                        document.getElementById('doneChecks').innerText = '5';
-                    }, 2000);
+                    console.error('Error fetching checklist data:', error);
+                    document.getElementById('totalChecks').innerText = '8';
+                    document.getElementById('pendingChecks').innerText = '3';
+                    document.getElementById('doneChecks').innerText = '5';
                 });
         }
 
-        // Mobile Sidebar Toggle
+        function fetchFMSData() {
+            document.getElementById('totalFiles').innerText = '156';
+            document.getElementById('usedSpace').innerText = '2.4GB';
+            document.getElementById('freeSpace').innerText = '7.6GB';
+        }
+
         function toggleMobileSidebar() {
             const sidebar = document.getElementById('sidebar');
             sidebar.classList.toggle('show-mobile');
         }
 
-        // Collapse sidebar initially on screens smaller than 1200px
-        function checkSidebarCollapse() {
-            const sidebar = document.getElementById('sidebar');
-            const sidebarToggle = document.getElementById('sidebarToggle');
-            if (window.innerWidth <= 1200) {
-                sidebar.classList.add('collapsed');
-                if (sidebarToggle) {
-                    sidebarToggle.querySelector('i').classList.remove('bi-chevron-left');
-                    sidebarToggle.querySelector('i').classList.add('bi-chevron-right');
-                }
-            } else {
-                sidebar.classList.remove('collapsed');
-                if (sidebarToggle) {
-                    sidebarToggle.querySelector('i').classList.remove('bi-chevron-right');
-                    sidebarToggle.querySelector('i').classList.add('bi-chevron-left');
-                }
-            }
-        }
-
-        // Initialize everything when DOM is loaded
-         document.addEventListener('DOMContentLoaded', () => {
-            createParticles();
+        document.addEventListener('DOMContentLoaded', () => {
             showContent('home');
-            fetchTaskData(); 
+            fetchTaskData();
             fetchCheckListData();
+            fetchFMSData();
 
-            // Attach event listeners to sidebar navigation items
             document.querySelectorAll('.sidebar-nav-item').forEach(item => {
                 item.addEventListener('click', (event) => {
                     event.preventDefault();
@@ -1734,22 +1332,18 @@
                 });
             });
 
-            // Sidebar Toggle functionality for desktop
             const sidebarToggle = document.getElementById('sidebarToggle');
             const sidebar = document.getElementById('sidebar');
 
             if (sidebarToggle) {
                 sidebarToggle.addEventListener('click', () => {
                     sidebar.classList.toggle('collapsed');
-                    sidebarToggle.querySelector('i').classList.toggle('bi-chevron-left');
-                    sidebarToggle.querySelector('i').classList.toggle('bi-chevron-right');
+                    const icon = sidebarToggle.querySelector('i');
+                    icon.classList.toggle('bi-chevron-left');
+                    icon.classList.toggle('bi-chevron-right');
                 });
             }
         });
-
-        // Run on load and resize
-        window.addEventListener('load', checkSidebarCollapse);
-        window.addEventListener('resize', checkSidebarCollapse);
     </script>
 </body>
 </html>
