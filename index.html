@@ -37,6 +37,7 @@
             --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
             --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
             --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
         }
 
         * {
@@ -76,6 +77,7 @@
             overflow-y: auto;
             flex-shrink: 0;
             box-shadow: var(--shadow-sm);
+            z-index: 1000; /* Ensure sidebar is above main content on smaller screens */
         }
 
         .sidebar.collapsed {
@@ -209,6 +211,7 @@
             top: 1.5rem;
             transition: all 0.2s ease;
             box-shadow: var(--shadow-md);
+            z-index: 10; /* Ensure toggle button is above other elements */
         }
 
         .sidebar-toggle:hover {
@@ -608,7 +611,7 @@
             }
 
             .sidebar-toggle {
-                display: none;
+                display: none !important; /* Hide on smaller screens */
             }
 
             .mobile-sidebar-toggle {
@@ -867,13 +870,12 @@
                             <span class="card-link">
                                 Explore Module <i class="bi bi-arrow-right"></i>
                             </span>
-                            </span>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Task Delegation Page - FIX APPLIED HERE -->
+            <!-- Task Delegation Page -->
             <div id="task-delegation-page" class="content">
                 <div class="page-header">
                     <a href="#" class="back-button" onclick="goBack(); return false;">
@@ -884,9 +886,7 @@
                     <p>Manage task assignments and track team performance</p>
                 </div>
 
-                <!-- CORRECTED FIX: Both cards are now inside a single card-grid wrapper -->
                 <div class="card-grid">
-                    <!-- First Card: Delegation Master -->
                     <a href="https://script.google.com/a/macros/yajurfibres.com/s/AKfycbz9Z62yxXqjoOWH7xwv-c9lGjF11e-QCcWBDdjkpqwTnn7qA12eUMULNZhZvfLjJhKv/exec" class="sub-card" target="_blank">
                         <div class="sub-icon-box">
                             <i class="bi bi-person-gear sub-card-icon"></i>
@@ -895,17 +895,23 @@
                         <p class="sub-card-description">Master delegation controls</p>
                     </a>
                     
-                    <!-- Second Card: Delegation Master L1 -->
                     <a href="https://script.google.com/macros/s/AKfycbxHJgKaJKA46c5vqL6v4k8WsPwPt_v3MSfPQAz4XOxr5g3Faq9hy1PEqAL40sTJOo3R/exec" class="sub-card" target="_blank">
                         <div class="sub-icon-box">
-                            <i class="bi bi-person-gear sub-card-icon"></i>
+                            <i class="bi bi-person-check sub-card-icon"></i>
                         </div>
-                        <h4 class="sub-card-title">Delegation Master Manager</h4>
-                        <p class="sub-card-description">Master delegation controls</p>
+                        <h4 class="sub-card-title">Task Master (Manager)</h4>
+                        <p class="sub-card-description">Manage and assign tasks for managers</p>
                     </a>
-                </div> <!-- END single card-grid -->
-            </div> <!-- END #task-delegation-page -->
-                       
+
+                    <a href="https://script.google.com/a/macros/yajurfibres.com/s/AKfycbxsXCoKmk1ob0NJlf8fFT-v4db-9m1Aag7zJ4vmMOUQCwR7QgudD-DZkaA1EnTt8uy-/exec" class="sub-card" target="_blank">
+                        <div class="sub-icon-box">
+                            <i class="bi bi-clipboard-data sub-card-icon"></i>
+                        </div>
+                        <h4 class="sub-card-title">Daily Work</h4>
+                        <p class="sub-card-description">Track daily work and progress</p>
+                    </a>
+                </div> 
+            </div> 
 
             <!-- Check List Page -->
             <div id="check-list-page" class="content">
@@ -923,24 +929,24 @@
                         <div class="sub-icon-box">
                             <i class="bi bi-file-earmark-text sub-card-icon"></i>
                         </div>
-                        <h4 class="sub-card-title">Master</h4>
-                        <p class="sub-card-description">Checklist master management</p>
+                        <h4 class="sub-card-title">Checklist Master</h4>
+                        <p class="sub-card-description">Manage and create new checklists</p>
                     </a>
 
                     <a href="https://script.google.com/macros/s/AKfycbzSBJ6j0aSUNFOjuwlMbBCJWQdldtLYxagDZVbOF67BzAX2fHTPweFrGRt10sa7T70RHQ/exec" class="sub-card" target="_blank">
                         <div class="sub-icon-box">
-                            <i class="bi bi-reply-fill sub-card-icon"></i>
+                            <i class="bi bi-ui-checks sub-card-icon"></i>
                         </div>
-                        <h4 class="sub-card-title">Response</h4>
-                        <p class="sub-card-description">Checklist responses and submissions</p>
+                        <h4 class="sub-card-title">Checklist Response</h4>
+                        <p class="sub-card-description">View and submit checklist responses</p>
                     </a>
 
                     <a href="https://script.google.com/macros/s/AKfycbwHji23MFxT56TRvrT3poSbB3lDSlCtlyOssTMNRfgSoeVsIc835N01PWgmjGMloDn6/exec" class="sub-card" target="_blank">
                         <div class="sub-icon-box">
                             <i class="bi bi-trophy sub-card-icon"></i>
                         </div>
-                        <h4 class="sub-card-title">Score</h4>
-                        <p class="sub-card-description">Performance scores and ratings</p>
+                        <h4 class="sub-card-title">Checklist Score</h4>
+                        <p class="sub-card-description">Review performance scores and ratings</p>
                     </a>
                 </div>
             </div>
@@ -961,24 +967,24 @@
                         <div class="sub-icon-box">
                             <i class="bi bi-cloud-upload sub-card-icon"></i>
                         </div>
-                        <h4 class="sub-card-title">Upload Files</h4>
-                        <p class="sub-card-description">Upload and manage documents</p>
+                        <h4 class="sub-card-title">Upload & Manage Files</h4>
+                        <p class="sub-card-description">Securely upload and manage all your documents</p>
                     </div>
 
                     <div class="sub-card">
                         <div class="sub-icon-box">
                             <i class="bi bi-folder-symlink sub-card-icon"></i>
                         </div>
-                        <h4 class="sub-card-title">Organize</h4>
-                        <p class="sub-card-description">Organize files and folders</p>
+                        <h4 class="sub-card-title">Organize & Categorize</h4>
+                        <p class="sub-card-description">Structure your files and folders efficiently</p>
                     </div>
 
                     <div class="sub-card">
                         <div class="sub-icon-box">
                             <i class="bi bi-search sub-card-icon"></i>
                         </div>
-                        <h4 class="sub-card-title">Search & Find</h4>
-                        <p class="sub-card-description">Quickly locate files</p>
+                        <h4 class="sub-card-title">Search & Retrieve</h4>
+                        <p class="sub-card-description">Quickly locate any file with advanced search</p>
                     </div>
                 </div>
             </div>
@@ -990,29 +996,26 @@
                         <i class="bi bi-arrow-left"></i>
                         <span>Back to Dashboard</span>
                     </a>
-                    <h1>Inventory Management</h1>
-                    <p>Track and manage organizational assets</p>
+                    <h1>Inventory Management System</h1>
+                    <p>Track and manage organizational assets and stock levels</p>
                 </div>
 
                 <div class="card-grid">
-                    <!-- Card 1: Stock Management (Half width) -->
                     <a href="https://script.google.com/a/macros/yajurfibres.com/s/AKfycbze85_ds-xafpBctmntHlxm-3aSAi8wLV-vbl99IvkDVP1pLSPhbXD1FruF6AHlNsBQ/exec" class="sub-card" target="_blank">
                         <div class="sub-icon-box">
                             <i class="bi bi-box-seam sub-card-icon"></i>
                         </div>
                         <h4 class="sub-card-title">Stock Management</h4>
-                        <p class="sub-card-description">Monitor inventory levels</p>
+                        <p class="sub-card-description">Monitor and control your inventory levels</p>
                     </a>
 
-                    <!-- Card 2: Blank/Placeholder Card (Half width) -->
-                    <!-- This placeholder card forces the grid layout to divide the space, making the first card half width. -->
+                    <!-- Placeholder for consistent grid layout -->
                     <div class="sub-card" style="visibility: hidden; pointer-events: none;">
                         <div class="sub-icon-box">
-                            <!-- Placeholder icon (using the reply icon from the initial image) -->
-                            <i class="bi bi-reply-fill sub-card-icon"></i> 
+                            <i class="bi bi-journal sub-card-icon"></i> 
                         </div>
-                        <h4 class="sub-card-title">Placeholder</h4>
-                        <p class="sub-card-description">Hidden to size card 1</p>
+                        <h4 class="sub-card-title">Future Module</h4>
+                        <p class="sub-card-description">More inventory features coming soon!</p>
                     </div>
                 </div>
             </div>
@@ -1024,35 +1027,33 @@
                         <i class="bi bi-arrow-left"></i>
                         <span>Back to Dashboard</span>
                     </a>
-                    <h1>Project Management</h1>
+                    <h1>Project Management System</h1>
                     <p>Monitor projects, milestones, and team coordination</p>
                 </div>
 
                 <div class="card-grid">
-                    <div class="sub-card">
-                            <a href="https://script.google.com/macros/s/AKfycbxoV4BWgt7UckmArLuHLtCheC3U-0c9RpWH7Ru0YoNF3EBO_tqTRsjdhEAMvlt6QP01/exec" class="sub-card" target="_blank">
+                    <a href="https://script.google.com/macros/s/AKfycbxoV4BWgt7UckmArLuHLtCheC3U-0c9RpWH7Ru0YoNF3EBO_tqTRsjdhEAMvlt6QP01/exec" class="sub-card" target="_blank">
                         <div class="sub-icon-box">
-                            <i class="bi bi-reply-fill sub-card-icon"></i>
+                            <i class="bi bi-cash-stack sub-card-icon"></i>
                         </div>
-                        <h4 class="sub-card-title">Yosodha Expense Request</h4>
-                        <p class="sub-card-description">Plan and structure projects</p>
+                        <h4 class="sub-card-title">Expense Request (Yosodha)</h4>
+                        <p class="sub-card-description">Manage and approve expense requests</p>
                     </a>
-                    </div>
 
                     <div class="sub-card">
                         <div class="sub-icon-box">
                             <i class="bi bi-calendar-event sub-card-icon"></i>
                         </div>
-                        <h4 class="sub-card-title">Timeline</h4>
-                        <p class="sub-card-description">View project schedules</p>
+                        <h4 class="sub-card-title">Project Timeline</h4>
+                        <p class="sub-card-description">Visualize project schedules and deadlines</p>
                     </div>
 
                     <div class="sub-card">
                         <div class="sub-icon-box">
                             <i class="bi bi-people sub-card-icon"></i>
                         </div>
-                        <h4 class="sub-card-title">Team Management</h4>
-                        <p class="sub-card-description">Manage project teams</p>
+                        <h4 class="sub-card-title">Team Collaboration</h4>
+                        <p class="sub-card-description">Facilitate communication and team management</p>
                     </div>
                 </div>
             </div>
@@ -1064,8 +1065,8 @@
                         <i class="bi bi-arrow-left"></i>
                         <span>Back to Dashboard</span>
                     </a>
-                    <h1>HR Dashboard</h1>
-                    <p>Human resources management and employee services</p>
+                    <h1>Human Resources Management</h1>
+                    <p>Comprehensive HR solutions for employee services and management</p>
                 </div>
 
                 <div class="card-grid">
@@ -1073,32 +1074,32 @@
                         <div class="sub-icon-box">
                             <i class="bi bi-person-plus sub-card-icon"></i>
                         </div>
-                        <h4 class="sub-card-title">Hiring</h4>
-                        <p class="sub-card-description">Recruitment and onboarding</p>
+                        <h4 class="sub-card-title">Recruitment & Onboarding</h4>
+                        <p class="sub-card-description">Streamline hiring and new employee integration</p>
                     </div>
 
                     <div class="sub-card">
                         <div class="sub-icon-box">
                             <i class="bi bi-exclamation-triangle sub-card-icon"></i>
                         </div>
-                        <h4 class="sub-card-title">Complaints</h4>
-                        <p class="sub-card-description">Employee complaint management</p>
+                        <h4 class="sub-card-title">Complaint Management</h4>
+                        <p class="sub-card-description">Handle employee grievances effectively</p>
                     </div>
 
                     <div class="sub-card">
                         <div class="sub-icon-box">
                             <i class="bi bi-clipboard-check sub-card-icon"></i>
                         </div>
-                        <h4 class="sub-card-title">Checklist</h4>
-                        <p class="sub-card-description">HR process checklists</p>
+                        <h4 class="sub-card-title">HR Process Checklists</h4>
+                        <p class="sub-card-description">Ensure compliance with HR operational checklists</p>
                     </div>
 
                     <div class="sub-card">
                         <div class="sub-icon-box">
                             <i class="bi bi-door-open sub-card-icon"></i>
                         </div>
-                        <h4 class="sub-card-title">Gate Pass</h4>
-                        <p class="sub-card-description">Gate pass management</p>
+                        <h4 class="sub-card-title">Gate Pass System</h4>
+                        <p class="sub-card-description">Manage entry and exit permissions</p>
                     </div>
 
                     <a href="https://script.google.com/a/macros/yajurfibres.com/s/AKfycbyVgq9YqhziZNKbkhOjyWkPIsAx-cDCf1Z5_whYIct2Zg6n7ZJuYYg6ZMimtk8czfj98A/exec" class="sub-card" target="_blank">
@@ -1106,31 +1107,31 @@
                             <i class="bi bi-calendar-x sub-card-icon"></i>
                         </div>
                         <h4 class="sub-card-title">Leave Application</h4>
-                        <p class="sub-card-description">Submit and manage leave requests</p>
+                        <p class="sub-card-description">Submit and track employee leave requests</p>
                     </a>
 
                     <div class="sub-card">
                         <div class="sub-icon-box">
                             <i class="bi bi-fuel-pump sub-card-icon"></i>
                         </div>
-                        <h4 class="sub-card-title">Vehicle Refueling</h4>
-                        <p class="sub-card-description">Vehicle fuel management</p>
+                        <h4 class="sub-card-title">Vehicle Refueling Log</h4>
+                        <p class="sub-card-description">Record and manage company vehicle refueling</p>
                     </div>
 
                     <div class="sub-card">
                         <div class="sub-icon-box">
-                            <i class="bi bi-people-fill sub-card-icon"></i>
+                            <i class="bi bi-person-lines-fill sub-card-icon"></i>
                         </div>
-                        <h4 class="sub-card-title">Lineup Manpower</h4>
-                        <p class="sub-card-description">Staff scheduling and lineup</p>
+                        <h4 class="sub-card-title">Manpower Lineup</h4>
+                        <p class="sub-card-description">Efficiently schedule and manage staff lineups</p>
                     </div>
 
                     <div class="sub-card">
                         <div class="sub-icon-box">
                             <i class="bi bi-calendar-event sub-card-icon"></i>
                         </div>
-                        <h4 class="sub-card-title">HR Committee Meeting</h4>
-                        <p class="sub-card-description">Schedule and manage HR meetings</p>
+                        <h4 class="sub-card-title">HR Committee Meetings</h4>
+                        <p class="sub-card-description">Organize and manage HR committee meetings</p>
                     </div>
                 </div>
             </div>
@@ -1180,49 +1181,23 @@
             }
         }
 
+        // Dummy data fetch functions (replace with actual API calls if needed)
         function fetchTaskData() {
-            const url = `https://sheets.googleapis.com/v4/spreadsheets/1aq7CXHNkpkWoJLhTDWkYG9CrszsRAY0v4sswWZC6fYE/values/Task-Data!A2:C2?key=AIzaSyAriKmI0OQAzmO3uH3EAK7598TkQBYT52I`;
-
-            fetch(url)
-                .then(response => response.json())
-                .then(data => {
-                    if (data.values && data.values.length > 0) {
-                        const row = data.values[0];
-                        document.getElementById('totalTasks').innerText = row[0] || '0';
-                        document.getElementById('totalPending').innerText = row[1] || '0';
-                        document.getElementById('totalDone').innerText = row[2] || '0';
-                    }
-                })
-                .catch(error => {
-                    console.error('Error fetching task data:', error);
-                    document.getElementById('totalTasks').innerText = '12';
-                    document.getElementById('totalPending').innerText = '5';
-                    document.getElementById('totalDone').innerText = '7';
-                });
+            // Replace with actual API call
+            document.getElementById('totalTasks').innerText = '12';
+            document.getElementById('totalPending').innerText = '5';
+            document.getElementById('totalDone').innerText = '7';
         }
 
         function fetchCheckListData() {
-            const url = `https://sheets.googleapis.com/v4/spreadsheets/1fGudRr5zZy_3qDGloCptok3VtXbR3L5pK1fBHC4tb8c/values/Task-Data!A2:C2?key=AIzaSyAriKmI0OQAzmO3uH3EAK7598TkQBYT52I`;
-
-            fetch(url)
-                .then(response => response.json())
-                .then(data => {
-                    if (data.values && data.values.length > 0) {
-                        const row = data.values[0];
-                        document.getElementById('totalChecks').innerText = row[0] || '0';
-                        document.getElementById('pendingChecks').innerText = row[1] || '0';
-                        document.getElementById('doneChecks').innerText = row[2] || '0';
-                    }
-                })
-                .catch(error => {
-                    console.error('Error fetching checklist data:', error);
-                    document.getElementById('totalChecks').innerText = '8';
-                    document.getElementById('pendingChecks').innerText = '3';
-                    document.getElementById('doneChecks').innerText = '5';
-                });
+            // Replace with actual API call
+            document.getElementById('totalChecks').innerText = '8';
+            document.getElementById('pendingChecks').innerText = '3';
+            document.getElementById('doneChecks').innerText = '5';
         }
 
         function fetchFMSData() {
+            // Replace with actual API call
             document.getElementById('totalFiles').innerText = '156';
             document.getElementById('usedSpace').innerText = '2.4GB';
             document.getElementById('freeSpace').innerText = '7.6GB';
@@ -1262,4 +1237,3 @@
     </script>
 </body>
 </html>
-
