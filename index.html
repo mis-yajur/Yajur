@@ -4,8 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Yajur Automation - Enterprise Dashboard</title>
+    
+    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+    
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -671,7 +680,7 @@
                 </a>
                 <a href="#" class="sidebar-nav-item" data-page="task-delegation-page">
                     <i class="bi bi-people-fill"></i>
-                    <span>Task Management</span>
+                    <span>Task Delegation</span>
                 </a>
                 <a href="#" class="sidebar-nav-item" data-page="check-list-page">
                     <i class="bi bi-list-check"></i>
@@ -693,6 +702,10 @@
                     <i class="bi bi-people"></i>
                     <span>HR</span>
                 </a>
+                <a href="#" class="sidebar-nav-item" data-page="production-page">
+                    <i class="bi bi-gear-fill"></i>
+                    <span>Production</span>
+                </a>
             </nav>
         </aside>
 
@@ -701,9 +714,9 @@
             <!-- Home Screen -->
             <div id="home" class="content active-content">
                 <div class="page-header">
-                    <h1>Yajur Automation</h1>
-                    <p>Enterprise Workflow Management Platform Overview</p>
-                    <div class="stats-bar">
+                    <h1 class="text-3xl font-bold text-gray-900">Yajur Automation</h1>
+                    <p class="text-lg text-gray-600 mt-2">Enterprise Workflow Management Platform Overview</p>
+                    <div class="stats-bar mt-6">
                         <div class="stat-item">
                             <div class="stat-value">6</div>
                             <div class="stat-label">Active Modules</div>
@@ -882,8 +895,8 @@
                         <i class="bi bi-arrow-left"></i>
                         <span>Back to Dashboard</span>
                     </a>
-                    <h1>Task Delegation</h1>
-                    <p>Manage task assignments and track team performance</p>
+                    <h1 class="text-3xl font-bold text-gray-900">Task Delegation</h1>
+                    <p class="text-lg text-gray-600 mt-2">Manage task assignments and track team performance</p>
                 </div>
 
                 <div class="card-grid">
@@ -920,8 +933,8 @@
                         <i class="bi bi-arrow-left"></i>
                         <span>Back to Dashboard</span>
                     </a>
-                    <h1>Check List</h1>
-                    <p>Manage and track completion of all checklists</p>
+                    <h1 class="text-3xl font-bold text-gray-900">Check List</h1>
+                    <p class="text-lg text-gray-600 mt-2">Manage and track completion of all checklists</p>
                 </div>
 
                 <div class="card-grid">
@@ -958,8 +971,8 @@
                         <i class="bi bi-arrow-left"></i>
                         <span>Back to Dashboard</span>
                     </a>
-                    <h1>File Management System</h1>
-                    <p>Centralized document storage and organization</p>
+                    <h1 class="text-3xl font-bold text-gray-900">File Management System</h1>
+                    <p class="text-lg text-gray-600 mt-2">Centralized document storage and organization</p>
                 </div>
 
                 <div class="card-grid">
@@ -996,8 +1009,8 @@
                         <i class="bi bi-arrow-left"></i>
                         <span>Back to Dashboard</span>
                     </a>
-                    <h1>Inventory Management System</h1>
-                    <p>Track and manage organizational assets and stock levels</p>
+                    <h1 class="text-3xl font-bold text-gray-900">Inventory Management System</h1>
+                    <p class="text-lg text-gray-600 mt-2">Track and manage organizational assets and stock levels</p>
                 </div>
 
                 <div class="card-grid">
@@ -1027,8 +1040,8 @@
                         <i class="bi bi-arrow-left"></i>
                         <span>Back to Dashboard</span>
                     </a>
-                    <h1>Project Management System</h1>
-                    <p>Monitor projects, milestones, and team coordination</p>
+                    <h1 class="text-3xl font-bold text-gray-900">Project Management System</h1>
+                    <p class="text-lg text-gray-600 mt-2">Monitor projects, milestones, and team coordination</p>
                 </div>
 
                 <div class="card-grid">
@@ -1065,8 +1078,8 @@
                         <i class="bi bi-arrow-left"></i>
                         <span>Back to Dashboard</span>
                     </a>
-                    <h1>Human Resources Management</h1>
-                    <p>Comprehensive HR solutions for employee services and management</p>
+                    <h1 class="text-3xl font-bold text-gray-900">Human Resources Management</h1>
+                    <p class="text-lg text-gray-600 mt-2">Comprehensive HR solutions for employee services and management</p>
                 </div>
 
                 <div class="card-grid">
@@ -1135,12 +1148,37 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Production Page -->
+            <div id="production-page" class="content">
+                <div class="page-header">
+                    <a href="#" class="back-button" onclick="goBack(); return false;">
+                        <i class="bi bi-arrow-left"></i>
+                        <span>Back to Dashboard</span>
+                    </a>
+                    <h1 class="text-3xl font-bold text-gray-900">Production</h1>
+                    <p class="text-lg text-gray-600 mt-2">Manage production processes and quality control</p>
+                </div>
+
+                <div class="card-grid">
+                    <a href="https://script.google.com/a/macros/yajurfibres.com/s/AKfycbyAQwhdWUy7xbkSGXwSTPi0NDGKGOch1U03lyWSO9h9K-1PJM9RuBbZRojLMBJ0e_qh/exec" class="sub-card" target="_blank">
+                        <div class="sub-icon-box">
+                            <i class="bi bi-award sub-card-icon"></i>
+                        </div>
+                        <h4 class="sub-card-title">Quality</h4>
+                        <p class="sub-card-description">Quality control and assurance systems</p>
+                    </a>
+                </div>
+            </div>
         </main>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         let pageHistory = ['home'];
+        
+        // Define API Key globally to be used by fetch functions
+        const API_KEY = 'AIzaSyAriKmI0OQAzmO3uH3EAK7598TkQBYT52I';
 
         function showContent(pageId) {
             document.querySelectorAll('.content').forEach(page => {
@@ -1181,21 +1219,61 @@
             }
         }
 
-        // Dummy data fetch functions (replace with actual API calls if needed)
-        function fetchTaskData() {
-            // Replace with actual API call
-            document.getElementById('totalTasks').innerText = '12';
-            document.getElementById('totalPending').innerText = '5';
-            document.getElementById('totalDone').innerText = '7';
+        // Updated Function: Fetch Task Data using Google Sheets API
+        async function fetchTaskData() {
+            const spreadsheetId = '1aq7CXHNkpkWoJLhTDWkYG9CrszsRAY0v4sswWZC6fYE';
+            const range = 'Task-Data!A2:C2';
+            const url = `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/${range}?key=${API_KEY}`;
+
+            try {
+                const response = await fetch(url);
+                const data = await response.json();
+                
+                if (data.values && data.values.length > 0) {
+                    const values = data.values[0];
+                    // Mapping: Index 0 -> Total, Index 1 -> Pending, Index 2 -> Done
+                    document.getElementById('totalTasks').innerText = values[0] || '0';
+                    document.getElementById('totalPending').innerText = values[1] || '0';
+                    document.getElementById('totalDone').innerText = values[2] || '0';
+                } else {
+                    console.warn('No task data found in the specified range.');
+                }
+            } catch (error) {
+                console.error('Error fetching task data:', error);
+                document.getElementById('totalTasks').innerText = '-';
+                document.getElementById('totalPending').innerText = '-';
+                document.getElementById('totalDone').innerText = '-';
+            }
         }
 
-        function fetchCheckListData() {
-            // Replace with actual API call
-            document.getElementById('totalChecks').innerText = '8';
-            document.getElementById('pendingChecks').innerText = '3';
-            document.getElementById('doneChecks').innerText = '5';
+        // Updated Function: Fetch Checklist Data using Google Sheets API
+        async function fetchCheckListData() {
+            const spreadsheetId = '1fGudRr5zZy_3qDGloCptok3VtXbR3L5pK1fBHC4tb8c';
+            const range = 'Task-Data!A2:C2';
+            const url = `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/${range}?key=${API_KEY}`;
+
+            try {
+                const response = await fetch(url);
+                const data = await response.json();
+                
+                if (data.values && data.values.length > 0) {
+                    const values = data.values[0];
+                    // Mapping: Index 0 -> Total, Index 1 -> Pending, Index 2 -> Done
+                    document.getElementById('totalChecks').innerText = values[0] || '0';
+                    document.getElementById('pendingChecks').innerText = values[1] || '0';
+                    document.getElementById('doneChecks').innerText = values[2] || '0';
+                } else {
+                    console.warn('No checklist data found in the specified range.');
+                }
+            } catch (error) {
+                console.error('Error fetching checklist data:', error);
+                document.getElementById('totalChecks').innerText = '-';
+                document.getElementById('pendingChecks').innerText = '-';
+                document.getElementById('doneChecks').innerText = '-';
+            }
         }
 
+        // Kept as dummy since no API key provided for FMS
         function fetchFMSData() {
             // Replace with actual API call
             document.getElementById('totalFiles').innerText = '156';
@@ -1237,4 +1315,3 @@
     </script>
 </body>
 </html>
-
