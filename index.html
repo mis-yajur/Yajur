@@ -760,12 +760,23 @@
                         <span>FMS</span>
                     </div>
                 </a>
-                <a href="#" class="sidebar-nav-item" data-page="ims-page" onclick="showContent('ims-page')">
-                    <div class="sidebar-nav-item-content">
-                        <i class="bi bi-database-fill"></i>
-                        <span>IMS</span>
+
+                <!-- IMS (Modified to Dropdown with Stock Management) -->
+                <div class="sidebar-nav-group">
+                    <div class="sidebar-nav-item" onclick="toggleSubmenu('ims-submenu', this)">
+                        <div class="sidebar-nav-item-content">
+                            <i class="bi bi-database-fill"></i>
+                            <span>IMS</span>
+                        </div>
+                        <i class="bi bi-chevron-down dropdown-icon" style="font-size: 0.8rem; margin-right: 0;"></i>
                     </div>
-                </a>
+                    <div id="ims-submenu" class="sidebar-submenu">
+                        <a href="#" class="sidebar-submenu-item" onclick="loadModule('https://script.google.com/macros/s/AKfycbygCfsQZXkIK5px7HEt-k6D5l5cl9TZeMJMQl-0wmxS-6QQKwbikXzqE3V-vPxPQ8AT/exec', 'Stock Management')">
+                            Stock Management
+                        </a>
+                    </div>
+                </div>
+
                 <a href="#" class="sidebar-nav-item" data-page="pms-page" onclick="showContent('pms-page')">
                     <div class="sidebar-nav-item-content">
                         <i class="bi bi-clipboard-data-fill"></i>
@@ -916,8 +927,8 @@
                         </div>
                     </div>
 
-                    <!-- Other Cards kept for UI Consistency -->
-                    <div class="main-card" onclick="showContent('ims-page')">
+                    <!-- IMS Card - Now loads Dashboard directly -->
+                    <div class="main-card" onclick="loadModule('https://script.google.com/macros/s/AKfycbygCfsQZXkIK5px7HEt-k6D5l5cl9TZeMJMQl-0wmxS-6QQKwbikXzqE3V-vPxPQ8AT/exec', 'IMS Dashboard')">
                         <div class="card-header">
                             <div class="icon-box">
                                 <i class="bi bi-database-fill card-icon"></i>
@@ -927,7 +938,7 @@
                                 <span class="badge">Inventory</span>
                             </div>
                         </div>
-                        <div class="card-footer"><span class="card-link">Explore Module <i class="bi bi-arrow-right"></i></span></div>
+                        <div class="card-footer"><span class="card-link">Open Dashboard <i class="bi bi-arrow-right"></i></span></div>
                     </div>
 
                     <div class="main-card" onclick="showContent('pms-page')">
@@ -982,25 +993,6 @@
                         <div class="sub-icon-box"><i class="bi bi-folder-symlink sub-card-icon"></i></div>
                         <h4 class="sub-card-title">Organize & Categorize</h4>
                     </div>
-                </div>
-            </div>
-
-            <!-- IMS Page -->
-            <div id="ims-page" class="content">
-                <div class="page-header">
-                    <a href="#" class="back-button" onclick="showContent('home'); return false;">
-                        <i class="bi bi-arrow-left"></i>
-                        <span>Back to Dashboard</span>
-                    </a>
-                    <h1 class="text-3xl font-bold text-gray-900">Inventory Management System</h1>
-                    <p class="text-lg text-gray-600 mt-2">Track and manage organizational assets and stock levels</p>
-                </div>
-                <div class="card-grid">
-                    <a href="https://script.google.com/a/macros/yajurfibres.com/s/AKfycbze85_ds-xafpBctmntHlxm-3aSAi8wLV-vbl99IvkDVP1pLSPhbXD1FruF6AHlNsBQ/exec" class="sub-card" target="_blank">
-                        <div class="sub-icon-box"><i class="bi bi-box-seam sub-card-icon"></i></div>
-                        <h4 class="sub-card-title">Stock Management</h4>
-                        <p class="sub-card-description">Monitor and control your inventory levels</p>
-                    </a>
                 </div>
             </div>
 
@@ -1125,11 +1117,16 @@
                 triggerElement = document.querySelectorAll('.sidebar-nav-item')[1]; // Task Delegation index
             } else if (submenuId === 'checklist-submenu') {
                 triggerElement = document.querySelectorAll('.sidebar-nav-item')[2]; // Checklist index
+            } else if (submenuId === 'ims-submenu') {
+                 // The 4th item (index 3) is FMS, so IMS is index 4
+                triggerElement = document.querySelectorAll('.sidebar-nav-item')[4];
             }
             
-            toggleSubmenu(submenuId, triggerElement);
-            // Scroll sidebar to show it
-            triggerElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            if(triggerElement) {
+                toggleSubmenu(submenuId, triggerElement);
+                // Scroll sidebar to show it
+                triggerElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
         }
 
         // Function to Load External Module into Iframe (Full Screen)
@@ -1149,8 +1146,13 @@
             iframe.src = url;
 
             // Update Active State in Sidebar (Submenu item)
+            // Note: This logic works well for sidebar clicks, for home card clicks we might want to manually highlight the sidebar
             document.querySelectorAll('.sidebar-submenu-item').forEach(item => item.classList.remove('active-sub'));
-            event.target.classList.add('active-sub');
+            
+            // If the click came from sidebar (event.target exists inside sidebar)
+            if(event.target.classList.contains('sidebar-submenu-item')) {
+                event.target.classList.add('active-sub');
+            }
 
             // Handle Mobile
             closeMobileSidebar();
