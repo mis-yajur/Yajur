@@ -810,12 +810,22 @@
                     </div>
                 </div>
 
-                <a href="#" class="sidebar-nav-item" data-page="production-page" onclick="showContent('production-page')">
-                    <div class="sidebar-nav-item-content">
-                        <i class="bi bi-gear-fill"></i>
-                        <span>Production</span>
+                <!-- Production (Direct Load + Quality Submenu) -->
+                <div class="sidebar-nav-group">
+                    <div class="sidebar-nav-item" onclick="loadModule('https://script.google.com/macros/s/AKfycbyplQQdMagE72dkkzoxW1N3nmR4cKgnrFdkvOPYllcpuVlaU0HDrppVsurwhpS3XSAt/exec', 'Production Dashboard'); toggleSubmenu('production-submenu', this)">
+                        <div class="sidebar-nav-item-content">
+                            <i class="bi bi-gear-fill"></i>
+                            <span>Production</span>
+                        </div>
+                        <i class="bi bi-chevron-down dropdown-icon" style="font-size: 0.8rem; margin-right: 0;"></i>
                     </div>
-                </a>
+                    <div id="production-submenu" class="sidebar-submenu">
+                        <a href="#" class="sidebar-submenu-item" onclick="loadModule('https://script.google.com/a/macros/yajurfibres.com/s/AKfycbyAQwhdWUy7xbkSGXwSTPi0NDGKGOch1U03lyWSO9h9K-1PJM9RuBbZRojLMBJ0e_qh/exec', 'Quality')">
+                            Quality
+                        </a>
+                    </div>
+                </div>
+
             </nav>
         </aside>
 
@@ -976,7 +986,7 @@
                         <div class="card-footer"><span class="card-link">Open Dashboard <i class="bi bi-arrow-right"></i></span></div>
                     </div>
 
-                    <!-- HR Card (Updated to load External Dashboard) -->
+                    <!-- HR Card -->
                     <div class="main-card" onclick="loadModule('https://script.google.com/macros/s/AKfycbxFxKL-T6YC0g0LIWgPKucEp12bFJqLFat_bIGv_3kasw7FJjXpei2KysMFwxpadZn4dw/exec', 'HR Dashboard')">
                         <div class="card-header">
                             <div class="icon-box">
@@ -985,6 +995,20 @@
                             <div class="card-body">
                                 <h3 class="card-title">HR</h3>
                                 <span class="badge">Resources</span>
+                            </div>
+                        </div>
+                        <div class="card-footer"><span class="card-link">Open Dashboard <i class="bi bi-arrow-right"></i></span></div>
+                    </div>
+
+                    <!-- Production Card (New) -->
+                    <div class="main-card" onclick="loadModule('https://script.google.com/macros/s/AKfycbyplQQdMagE72dkkzoxW1N3nmR4cKgnrFdkvOPYllcpuVlaU0HDrppVsurwhpS3XSAt/exec', 'Production Dashboard')">
+                        <div class="card-header">
+                            <div class="icon-box">
+                                <i class="bi bi-gear-fill card-icon"></i>
+                            </div>
+                            <div class="card-body">
+                                <h3 class="card-title">Production</h3>
+                                <span class="badge">Manufacturing</span>
                             </div>
                         </div>
                         <div class="card-footer"><span class="card-link">Open Dashboard <i class="bi bi-arrow-right"></i></span></div>
@@ -1019,24 +1043,6 @@
                 </div>
             </div>
 
-            <!-- HR Page REMOVED (Replaced by direct Iframe Load) -->
-
-            <!-- Production Page -->
-            <div id="production-page" class="content">
-                <div class="page-header">
-                    <a href="#" class="back-button" onclick="showContent('home'); return false;">
-                        <i class="bi bi-arrow-left"></i>
-                        <span>Back to Dashboard</span>
-                    </a>
-                    <h1 class="text-3xl font-bold text-gray-900">Production</h1>
-                </div>
-                <div class="card-grid">
-                    <a href="https://script.google.com/a/macros/yajurfibres.com/s/AKfycbyAQwhdWUy7xbkSGXwSTPi0NDGKGOch1U03lyWSO9h9K-1PJM9RuBbZRojLMBJ0e_qh/exec" class="sub-card" target="_blank">
-                        <div class="sub-icon-box"><i class="bi bi-award sub-card-icon"></i></div>
-                        <h4 class="sub-card-title">Quality</h4>
-                    </a>
-                </div>
-            </div>
         </main>
     </div>
 
@@ -1111,6 +1117,8 @@
                 triggerElement = navItems[5]; // PMS
             } else if (submenuId === 'hr-submenu') {
                 triggerElement = navItems[6]; // HR
+            } else if (submenuId === 'production-submenu') {
+                triggerElement = navItems[7]; // Production
             }
             
             if(triggerElement) {
