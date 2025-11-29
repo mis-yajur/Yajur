@@ -68,6 +68,8 @@
         .app-wrapper {
             display: flex;
             width: 100%;
+            height: 100vh; /* Fixed height for full screen apps */
+            overflow: hidden;
         }
 
         /* Sidebar */
@@ -86,7 +88,7 @@
             overflow-y: auto;
             flex-shrink: 0;
             box-shadow: var(--shadow-sm);
-            z-index: 1000; /* Ensure sidebar is above main content on smaller screens */
+            z-index: 1000;
         }
 
         .sidebar.collapsed {
@@ -134,11 +136,15 @@
             padding: 0 0.75rem;
         }
 
+        /* Submenu Styling */
+        .sidebar-nav-group {
+            margin-bottom: 0.25rem;
+        }
+
         .sidebar-nav-item {
             display: flex;
             align-items: center;
             padding: 0.75rem 1rem;
-            margin-bottom: 0.25rem;
             border-radius: 8px;
             color: var(--text-secondary);
             text-decoration: none;
@@ -147,6 +153,13 @@
             overflow: hidden;
             font-weight: 500;
             font-size: 0.9375rem;
+            cursor: pointer;
+            justify-content: space-between;
+        }
+
+        .sidebar-nav-item-content {
+            display: flex;
+            align-items: center;
         }
 
         .sidebar-nav-item i {
@@ -157,26 +170,18 @@
             flex-shrink: 0;
         }
 
-        .sidebar-nav-item span {
-            opacity: 1;
-            transition: opacity 0.2s ease;
-        }
-
-        .sidebar.collapsed .sidebar-nav-item {
-            justify-content: center;
-            padding: 0.75rem 0.5rem;
-        }
-
         .sidebar.collapsed .sidebar-nav-item i {
             margin-right: 0;
             font-size: 1.4rem;
         }
 
-        .sidebar.collapsed .sidebar-nav-item span {
-            width: 0;
-            opacity: 0;
-            overflow: hidden;
-            visibility: hidden;
+        .sidebar.collapsed .sidebar-nav-item span,
+        .sidebar.collapsed .sidebar-nav-item .dropdown-icon {
+            display: none;
+        }
+        
+        .sidebar.collapsed .sidebar-nav-item {
+             justify-content: center;
         }
 
         .sidebar-nav-item:hover {
@@ -199,9 +204,63 @@
             color: var(--primary);
         }
 
-        .sidebar.collapsed .sidebar-nav-item.active {
-            border-left: none;
-            background: rgba(37, 99, 235, 0.1);
+        /* Submenu Container */
+        .sidebar-submenu {
+            display: none;
+            padding-left: 1rem;
+            margin-top: 0.25rem;
+            animation: slideDown 0.3s ease forwards;
+        }
+        
+        .sidebar-submenu.show {
+            display: block;
+        }
+
+        .sidebar.collapsed .sidebar-submenu {
+            display: none !important; /* Hide submenus when collapsed */
+        }
+
+        .sidebar-submenu-item {
+            display: flex;
+            align-items: center;
+            padding: 0.5rem 1rem 0.5rem 2.5rem;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            border-radius: 6px;
+            margin-bottom: 2px;
+            position: relative;
+        }
+        
+        .sidebar-submenu-item:before {
+            content: '';
+            position: absolute;
+            left: 1.2rem;
+            top: 50%;
+            width: 6px;
+            height: 6px;
+            background-color: var(--border-color);
+            border-radius: 50%;
+            transform: translateY(-50%);
+        }
+
+        .sidebar-submenu-item:hover {
+            color: var(--primary);
+            background: rgba(37, 99, 235, 0.05);
+        }
+        
+        .sidebar-submenu-item:hover:before {
+            background-color: var(--primary);
+        }
+        
+        .sidebar-submenu-item.active-sub {
+            color: var(--primary);
+            font-weight: 600;
+            background: rgba(37, 99, 235, 0.05);
+        }
+
+        .sidebar-submenu-item.active-sub:before {
+            background-color: var(--primary);
         }
 
         .sidebar-toggle {
@@ -220,7 +279,7 @@
             top: 1.5rem;
             transition: all 0.2s ease;
             box-shadow: var(--shadow-md);
-            z-index: 10; /* Ensure toggle button is above other elements */
+            z-index: 10;
         }
 
         .sidebar-toggle:hover {
@@ -235,6 +294,29 @@
             padding: 2rem;
             overflow-y: auto;
             background: var(--bg-main);
+            position: relative;
+        }
+        
+        /* Iframe Full Screen Wrapper */
+        .iframe-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: none;
+            background: white;
+            z-index: 50;
+        }
+        
+        .iframe-container.active-content {
+            display: block;
+        }
+        
+        .app-iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
         }
 
         .content {
@@ -249,14 +331,13 @@
         }
 
         @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-5px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         /* Page Header */
@@ -514,54 +595,6 @@
             line-height: 1.5;
         }
 
-        /* Single Card Layout */
-        .single-card-layout {
-            display: flex;
-            justify-content: center;
-            padding: 2rem 0;
-        }
-
-        .single-card-layout .sub-card {
-            max-width: 400px;
-            width: 100%;
-            padding: 2.5rem;
-            text-align: center;
-        }
-
-        .single-card-layout .sub-icon-box {
-            width: 80px;
-            height: 80px;
-            margin: 0 auto 1.5rem;
-        }
-
-        .single-card-layout .sub-card-icon {
-            font-size: 2.5rem;
-        }
-
-        .single-card-layout .sub-card-title {
-            font-size: 1.5rem;
-        }
-
-        .action-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.625rem 1.25rem;
-            background: rgba(14, 165, 233, 0.1);
-            border: 1px solid rgba(14, 165, 233, 0.2);
-            border-radius: 24px;
-            font-size: 0.875rem;
-            font-weight: 600;
-            color: var(--accent);
-            margin-top: 1rem;
-            transition: all 0.2s ease;
-        }
-
-        .sub-card:hover .action-badge {
-            background: rgba(14, 165, 233, 0.15);
-            border-color: var(--accent);
-        }
-
         /* Back Button */
         .back-button {
             display: inline-flex;
@@ -674,43 +707,93 @@
             </div>
 
             <nav class="sidebar-nav">
-                <a href="#" class="sidebar-nav-item active" data-page="home">
-                    <i class="bi bi-grid-fill"></i>
-                    <span>Dashboard</span>
+                <!-- Dashboard Home -->
+                <a href="#" class="sidebar-nav-item active" data-page="home" onclick="showContent('home')">
+                    <div class="sidebar-nav-item-content">
+                        <i class="bi bi-grid-fill"></i>
+                        <span>Dashboard</span>
+                    </div>
                 </a>
-                <a href="#" class="sidebar-nav-item" data-page="task-delegation-page">
-                    <i class="bi bi-people-fill"></i>
-                    <span>Task Delegation</span>
+
+                <!-- Task Delegation (With Submenu) -->
+                <div class="sidebar-nav-group">
+                    <div class="sidebar-nav-item" onclick="toggleSubmenu('task-submenu', this)">
+                        <div class="sidebar-nav-item-content">
+                            <i class="bi bi-people-fill"></i>
+                            <span>Task Delegation</span>
+                        </div>
+                        <i class="bi bi-chevron-down dropdown-icon" style="font-size: 0.8rem; margin-right: 0;"></i>
+                    </div>
+                    <div id="task-submenu" class="sidebar-submenu">
+                        <a href="#" class="sidebar-submenu-item" onclick="loadModule('https://script.google.com/macros/s/AKfycbwrELqyJhu7LTU1gshHa7JUKL9MoP2be0zk26yfs0nJALzrtqskyw-FfzX_lrZGs_ys/exec', 'Delegation Master')">
+                            Delegation Master
+                        </a>
+                        <a href="#" class="sidebar-submenu-item" onclick="loadModule('https://script.google.com/macros/s/AKfycbxGJ4keymTTG5dBT7A5XNtcEqvbzCUFQchPx6W4QJBROXlGSAI5pGmK3KlvT-iekry3/exec', 'Task Master (Manager)')">
+                            Task Master (Manager)
+                        </a>
+                        <a href="#" class="sidebar-submenu-item" onclick="loadModule('https://script.google.com/macros/s/AKfycbxnujoBeXrHdvi2ejp8VlHNgPKW_LCExoaPDjA97cE8Yh9UUUE-yLTJWy2OtHLW0ZQv/exec', 'Daily Work')">
+                            Daily Work
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Check List (With Submenu) -->
+                <div class="sidebar-nav-group">
+                    <div class="sidebar-nav-item" onclick="toggleSubmenu('checklist-submenu', this)">
+                        <div class="sidebar-nav-item-content">
+                            <i class="bi bi-list-check"></i>
+                            <span>Check List</span>
+                        </div>
+                        <i class="bi bi-chevron-down dropdown-icon" style="font-size: 0.8rem; margin-right: 0;"></i>
+                    </div>
+                    <div id="checklist-submenu" class="sidebar-submenu">
+                        <a href="#" class="sidebar-submenu-item" onclick="loadModule('https://script.google.com/macros/s/AKfycbyI1jtT6dimf_EtNABZAkTtRtmmyypsR4bY6GWCq_ZvI3mdNEybmVVfFpJPgpK5HofLtw/exec', 'Check List Master')">
+                            Check List Master
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Other Modules -->
+                <a href="#" class="sidebar-nav-item" data-page="fms-page" onclick="showContent('fms-page')">
+                    <div class="sidebar-nav-item-content">
+                        <i class="bi bi-folder-fill"></i>
+                        <span>FMS</span>
+                    </div>
                 </a>
-                <a href="#" class="sidebar-nav-item" data-page="check-list-page">
-                    <i class="bi bi-list-check"></i>
-                    <span>Check List</span>
+                <a href="#" class="sidebar-nav-item" data-page="ims-page" onclick="showContent('ims-page')">
+                    <div class="sidebar-nav-item-content">
+                        <i class="bi bi-database-fill"></i>
+                        <span>IMS</span>
+                    </div>
                 </a>
-                <a href="#" class="sidebar-nav-item" data-page="fms-page">
-                    <i class="bi bi-folder-fill"></i>
-                    <span>FMS</span>
+                <a href="#" class="sidebar-nav-item" data-page="pms-page" onclick="showContent('pms-page')">
+                    <div class="sidebar-nav-item-content">
+                        <i class="bi bi-clipboard-data-fill"></i>
+                        <span>PMS</span>
+                    </div>
                 </a>
-                <a href="#" class="sidebar-nav-item" data-page="ims-page">
-                    <i class="bi bi-database-fill"></i>
-                    <span>IMS</span>
+                <a href="#" class="sidebar-nav-item" data-page="hr-page" onclick="showContent('hr-page')">
+                    <div class="sidebar-nav-item-content">
+                        <i class="bi bi-people"></i>
+                        <span>HR</span>
+                    </div>
                 </a>
-                <a href="#" class="sidebar-nav-item" data-page="pms-page">
-                    <i class="bi bi-clipboard-data-fill"></i>
-                    <span>PMS</span>
-                </a>
-                <a href="#" class="sidebar-nav-item" data-page="hr-page">
-                    <i class="bi bi-people"></i>
-                    <span>HR</span>
-                </a>
-                <a href="#" class="sidebar-nav-item" data-page="production-page">
-                    <i class="bi bi-gear-fill"></i>
-                    <span>Production</span>
+                <a href="#" class="sidebar-nav-item" data-page="production-page" onclick="showContent('production-page')">
+                    <div class="sidebar-nav-item-content">
+                        <i class="bi bi-gear-fill"></i>
+                        <span>Production</span>
+                    </div>
                 </a>
             </nav>
         </aside>
 
         <!-- Main Content -->
         <main class="main-content-wrapper">
+            <!-- Full Screen Iframe Container for External Tools -->
+            <div id="module-container" class="iframe-container">
+                <iframe id="main-frame" class="app-iframe" src="" allow="camera; microphone; fullscreen"></iframe>
+            </div>
+
             <!-- Home Screen -->
             <div id="home" class="content active-content">
                 <div class="page-header">
@@ -733,7 +816,8 @@
                 </div>
 
                 <div class="card-grid">
-                    <div class="main-card" onclick="showContent('task-delegation-page')">
+                    <!-- Task Delegation Summary Card (Redirects to first submodule or prompts user) -->
+                    <div class="main-card" onclick="toggleSubmenuAndOpen('task-submenu')">
                         <div class="card-header">
                             <div class="icon-box">
                                 <i class="bi bi-people-fill card-icon"></i>
@@ -761,12 +845,12 @@
 
                         <div class="card-footer">
                             <span class="card-link">
-                                Explore Module <i class="bi bi-arrow-right"></i>
+                                Expand Menu <i class="bi bi-arrow-right"></i>
                             </span>
                         </div>
                     </div>
 
-                    <div class="main-card" onclick="showContent('check-list-page')">
+                    <div class="main-card" onclick="toggleSubmenuAndOpen('checklist-submenu')">
                         <div class="card-header">
                             <div class="icon-box">
                                 <i class="bi bi-list-check card-icon"></i>
@@ -794,7 +878,7 @@
 
                         <div class="card-footer">
                             <span class="card-link">
-                                Explore Module <i class="bi bi-arrow-right"></i>
+                                Expand Menu <i class="bi bi-arrow-right"></i>
                             </span>
                         </div>
                     </div>
@@ -832,6 +916,7 @@
                         </div>
                     </div>
 
+                    <!-- Other Cards kept for UI Consistency -->
                     <div class="main-card" onclick="showContent('ims-page')">
                         <div class="card-header">
                             <div class="icon-box">
@@ -842,12 +927,7 @@
                                 <span class="badge">Inventory</span>
                             </div>
                         </div>
-
-                        <div class="card-footer">
-                            <span class="card-link">
-                                Explore Module <i class="bi bi-arrow-right"></i>
-                            </span>
-                        </div>
+                        <div class="card-footer"><span class="card-link">Explore Module <i class="bi bi-arrow-right"></i></span></div>
                     </div>
 
                     <div class="main-card" onclick="showContent('pms-page')">
@@ -860,12 +940,7 @@
                                 <span class="badge">Projects</span>
                             </div>
                         </div>
-
-                        <div class="card-footer">
-                            <span class="card-link">
-                                Explore Module <i class="bi bi-arrow-right"></i>
-                            </span>
-                        </div>
+                        <div class="card-footer"><span class="card-link">Explore Module <i class="bi bi-arrow-right"></i></span></div>
                     </div>
 
                     <div class="main-card" onclick="showContent('hr-page')">
@@ -878,96 +953,15 @@
                                 <span class="badge">Resources</span>
                             </div>
                         </div>
-
-                        <div class="card-footer">
-                            <span class="card-link">
-                                Explore Module <i class="bi bi-arrow-right"></i>
-                            </span>
-                        </div>
+                        <div class="card-footer"><span class="card-link">Explore Module <i class="bi bi-arrow-right"></i></span></div>
                     </div>
-                </div>
-            </div>
-
-            <!-- Task Delegation Page -->
-            <div id="task-delegation-page" class="content">
-                <div class="page-header">
-                    <a href="#" class="back-button" onclick="goBack(); return false;">
-                        <i class="bi bi-arrow-left"></i>
-                        <span>Back to Dashboard</span>
-                    </a>
-                    <h1 class="text-3xl font-bold text-gray-900">Task Delegation</h1>
-                    <p class="text-lg text-gray-600 mt-2">Manage task assignments and track team performance</p>
-                </div>
-
-                <div class="card-grid">
-                    <a href="https://script.google.com/a/macros/yajurfibres.com/s/AKfycbz9Z62yxXqjoOWH7xwv-c9lGjF11e-QCcWBDdjkpqwTnn7qA12eUMULNZhZvfLjJhKv/exec" class="sub-card" target="_blank">
-                        <div class="sub-icon-box">
-                            <i class="bi bi-person-gear sub-card-icon"></i>
-                        </div>
-                        <h4 class="sub-card-title">Delegation Master</h4>
-                        <p class="sub-card-description">Master delegation controls</p>
-                    </a>
-                    
-                    <a href="https://script.google.com/macros/s/AKfycbxHJgKaJKA46c5vqL6v4k8WsPwPt_v3MSfPQAz4XOxr5g3Faq9hy1PEqAL40sTJOo3R/exec" class="sub-card" target="_blank">
-                        <div class="sub-icon-box">
-                            <i class="bi bi-person-check sub-card-icon"></i>
-                        </div>
-                        <h4 class="sub-card-title">Task Master (Manager)</h4>
-                        <p class="sub-card-description">Manage and assign tasks for managers</p>
-                    </a>
-
-                    <a href="https://script.google.com/a/macros/yajurfibres.com/s/AKfycbxsXCoKmk1ob0NJlf8fFT-v4db-9m1Aag7zJ4vmMOUQCwR7QgudD-DZkaA1EnTt8uy-/exec" class="sub-card" target="_blank">
-                        <div class="sub-icon-box">
-                            <i class="bi bi-clipboard-data sub-card-icon"></i>
-                        </div>
-                        <h4 class="sub-card-title">Daily Work</h4>
-                        <p class="sub-card-description">Track daily work and progress</p>
-                    </a>
-                </div> 
-            </div> 
-
-            <!-- Check List Page -->
-            <div id="check-list-page" class="content">
-                <div class="page-header">
-                    <a href="#" class="back-button" onclick="goBack(); return false;">
-                        <i class="bi bi-arrow-left"></i>
-                        <span>Back to Dashboard</span>
-                    </a>
-                    <h1 class="text-3xl font-bold text-gray-900">Check List</h1>
-                    <p class="text-lg text-gray-600 mt-2">Manage and track completion of all checklists</p>
-                </div>
-
-                <div class="card-grid">
-                    <a href="https://script.google.com/macros/s/AKfycbwMKiKrNvWAqDuLBRGnWB97_vcIlhLKJiyUFguSUQOeetM6d6ai3quXphmSvug8SnJyFw/exec" class="sub-card" target="_blank">
-                        <div class="sub-icon-box">
-                            <i class="bi bi-file-earmark-text sub-card-icon"></i>
-                        </div>
-                        <h4 class="sub-card-title">Checklist Master</h4>
-                        <p class="sub-card-description">Manage and create new checklists</p>
-                    </a>
-
-                    <a href="https://script.google.com/macros/s/AKfycbzSBJ6j0aSUNFOjuwlMbBCJWQdldtLYxagDZVbOF67BzAX2fHTPweFrGRt10sa7T70RHQ/exec" class="sub-card" target="_blank">
-                        <div class="sub-icon-box">
-                            <i class="bi bi-ui-checks sub-card-icon"></i>
-                        </div>
-                        <h4 class="sub-card-title">Checklist Response</h4>
-                        <p class="sub-card-description">View and submit checklist responses</p>
-                    </a>
-
-                    <a href="https://script.google.com/macros/s/AKfycbwHji23MFxT56TRvrT3poSbB3lDSlCtlyOssTMNRfgSoeVsIc835N01PWgmjGMloDn6/exec" class="sub-card" target="_blank">
-                        <div class="sub-icon-box">
-                            <i class="bi bi-trophy sub-card-icon"></i>
-                        </div>
-                        <h4 class="sub-card-title">Checklist Score</h4>
-                        <p class="sub-card-description">Review performance scores and ratings</p>
-                    </a>
                 </div>
             </div>
 
             <!-- FMS Page -->
             <div id="fms-page" class="content">
                 <div class="page-header">
-                    <a href="#" class="back-button" onclick="goBack(); return false;">
+                    <a href="#" class="back-button" onclick="showContent('home'); return false;">
                         <i class="bi bi-arrow-left"></i>
                         <span>Back to Dashboard</span>
                     </a>
@@ -983,168 +977,68 @@
                         <h4 class="sub-card-title">Upload & Manage Files</h4>
                         <p class="sub-card-description">Securely upload and manage all your documents</p>
                     </div>
-
+                    <!-- Placeholders -->
                     <div class="sub-card">
-                        <div class="sub-icon-box">
-                            <i class="bi bi-folder-symlink sub-card-icon"></i>
-                        </div>
+                        <div class="sub-icon-box"><i class="bi bi-folder-symlink sub-card-icon"></i></div>
                         <h4 class="sub-card-title">Organize & Categorize</h4>
-                        <p class="sub-card-description">Structure your files and folders efficiently</p>
-                    </div>
-
-                    <div class="sub-card">
-                        <div class="sub-icon-box">
-                            <i class="bi bi-search sub-card-icon"></i>
-                        </div>
-                        <h4 class="sub-card-title">Search & Retrieve</h4>
-                        <p class="sub-card-description">Quickly locate any file with advanced search</p>
                     </div>
                 </div>
             </div>
 
-            <!-- IMS Page (Inventory Management) -->
+            <!-- IMS Page -->
             <div id="ims-page" class="content">
                 <div class="page-header">
-                    <a href="#" class="back-button" onclick="goBack(); return false;">
+                    <a href="#" class="back-button" onclick="showContent('home'); return false;">
                         <i class="bi bi-arrow-left"></i>
                         <span>Back to Dashboard</span>
                     </a>
                     <h1 class="text-3xl font-bold text-gray-900">Inventory Management System</h1>
                     <p class="text-lg text-gray-600 mt-2">Track and manage organizational assets and stock levels</p>
                 </div>
-
                 <div class="card-grid">
                     <a href="https://script.google.com/a/macros/yajurfibres.com/s/AKfycbze85_ds-xafpBctmntHlxm-3aSAi8wLV-vbl99IvkDVP1pLSPhbXD1FruF6AHlNsBQ/exec" class="sub-card" target="_blank">
-                        <div class="sub-icon-box">
-                            <i class="bi bi-box-seam sub-card-icon"></i>
-                        </div>
+                        <div class="sub-icon-box"><i class="bi bi-box-seam sub-card-icon"></i></div>
                         <h4 class="sub-card-title">Stock Management</h4>
                         <p class="sub-card-description">Monitor and control your inventory levels</p>
                     </a>
-
-                    <!-- Placeholder for consistent grid layout -->
-                    <div class="sub-card" style="visibility: hidden; pointer-events: none;">
-                        <div class="sub-icon-box">
-                            <i class="bi bi-journal sub-card-icon"></i> 
-                        </div>
-                        <h4 class="sub-card-title">Future Module</h4>
-                        <p class="sub-card-description">More inventory features coming soon!</p>
-                    </div>
                 </div>
             </div>
 
             <!-- PMS Page -->
             <div id="pms-page" class="content">
                 <div class="page-header">
-                    <a href="#" class="back-button" onclick="goBack(); return false;">
+                    <a href="#" class="back-button" onclick="showContent('home'); return false;">
                         <i class="bi bi-arrow-left"></i>
                         <span>Back to Dashboard</span>
                     </a>
                     <h1 class="text-3xl font-bold text-gray-900">Project Management System</h1>
-                    <p class="text-lg text-gray-600 mt-2">Monitor projects, milestones, and team coordination</p>
                 </div>
-
                 <div class="card-grid">
                     <a href="https://script.google.com/macros/s/AKfycbxoV4BWgt7UckmArLuHLtCheC3U-0c9RpWH7Ru0YoNF3EBO_tqTRsjdhEAMvlt6QP01/exec" class="sub-card" target="_blank">
-                        <div class="sub-icon-box">
-                            <i class="bi bi-cash-stack sub-card-icon"></i>
-                        </div>
+                        <div class="sub-icon-box"><i class="bi bi-cash-stack sub-card-icon"></i></div>
                         <h4 class="sub-card-title">Expense Request (Yosodha)</h4>
-                        <p class="sub-card-description">Manage and approve expense requests</p>
                     </a>
-
-                    <div class="sub-card">
-                        <div class="sub-icon-box">
-                            <i class="bi bi-calendar-event sub-card-icon"></i>
-                        </div>
-                        <h4 class="sub-card-title">Project Timeline</h4>
-                        <p class="sub-card-description">Visualize project schedules and deadlines</p>
-                    </div>
-
-                    <div class="sub-card">
-                        <div class="sub-icon-box">
-                            <i class="bi bi-people sub-card-icon"></i>
-                        </div>
-                        <h4 class="sub-card-title">Team Collaboration</h4>
-                        <p class="sub-card-description">Facilitate communication and team management</p>
-                    </div>
                 </div>
             </div>
 
             <!-- HR Page -->
             <div id="hr-page" class="content">
                 <div class="page-header">
-                    <a href="#" class="back-button" onclick="goBack(); return false;">
+                    <a href="#" class="back-button" onclick="showContent('home'); return false;">
                         <i class="bi bi-arrow-left"></i>
                         <span>Back to Dashboard</span>
                     </a>
-                    <h1 class="text-3xl font-bold text-gray-900">Human Resources Management</h1>
-                    <p class="text-lg text-gray-600 mt-2">Comprehensive HR solutions for employee services and management</p>
+                    <h1 class="text-3xl font-bold text-gray-900">Human Resources</h1>
                 </div>
-
                 <div class="card-grid">
-                    <div class="sub-card">
-                        <div class="sub-icon-box">
-                            <i class="bi bi-person-plus sub-card-icon"></i>
-                        </div>
-                        <h4 class="sub-card-title">Recruitment & Onboarding</h4>
-                        <p class="sub-card-description">Streamline hiring and new employee integration</p>
-                    </div>
-
-                    <div class="sub-card">
-                        <div class="sub-icon-box">
-                            <i class="bi bi-exclamation-triangle sub-card-icon"></i>
-                        </div>
-                        <h4 class="sub-card-title">Complaint Management</h4>
-                        <p class="sub-card-description">Handle employee grievances effectively</p>
-                    </div>
-
-                    <div class="sub-card">
-                        <div class="sub-icon-box">
-                            <i class="bi bi-clipboard-check sub-card-icon"></i>
-                        </div>
-                        <h4 class="sub-card-title">HR Process Checklists</h4>
-                        <p class="sub-card-description">Ensure compliance with HR operational checklists</p>
-                    </div>
-
-                    <div class="sub-card">
-                        <div class="sub-icon-box">
-                            <i class="bi bi-door-open sub-card-icon"></i>
-                        </div>
-                        <h4 class="sub-card-title">Gate Pass System</h4>
-                        <p class="sub-card-description">Manage entry and exit permissions</p>
-                    </div>
-
                     <a href="https://script.google.com/a/macros/yajurfibres.com/s/AKfycbyVgq9YqhziZNKbkhOjyWkPIsAx-cDCf1Z5_whYIct2Zg6n7ZJuYYg6ZMimtk8czfj98A/exec" class="sub-card" target="_blank">
-                        <div class="sub-icon-box">
-                            <i class="bi bi-calendar-x sub-card-icon"></i>
-                        </div>
+                        <div class="sub-icon-box"><i class="bi bi-calendar-x sub-card-icon"></i></div>
                         <h4 class="sub-card-title">Leave Application</h4>
-                        <p class="sub-card-description">Submit and track employee leave requests</p>
                     </a>
-
+                    <!-- Placeholder cards kept generic -->
                     <div class="sub-card">
-                        <div class="sub-icon-box">
-                            <i class="bi bi-fuel-pump sub-card-icon"></i>
-                        </div>
-                        <h4 class="sub-card-title">Vehicle Refueling Log</h4>
-                        <p class="sub-card-description">Record and manage company vehicle refueling</p>
-                    </div>
-
-                    <div class="sub-card">
-                        <div class="sub-icon-box">
-                            <i class="bi bi-person-lines-fill sub-card-icon"></i>
-                        </div>
-                        <h4 class="sub-card-title">Manpower Lineup</h4>
-                        <p class="sub-card-description">Efficiently schedule and manage staff lineups</p>
-                    </div>
-
-                    <div class="sub-card">
-                        <div class="sub-icon-box">
-                            <i class="bi bi-calendar-event sub-card-icon"></i>
-                        </div>
-                        <h4 class="sub-card-title">HR Committee Meetings</h4>
-                        <p class="sub-card-description">Organize and manage HR committee meetings</p>
+                        <div class="sub-icon-box"><i class="bi bi-person-plus sub-card-icon"></i></div>
+                        <h4 class="sub-card-title">Recruitment</h4>
                     </div>
                 </div>
             </div>
@@ -1152,21 +1046,16 @@
             <!-- Production Page -->
             <div id="production-page" class="content">
                 <div class="page-header">
-                    <a href="#" class="back-button" onclick="goBack(); return false;">
+                    <a href="#" class="back-button" onclick="showContent('home'); return false;">
                         <i class="bi bi-arrow-left"></i>
                         <span>Back to Dashboard</span>
                     </a>
                     <h1 class="text-3xl font-bold text-gray-900">Production</h1>
-                    <p class="text-lg text-gray-600 mt-2">Manage production processes and quality control</p>
                 </div>
-
                 <div class="card-grid">
                     <a href="https://script.google.com/a/macros/yajurfibres.com/s/AKfycbyAQwhdWUy7xbkSGXwSTPi0NDGKGOch1U03lyWSO9h9K-1PJM9RuBbZRojLMBJ0e_qh/exec" class="sub-card" target="_blank">
-                        <div class="sub-icon-box">
-                            <i class="bi bi-award sub-card-icon"></i>
-                        </div>
+                        <div class="sub-icon-box"><i class="bi bi-award sub-card-icon"></i></div>
                         <h4 class="sub-card-title">Quality</h4>
-                        <p class="sub-card-description">Quality control and assurance systems</p>
                     </a>
                 </div>
             </div>
@@ -1175,110 +1064,103 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        let pageHistory = ['home'];
-        
-        // Define API Key globally to be used by fetch functions
         const API_KEY = 'AIzaSyAriKmI0OQAzmO3uH3EAK7598TkQBYT52I';
 
+        // Function to handle showing standard content divs
         function showContent(pageId) {
+            // Hide iframe
+            document.getElementById('module-container').classList.remove('active-content');
+            document.getElementById('main-frame').src = ''; // Clear source to stop processing
+
+            // Hide all content divs
             document.querySelectorAll('.content').forEach(page => {
                 page.classList.remove('active-content');
             });
 
+            // Show target
             const targetPage = document.getElementById(pageId);
             if (targetPage) {
                 targetPage.classList.add('active-content');
-                if (pageHistory[pageHistory.length - 1] !== pageId) {
-                    pageHistory.push(pageId);
-                }
                 window.scrollTo({ top: 0, behavior: 'smooth' });
-                updateSidebarActiveState(pageId);
                 
-                const sidebar = document.getElementById('sidebar');
-                if (sidebar.classList.contains('show-mobile')) {
-                    sidebar.classList.remove('show-mobile');
-                }
+                // Update Sidebar highlight
+                document.querySelectorAll('.sidebar-nav-item').forEach(item => item.classList.remove('active'));
+                document.querySelectorAll('.sidebar-submenu-item').forEach(item => item.classList.remove('active-sub'));
+                
+                const activeNavItem = document.querySelector(`.sidebar-nav-item[data-page="${pageId}"]`);
+                if (activeNavItem) activeNavItem.classList.add('active');
+            }
+            
+            closeMobileSidebar();
+        }
+
+        // Function to Toggle Submenus
+        function toggleSubmenu(submenuId, element) {
+            const submenu = document.getElementById(submenuId);
+            const icon = element ? element.querySelector('.dropdown-icon') : null;
+            
+            if (submenu.classList.contains('show')) {
+                submenu.classList.remove('show');
+                if(icon) icon.classList.remove('bi-chevron-up');
+                if(icon) icon.classList.add('bi-chevron-down');
+            } else {
+                // Close other submenus first (optional, for accordion effect)
+                document.querySelectorAll('.sidebar-submenu').forEach(sm => sm.classList.remove('show'));
+                document.querySelectorAll('.dropdown-icon').forEach(ic => {
+                    ic.classList.remove('bi-chevron-up');
+                    ic.classList.add('bi-chevron-down');
+                });
+
+                submenu.classList.add('show');
+                if(icon) icon.classList.remove('bi-chevron-down');
+                if(icon) icon.classList.add('bi-chevron-up');
             }
         }
 
-        function goBack() {
-            if (pageHistory.length > 1) {
-                pageHistory.pop();
+        // Helper to open submenu from Dashboard card
+        function toggleSubmenuAndOpen(submenuId) {
+            // Find the parent trigger element based on submenuId
+            let triggerElement;
+            if(submenuId === 'task-submenu') {
+                triggerElement = document.querySelectorAll('.sidebar-nav-item')[1]; // Task Delegation index
+            } else if (submenuId === 'checklist-submenu') {
+                triggerElement = document.querySelectorAll('.sidebar-nav-item')[2]; // Checklist index
             }
-            const previousPageId = pageHistory[pageHistory.length - 1];
-            showContent(previousPageId);
+            
+            toggleSubmenu(submenuId, triggerElement);
+            // Scroll sidebar to show it
+            triggerElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
 
-        function updateSidebarActiveState(activePageId) {
-            document.querySelectorAll('.sidebar-nav-item').forEach(item => {
-                item.classList.remove('active');
+        // Function to Load External Module into Iframe (Full Screen)
+        function loadModule(url, title) {
+            event.preventDefault(); // Prevent link default
+            
+            // Hide all standard content pages
+            document.querySelectorAll('.content').forEach(page => {
+                page.classList.remove('active-content');
             });
-            const activeNavItem = document.querySelector(`.sidebar-nav-item[data-page="${activePageId}"]`);
-            if (activeNavItem) {
-                activeNavItem.classList.add('active');
-            }
+
+            // Show Iframe container
+            const container = document.getElementById('module-container');
+            const iframe = document.getElementById('main-frame');
+            
+            container.classList.add('active-content');
+            iframe.src = url;
+
+            // Update Active State in Sidebar (Submenu item)
+            document.querySelectorAll('.sidebar-submenu-item').forEach(item => item.classList.remove('active-sub'));
+            event.target.classList.add('active-sub');
+
+            // Handle Mobile
+            closeMobileSidebar();
         }
 
-        // Updated Function: Fetch Task Data using Google Sheets API
-        async function fetchTaskData() {
-            const spreadsheetId = '1aq7CXHNkpkWoJLhTDWkYG9CrszsRAY0v4sswWZC6fYE';
-            const range = 'Task-Data!A2:C2';
-            const url = `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/${range}?key=${API_KEY}`;
-
-            try {
-                const response = await fetch(url);
-                const data = await response.json();
-                
-                if (data.values && data.values.length > 0) {
-                    const values = data.values[0];
-                    // Mapping: Index 0 -> Total, Index 1 -> Pending, Index 2 -> Done
-                    document.getElementById('totalTasks').innerText = values[0] || '0';
-                    document.getElementById('totalPending').innerText = values[1] || '0';
-                    document.getElementById('totalDone').innerText = values[2] || '0';
-                } else {
-                    console.warn('No task data found in the specified range.');
-                }
-            } catch (error) {
-                console.error('Error fetching task data:', error);
-                document.getElementById('totalTasks').innerText = '-';
-                document.getElementById('totalPending').innerText = '-';
-                document.getElementById('totalDone').innerText = '-';
+        function closeMobileSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            if (sidebar.classList.contains('show-mobile')) {
+                sidebar.classList.remove('show-mobile');
             }
-        }
-
-        // Updated Function: Fetch Checklist Data using Google Sheets API
-        async function fetchCheckListData() {
-            const spreadsheetId = '1fGudRr5zZy_3qDGloCptok3VtXbR3L5pK1fBHC4tb8c';
-            const range = 'Task-Data!A2:C2';
-            const url = `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/${range}?key=${API_KEY}`;
-
-            try {
-                const response = await fetch(url);
-                const data = await response.json();
-                
-                if (data.values && data.values.length > 0) {
-                    const values = data.values[0];
-                    // Mapping: Index 0 -> Total, Index 1 -> Pending, Index 2 -> Done
-                    document.getElementById('totalChecks').innerText = values[0] || '0';
-                    document.getElementById('pendingChecks').innerText = values[1] || '0';
-                    document.getElementById('doneChecks').innerText = values[2] || '0';
-                } else {
-                    console.warn('No checklist data found in the specified range.');
-                }
-            } catch (error) {
-                console.error('Error fetching checklist data:', error);
-                document.getElementById('totalChecks').innerText = '-';
-                document.getElementById('pendingChecks').innerText = '-';
-                document.getElementById('doneChecks').innerText = '-';
-            }
-        }
-
-        // Kept as dummy since no API key provided for FMS
-        function fetchFMSData() {
-            // Replace with actual API call
-            document.getElementById('totalFiles').innerText = '156';
-            document.getElementById('usedSpace').innerText = '2.4GB';
-            document.getElementById('freeSpace').innerText = '7.6GB';
         }
 
         function toggleMobileSidebar() {
@@ -1286,19 +1168,54 @@
             sidebar.classList.toggle('show-mobile');
         }
 
+        // Fetch Data Functions (Preserved)
+        async function fetchTaskData() {
+            const spreadsheetId = '1aq7CXHNkpkWoJLhTDWkYG9CrszsRAY0v4sswWZC6fYE';
+            const range = 'Task-Data!A2:C2';
+            const url = `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/${range}?key=${API_KEY}`;
+            try {
+                const response = await fetch(url);
+                const data = await response.json();
+                if (data.values && data.values.length > 0) {
+                    const values = data.values[0];
+                    document.getElementById('totalTasks').innerText = values[0] || '0';
+                    document.getElementById('totalPending').innerText = values[1] || '0';
+                    document.getElementById('totalDone').innerText = values[2] || '0';
+                }
+            } catch (error) {
+                console.error('Error fetching task data:', error);
+            }
+        }
+
+        async function fetchCheckListData() {
+            const spreadsheetId = '1fGudRr5zZy_3qDGloCptok3VtXbR3L5pK1fBHC4tb8c';
+            const range = 'Task-Data!A2:C2';
+            const url = `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/${range}?key=${API_KEY}`;
+            try {
+                const response = await fetch(url);
+                const data = await response.json();
+                if (data.values && data.values.length > 0) {
+                    const values = data.values[0];
+                    document.getElementById('totalChecks').innerText = values[0] || '0';
+                    document.getElementById('pendingChecks').innerText = values[1] || '0';
+                    document.getElementById('doneChecks').innerText = values[2] || '0';
+                }
+            } catch (error) {
+                console.error('Error fetching checklist data:', error);
+            }
+        }
+
+        function fetchFMSData() {
+            document.getElementById('totalFiles').innerText = '156';
+            document.getElementById('usedSpace').innerText = '2.4GB';
+            document.getElementById('freeSpace').innerText = '7.6GB';
+        }
+
         document.addEventListener('DOMContentLoaded', () => {
             showContent('home');
             fetchTaskData();
             fetchCheckListData();
             fetchFMSData();
-
-            document.querySelectorAll('.sidebar-nav-item').forEach(item => {
-                item.addEventListener('click', (event) => {
-                    event.preventDefault();
-                    const pageId = item.getAttribute('data-page');
-                    showContent(pageId);
-                });
-            });
 
             const sidebarToggle = document.getElementById('sidebarToggle');
             const sidebar = document.getElementById('sidebar');
