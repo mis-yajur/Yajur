@@ -230,6 +230,7 @@
             border-radius: 6px;
             margin-bottom: 2px;
             position: relative;
+            cursor: pointer;
         }
         
         .sidebar-submenu-item:before {
@@ -777,12 +778,24 @@
                     </div>
                 </div>
 
-                <a href="#" class="sidebar-nav-item" data-page="pms-page" onclick="showContent('pms-page')">
-                    <div class="sidebar-nav-item-content">
-                        <i class="bi bi-clipboard-data-fill"></i>
-                        <span>PMS</span>
+                <!-- PMS (Modified to Dropdown with direct load + Submenu) -->
+                <div class="sidebar-nav-group">
+                    <!-- Main PMS Item: Clicking it loads the Dashboard AND toggles the menu -->
+                    <div class="sidebar-nav-item" onclick="loadModule('https://script.google.com/macros/s/AKfycbwA-KQ6BZlfc69YgClBcjaxoxIQQBEDLH7TW_GTw89XKfQq6ugXwtHmvMudL50uekgv/exec', 'PMS Dashboard'); toggleSubmenu('pms-submenu', this)">
+                        <div class="sidebar-nav-item-content">
+                            <i class="bi bi-clipboard-data-fill"></i>
+                            <span>PMS</span>
+                        </div>
+                        <i class="bi bi-chevron-down dropdown-icon" style="font-size: 0.8rem; margin-right: 0;"></i>
                     </div>
-                </a>
+                    <div id="pms-submenu" class="sidebar-submenu">
+                        <!-- Submenu Item: Expense Request -->
+                        <a href="#" class="sidebar-submenu-item" onclick="loadModule('https://script.google.com/macros/s/AKfycbxoV4BWgt7UckmArLuHLtCheC3U-0c9RpWH7Ru0YoNF3EBO_tqTRsjdhEAMvlt6QP01/exec', 'Expense Request')">
+                            Expense Request (Yasoda)
+                        </a>
+                    </div>
+                </div>
+
                 <a href="#" class="sidebar-nav-item" data-page="hr-page" onclick="showContent('hr-page')">
                     <div class="sidebar-nav-item-content">
                         <i class="bi bi-people"></i>
@@ -827,7 +840,7 @@
                 </div>
 
                 <div class="card-grid">
-                    <!-- Task Delegation Summary Card (Redirects to first submodule or prompts user) -->
+                    <!-- Task Delegation Summary Card -->
                     <div class="main-card" onclick="toggleSubmenuAndOpen('task-submenu')">
                         <div class="card-header">
                             <div class="icon-box">
@@ -927,7 +940,7 @@
                         </div>
                     </div>
 
-                    <!-- IMS Card - Now loads Dashboard directly -->
+                    <!-- IMS Card -->
                     <div class="main-card" onclick="loadModule('https://script.google.com/macros/s/AKfycbygCfsQZXkIK5px7HEt-k6D5l5cl9TZeMJMQl-0wmxS-6QQKwbikXzqE3V-vPxPQ8AT/exec', 'IMS Dashboard')">
                         <div class="card-header">
                             <div class="icon-box">
@@ -941,7 +954,8 @@
                         <div class="card-footer"><span class="card-link">Open Dashboard <i class="bi bi-arrow-right"></i></span></div>
                     </div>
 
-                    <div class="main-card" onclick="showContent('pms-page')">
+                    <!-- PMS Card - Updated to load external dashboard directly -->
+                    <div class="main-card" onclick="loadModule('https://script.google.com/macros/s/AKfycbwA-KQ6BZlfc69YgClBcjaxoxIQQBEDLH7TW_GTw89XKfQq6ugXwtHmvMudL50uekgv/exec', 'PMS Dashboard')">
                         <div class="card-header">
                             <div class="icon-box">
                                 <i class="bi bi-clipboard-data-fill card-icon"></i>
@@ -951,7 +965,7 @@
                                 <span class="badge">Projects</span>
                             </div>
                         </div>
-                        <div class="card-footer"><span class="card-link">Explore Module <i class="bi bi-arrow-right"></i></span></div>
+                        <div class="card-footer"><span class="card-link">Open Dashboard <i class="bi bi-arrow-right"></i></span></div>
                     </div>
 
                     <div class="main-card" onclick="showContent('hr-page')">
@@ -996,22 +1010,7 @@
                 </div>
             </div>
 
-            <!-- PMS Page -->
-            <div id="pms-page" class="content">
-                <div class="page-header">
-                    <a href="#" class="back-button" onclick="showContent('home'); return false;">
-                        <i class="bi bi-arrow-left"></i>
-                        <span>Back to Dashboard</span>
-                    </a>
-                    <h1 class="text-3xl font-bold text-gray-900">Project Management System</h1>
-                </div>
-                <div class="card-grid">
-                    <a href="https://script.google.com/macros/s/AKfycbxoV4BWgt7UckmArLuHLtCheC3U-0c9RpWH7Ru0YoNF3EBO_tqTRsjdhEAMvlt6QP01/exec" class="sub-card" target="_blank">
-                        <div class="sub-icon-box"><i class="bi bi-cash-stack sub-card-icon"></i></div>
-                        <h4 class="sub-card-title">Expense Request (Yosodha)</h4>
-                    </a>
-                </div>
-            </div>
+            <!-- PMS Page REMOVED (Replaced by direct Iframe Load) -->
 
             <!-- HR Page -->
             <div id="hr-page" class="content">
@@ -1120,6 +1119,9 @@
             } else if (submenuId === 'ims-submenu') {
                  // The 4th item (index 3) is FMS, so IMS is index 4
                 triggerElement = document.querySelectorAll('.sidebar-nav-item')[4];
+            } else if (submenuId === 'pms-submenu') {
+                // PMS is index 5
+                triggerElement = document.querySelectorAll('.sidebar-nav-item')[5];
             }
             
             if(triggerElement) {
@@ -1131,7 +1133,7 @@
 
         // Function to Load External Module into Iframe (Full Screen)
         function loadModule(url, title) {
-            event.preventDefault(); // Prevent link default
+            if(event) event.preventDefault(); // Prevent link default
             
             // Hide all standard content pages
             document.querySelectorAll('.content').forEach(page => {
@@ -1146,11 +1148,10 @@
             iframe.src = url;
 
             // Update Active State in Sidebar (Submenu item)
-            // Note: This logic works well for sidebar clicks, for home card clicks we might want to manually highlight the sidebar
             document.querySelectorAll('.sidebar-submenu-item').forEach(item => item.classList.remove('active-sub'));
             
             // If the click came from sidebar (event.target exists inside sidebar)
-            if(event.target.classList.contains('sidebar-submenu-item')) {
+            if(event && event.target && event.target.classList.contains('sidebar-submenu-item')) {
                 event.target.classList.add('active-sub');
             }
 
