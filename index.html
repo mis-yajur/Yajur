@@ -64,12 +64,94 @@
             display: flex;
         }
 
+        /* --- LOGIN SCREEN STYLES --- */
+        #login-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #F1F5F9;
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .login-card {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 1rem;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        .login-logo {
+            width: 64px;
+            height: 64px;
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+        }
+
+        .login-input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            margin-bottom: 1rem;
+            border: 1px solid #E2E8F0;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            outline: none;
+            transition: all 0.2s;
+        }
+
+        .login-input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 0.75rem;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .login-btn:hover {
+            background: var(--primary-dark);
+        }
+
+        .error-msg {
+            color: var(--danger);
+            font-size: 0.875rem;
+            margin-top: 1rem;
+            display: none;
+        }
+
+        /* --- EXISTING STYLES --- */
+
         /* Main Layout */
         .app-wrapper {
             display: flex;
             width: 100%;
-            height: 100vh; /* Fixed height for full screen apps */
+            height: 100vh;
             overflow: hidden;
+            /* Hidden initially until login */
+            visibility: hidden; 
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        
+        .app-wrapper.authenticated {
+            visibility: visible;
+            opacity: 1;
         }
 
         /* Sidebar */
@@ -217,7 +299,7 @@
         }
 
         .sidebar.collapsed .sidebar-submenu {
-            display: none !important; /* Hide submenus when collapsed */
+            display: none !important;
         }
 
         .sidebar-submenu-item {
@@ -691,12 +773,28 @@
     </style>
 </head>
 <body>
+    
+    <!-- Login Overlay -->
+    <div id="login-overlay">
+        <div class="login-card">
+            <img src="https://i.ibb.co/KxMxh3Hw/logo.png" alt="Yajur Automation" class="login-logo">
+            <h2 class="text-2xl font-bold mb-1 text-gray-800">Welcome Back</h2>
+            <p class="text-gray-500 mb-6">Enter your credentials to access modules</p>
+            
+            <input type="text" id="username" class="login-input" placeholder="Username">
+            <input type="password" id="password" class="login-input" placeholder="Password">
+            
+            <button onclick="handleLogin()" class="login-btn">Sign In</button>
+            <div id="login-error" class="error-msg">Invalid Username or Password</div>
+        </div>
+    </div>
+
     <!-- Mobile Sidebar Toggle -->
     <div class="mobile-sidebar-toggle" onclick="toggleMobileSidebar()">
         <i class="bi bi-list"></i>
     </div>
 
-    <div class="app-wrapper">
+    <div class="app-wrapper" id="app-wrapper">
         <!-- Sidebar -->
         <aside id="sidebar" class="sidebar">
             <div class="sidebar-header">
@@ -716,8 +814,8 @@
                     </div>
                 </a>
 
-                <!-- Task Delegation (With Submenu) -->
-                <div class="sidebar-nav-group">
+                <!-- Task Delegation (Group ID Added) -->
+                <div class="sidebar-nav-group" id="nav-group-task">
                     <div class="sidebar-nav-item" onclick="toggleSubmenu('task-submenu', this)">
                         <div class="sidebar-nav-item-content">
                             <i class="bi bi-people-fill"></i>
@@ -726,20 +824,20 @@
                         <i class="bi bi-chevron-down dropdown-icon" style="font-size: 0.8rem; margin-right: 0;"></i>
                     </div>
                     <div id="task-submenu" class="sidebar-submenu">
-                        <a href="#" class="sidebar-submenu-item" onclick="loadModule('https://script.google.com/macros/s/AKfycbwrELqyJhu7LTU1gshHa7JUKL9MoP2be0zk26yfs0nJALzrtqskyw-FfzX_lrZGs_ys/exec', 'Delegation Master')">
+                        <a href="#" id="link-delegation-master" class="sidebar-submenu-item" onclick="loadModule('https://script.google.com/macros/s/AKfycbwrELqyJhu7LTU1gshHa7JUKL9MoP2be0zk26yfs0nJALzrtqskyw-FfzX_lrZGs_ys/exec', 'Delegation Master')">
                             Delegation Master
                         </a>
-                        <a href="#" class="sidebar-submenu-item" onclick="loadModule('https://script.google.com/macros/s/AKfycbxGJ4keymTTG5dBT7A5XNtcEqvbzCUFQchPx6W4QJBROXlGSAI5pGmK3KlvT-iekry3/exec', 'Task Master (Manager)')">
+                        <a href="#" id="link-task-master" class="sidebar-submenu-item" onclick="loadModule('https://script.google.com/macros/s/AKfycbxGJ4keymTTG5dBT7A5XNtcEqvbzCUFQchPx6W4QJBROXlGSAI5pGmK3KlvT-iekry3/exec', 'Task Master (Manager)')">
                             Task Master (Manager)
                         </a>
-                        <a href="#" class="sidebar-submenu-item" onclick="loadModule('https://script.google.com/macros/s/AKfycbxnujoBeXrHdvi2ejp8VlHNgPKW_LCExoaPDjA97cE8Yh9UUUE-yLTJWy2OtHLW0ZQv/exec', 'Daily Work')">
+                        <a href="#" id="link-daily-work" class="sidebar-submenu-item" onclick="loadModule('https://script.google.com/macros/s/AKfycbxnujoBeXrHdvi2ejp8VlHNgPKW_LCExoaPDjA97cE8Yh9UUUE-yLTJWy2OtHLW0ZQv/exec', 'Daily Work')">
                             Daily Work
                         </a>
                     </div>
                 </div>
 
-                <!-- Check List (With Submenu) -->
-                <div class="sidebar-nav-group">
+                <!-- Check List (Group ID Added) -->
+                <div class="sidebar-nav-group" id="nav-group-checklist">
                     <div class="sidebar-nav-item" onclick="toggleSubmenu('checklist-submenu', this)">
                         <div class="sidebar-nav-item-content">
                             <i class="bi bi-list-check"></i>
@@ -754,16 +852,16 @@
                     </div>
                 </div>
 
-                <!-- Other Modules -->
-                <a href="#" class="sidebar-nav-item" data-page="fms-page" onclick="showContent('fms-page')">
+                <!-- FMS (ID Added) -->
+                <a href="#" class="sidebar-nav-item" id="nav-item-fms" data-page="fms-page" onclick="showContent('fms-page')">
                     <div class="sidebar-nav-item-content">
                         <i class="bi bi-folder-fill"></i>
                         <span>FMS</span>
                     </div>
                 </a>
 
-                <!-- IMS (Modified to Dropdown with Stock Management) -->
-                <div class="sidebar-nav-group">
+                <!-- IMS (Group ID Added) -->
+                <div class="sidebar-nav-group" id="nav-group-ims">
                     <div class="sidebar-nav-item" onclick="toggleSubmenu('ims-submenu', this)">
                         <div class="sidebar-nav-item-content">
                             <i class="bi bi-database-fill"></i>
@@ -778,8 +876,8 @@
                     </div>
                 </div>
 
-                <!-- PMS (Modified to Dropdown with direct load + Submenu) -->
-                <div class="sidebar-nav-group">
+                <!-- PMS (Group ID Added) -->
+                <div class="sidebar-nav-group" id="nav-group-pms">
                     <div class="sidebar-nav-item" onclick="loadModule('https://script.google.com/macros/s/AKfycbwA-KQ6BZlfc69YgClBcjaxoxIQQBEDLH7TW_GTw89XKfQq6ugXwtHmvMudL50uekgv/exec', 'PMS Dashboard'); toggleSubmenu('pms-submenu', this)">
                         <div class="sidebar-nav-item-content">
                             <i class="bi bi-clipboard-data-fill"></i>
@@ -794,8 +892,8 @@
                     </div>
                 </div>
 
-                <!-- HR (Updated to Dropdown with direct load + Leave Application Submenu) -->
-                <div class="sidebar-nav-group">
+                <!-- HR (Group ID Added) -->
+                <div class="sidebar-nav-group" id="nav-group-hr">
                     <div class="sidebar-nav-item" onclick="loadModule('https://script.google.com/macros/s/AKfycbxFxKL-T6YC0g0LIWgPKucEp12bFJqLFat_bIGv_3kasw7FJjXpei2KysMFwxpadZn4dw/exec', 'HR Dashboard'); toggleSubmenu('hr-submenu', this)">
                         <div class="sidebar-nav-item-content">
                             <i class="bi bi-people"></i>
@@ -810,8 +908,8 @@
                     </div>
                 </div>
 
-                <!-- Production (Direct Load + Quality Submenu) -->
-                <div class="sidebar-nav-group">
+                <!-- Production (Group ID Added) -->
+                <div class="sidebar-nav-group" id="nav-group-production">
                     <div class="sidebar-nav-item" onclick="loadModule('https://script.google.com/macros/s/AKfycbyplQQdMagE72dkkzoxW1N3nmR4cKgnrFdkvOPYllcpuVlaU0HDrppVsurwhpS3XSAt/exec', 'Production Dashboard'); toggleSubmenu('production-submenu', this)">
                         <div class="sidebar-nav-item-content">
                             <i class="bi bi-gear-fill"></i>
@@ -858,8 +956,8 @@
                 </div>
 
                 <div class="card-grid">
-                    <!-- Task Delegation Summary Card -->
-                    <div class="main-card" onclick="toggleSubmenuAndOpen('task-submenu')">
+                    <!-- Task Delegation Card (ID Added) -->
+                    <div class="main-card" id="card-task" onclick="toggleSubmenuAndOpen('task-submenu')">
                         <div class="card-header">
                             <div class="icon-box">
                                 <i class="bi bi-people-fill card-icon"></i>
@@ -892,7 +990,8 @@
                         </div>
                     </div>
 
-                    <div class="main-card" onclick="toggleSubmenuAndOpen('checklist-submenu')">
+                    <!-- Checklist Card (ID Added) -->
+                    <div class="main-card" id="card-checklist" onclick="toggleSubmenuAndOpen('checklist-submenu')">
                         <div class="card-header">
                             <div class="icon-box">
                                 <i class="bi bi-list-check card-icon"></i>
@@ -925,7 +1024,8 @@
                         </div>
                     </div>
 
-                    <div class="main-card" onclick="showContent('fms-page')">
+                    <!-- FMS Card (ID Added) -->
+                    <div class="main-card" id="card-fms" onclick="showContent('fms-page')">
                         <div class="card-header">
                             <div class="icon-box">
                                 <i class="bi bi-folder-fill card-icon"></i>
@@ -958,8 +1058,8 @@
                         </div>
                     </div>
 
-                    <!-- IMS Card -->
-                    <div class="main-card" onclick="loadModule('https://script.google.com/macros/s/AKfycbygCfsQZXkIK5px7HEt-k6D5l5cl9TZeMJMQl-0wmxS-6QQKwbikXzqE3V-vPxPQ8AT/exec', 'IMS Dashboard')">
+                    <!-- IMS Card (ID Added) -->
+                    <div class="main-card" id="card-ims" onclick="loadModule('https://script.google.com/macros/s/AKfycbygCfsQZXkIK5px7HEt-k6D5l5cl9TZeMJMQl-0wmxS-6QQKwbikXzqE3V-vPxPQ8AT/exec', 'IMS Dashboard')">
                         <div class="card-header">
                             <div class="icon-box">
                                 <i class="bi bi-database-fill card-icon"></i>
@@ -972,8 +1072,8 @@
                         <div class="card-footer"><span class="card-link">Open Dashboard <i class="bi bi-arrow-right"></i></span></div>
                     </div>
 
-                    <!-- PMS Card -->
-                    <div class="main-card" onclick="loadModule('https://script.google.com/macros/s/AKfycbwA-KQ6BZlfc69YgClBcjaxoxIQQBEDLH7TW_GTw89XKfQq6ugXwtHmvMudL50uekgv/exec', 'PMS Dashboard')">
+                    <!-- PMS Card (ID Added) -->
+                    <div class="main-card" id="card-pms" onclick="loadModule('https://script.google.com/macros/s/AKfycbwA-KQ6BZlfc69YgClBcjaxoxIQQBEDLH7TW_GTw89XKfQq6ugXwtHmvMudL50uekgv/exec', 'PMS Dashboard')">
                         <div class="card-header">
                             <div class="icon-box">
                                 <i class="bi bi-clipboard-data-fill card-icon"></i>
@@ -986,8 +1086,8 @@
                         <div class="card-footer"><span class="card-link">Open Dashboard <i class="bi bi-arrow-right"></i></span></div>
                     </div>
 
-                    <!-- HR Card -->
-                    <div class="main-card" onclick="loadModule('https://script.google.com/macros/s/AKfycbxFxKL-T6YC0g0LIWgPKucEp12bFJqLFat_bIGv_3kasw7FJjXpei2KysMFwxpadZn4dw/exec', 'HR Dashboard')">
+                    <!-- HR Card (ID Added) -->
+                    <div class="main-card" id="card-hr" onclick="loadModule('https://script.google.com/macros/s/AKfycbxFxKL-T6YC0g0LIWgPKucEp12bFJqLFat_bIGv_3kasw7FJjXpei2KysMFwxpadZn4dw/exec', 'HR Dashboard')">
                         <div class="card-header">
                             <div class="icon-box">
                                 <i class="bi bi-people card-icon"></i>
@@ -1000,8 +1100,8 @@
                         <div class="card-footer"><span class="card-link">Open Dashboard <i class="bi bi-arrow-right"></i></span></div>
                     </div>
 
-                    <!-- Production Card (New) -->
-                    <div class="main-card" onclick="loadModule('https://script.google.com/macros/s/AKfycbyplQQdMagE72dkkzoxW1N3nmR4cKgnrFdkvOPYllcpuVlaU0HDrppVsurwhpS3XSAt/exec', 'Production Dashboard')">
+                    <!-- Production Card (ID Added) -->
+                    <div class="main-card" id="card-production" onclick="loadModule('https://script.google.com/macros/s/AKfycbyplQQdMagE72dkkzoxW1N3nmR4cKgnrFdkvOPYllcpuVlaU0HDrppVsurwhpS3XSAt/exec', 'Production Dashboard')">
                         <div class="card-header">
                             <div class="icon-box">
                                 <i class="bi bi-gear-fill card-icon"></i>
@@ -1050,35 +1150,128 @@
     <script>
         const API_KEY = 'AIzaSyAriKmI0OQAzmO3uH3EAK7598TkQBYT52I';
 
-        // Function to handle showing standard content divs
-        function showContent(pageId) {
-            // Hide iframe
-            document.getElementById('module-container').classList.remove('active-content');
-            document.getElementById('main-frame').src = ''; // Clear source to stop processing
+        // --- LOGIN CONFIGURATION ---
+        const USERS = {
+            'Admin':   { pass: '1234', role: 'admin' },
+            'Manager': { pass: '1234', role: 'admin' }, // Same full access as admin
+            'Store':   { pass: '1234', role: 'store' },
+            'Hr':      { pass: '1234', role: 'hr' },
+            'SQC':     { pass: '1234', role: 'production' },
+            'Office':  { pass: '1234', role: 'office' },
+            'Yasoda':  { pass: '1234', role: 'pms' }
+        };
 
-            // Hide all content divs
+        // --- UI IDs MAPPING ---
+        // Maps roles to the IDs of Navigation Groups and Dashboard Cards they can see
+        const UI_ELEMENTS = {
+            'task':       { nav: 'nav-group-task',       card: 'card-task' },
+            'checklist':  { nav: 'nav-group-checklist',  card: 'card-checklist' },
+            'fms':        { nav: 'nav-item-fms',         card: 'card-fms' },
+            'ims':        { nav: 'nav-group-ims',        card: 'card-ims' },
+            'pms':        { nav: 'nav-group-pms',        card: 'card-pms' },
+            'hr':         { nav: 'nav-group-hr',         card: 'card-hr' },
+            'production': { nav: 'nav-group-production', card: 'card-production' }
+        };
+
+        function handleLogin() {
+            const userIn = document.getElementById('username').value;
+            const passIn = document.getElementById('password').value;
+            const errorMsg = document.getElementById('login-error');
+
+            if (USERS[userIn] && USERS[userIn].pass === passIn) {
+                // Success
+                errorMsg.style.display = 'none';
+                document.getElementById('login-overlay').style.display = 'none';
+                document.getElementById('app-wrapper').classList.add('authenticated');
+                
+                // Configure View based on Role
+                configureAccess(USERS[userIn].role);
+                
+                // Initial Data Fetch (Moved here so we don't fetch if not logged in)
+                fetchTaskData();
+                fetchCheckListData();
+                fetchFMSData();
+            } else {
+                // Error
+                errorMsg.style.display = 'block';
+            }
+        }
+
+        function configureAccess(role) {
+            // 1. Hide EVERYTHING first
+            for (let key in UI_ELEMENTS) {
+                document.getElementById(UI_ELEMENTS[key].nav).style.display = 'none';
+                document.getElementById(UI_ELEMENTS[key].card).style.display = 'none';
+            }
+
+            // 2. Specific Logic based on Role
+            if (role === 'admin') {
+                // Show All
+                for (let key in UI_ELEMENTS) {
+                    document.getElementById(UI_ELEMENTS[key].nav).style.display = 'block'; // 'flex' for nav item usually, but block works for wrapper
+                    if(key === 'fms') document.getElementById(UI_ELEMENTS[key].nav).style.display = 'flex'; // Fix for single item
+                    document.getElementById(UI_ELEMENTS[key].card).style.display = 'block';
+                }
+            } 
+            else if (role === 'store') {
+                showModule('ims');
+            }
+            else if (role === 'hr') {
+                showModule('hr');
+            }
+            else if (role === 'production') {
+                showModule('production');
+            }
+            else if (role === 'pms') {
+                showModule('pms');
+            }
+            else if (role === 'office') {
+                // Special Case: Task Delegation -> Only "Daily Work"
+                const taskElems = UI_ELEMENTS['task'];
+                document.getElementById(taskElems.nav).style.display = 'block';
+                document.getElementById(taskElems.card).style.display = 'block';
+
+                // Handle Submenu Items hiding
+                document.getElementById('link-delegation-master').style.display = 'none';
+                document.getElementById('link-task-master').style.display = 'none';
+                document.getElementById('link-daily-work').style.display = 'flex'; // Ensure this is visible
+            }
+        }
+
+        function showModule(moduleKey) {
+            const elems = UI_ELEMENTS[moduleKey];
+            if (elems) {
+                // Sidebar item
+                if(moduleKey === 'fms') {
+                     document.getElementById(elems.nav).style.display = 'flex';
+                } else {
+                     document.getElementById(elems.nav).style.display = 'block';
+                }
+                // Dashboard Card
+                document.getElementById(elems.card).style.display = 'block';
+            }
+        }
+
+        // --- ORIGINAL FUNCTIONS (Unchanged Logic) ---
+
+        function showContent(pageId) {
+            document.getElementById('module-container').classList.remove('active-content');
+            document.getElementById('main-frame').src = ''; 
             document.querySelectorAll('.content').forEach(page => {
                 page.classList.remove('active-content');
             });
-
-            // Show target
             const targetPage = document.getElementById(pageId);
             if (targetPage) {
                 targetPage.classList.add('active-content');
                 window.scrollTo({ top: 0, behavior: 'smooth' });
-                
-                // Update Sidebar highlight
                 document.querySelectorAll('.sidebar-nav-item').forEach(item => item.classList.remove('active'));
                 document.querySelectorAll('.sidebar-submenu-item').forEach(item => item.classList.remove('active-sub'));
-                
                 const activeNavItem = document.querySelector(`.sidebar-nav-item[data-page="${pageId}"]`);
                 if (activeNavItem) activeNavItem.classList.add('active');
             }
-            
             closeMobileSidebar();
         }
 
-        // Function to Toggle Submenus
         function toggleSubmenu(submenuId, element) {
             const submenu = document.getElementById(submenuId);
             const icon = element ? element.querySelector('.dropdown-icon') : null;
@@ -1088,71 +1281,47 @@
                 if(icon) icon.classList.remove('bi-chevron-up');
                 if(icon) icon.classList.add('bi-chevron-down');
             } else {
-                // Close other submenus first (optional, for accordion effect)
                 document.querySelectorAll('.sidebar-submenu').forEach(sm => sm.classList.remove('show'));
                 document.querySelectorAll('.dropdown-icon').forEach(ic => {
                     ic.classList.remove('bi-chevron-up');
                     ic.classList.add('bi-chevron-down');
                 });
-
                 submenu.classList.add('show');
                 if(icon) icon.classList.remove('bi-chevron-down');
                 if(icon) icon.classList.add('bi-chevron-up');
             }
         }
 
-        // Helper to open submenu from Dashboard card
         function toggleSubmenuAndOpen(submenuId) {
-            // Find the parent trigger element based on submenuId
             let triggerElement;
             const navItems = document.querySelectorAll('.sidebar-nav-item');
             
-            if(submenuId === 'task-submenu') {
-                triggerElement = navItems[1]; // Task Delegation
-            } else if (submenuId === 'checklist-submenu') {
-                triggerElement = navItems[2]; // Checklist
-            } else if (submenuId === 'ims-submenu') {
-                triggerElement = navItems[4]; // IMS (Index might vary if items change, currently 4)
-            } else if (submenuId === 'pms-submenu') {
-                triggerElement = navItems[5]; // PMS
-            } else if (submenuId === 'hr-submenu') {
-                triggerElement = navItems[6]; // HR
-            } else if (submenuId === 'production-submenu') {
-                triggerElement = navItems[7]; // Production
-            }
+            if(submenuId === 'task-submenu') triggerElement = navItems[1]; 
+            else if (submenuId === 'checklist-submenu') triggerElement = navItems[2]; 
+            else if (submenuId === 'ims-submenu') triggerElement = navItems[4]; 
+            else if (submenuId === 'pms-submenu') triggerElement = navItems[5]; 
+            else if (submenuId === 'hr-submenu') triggerElement = navItems[6]; 
+            else if (submenuId === 'production-submenu') triggerElement = navItems[7]; 
             
             if(triggerElement) {
                 toggleSubmenu(submenuId, triggerElement);
-                // Scroll sidebar to show it
                 triggerElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
             }
         }
 
-        // Function to Load External Module into Iframe (Full Screen)
         function loadModule(url, title) {
-            if(event) event.preventDefault(); // Prevent link default
-            
-            // Hide all standard content pages
+            if(event) event.preventDefault(); 
             document.querySelectorAll('.content').forEach(page => {
                 page.classList.remove('active-content');
             });
-
-            // Show Iframe container
             const container = document.getElementById('module-container');
             const iframe = document.getElementById('main-frame');
-            
             container.classList.add('active-content');
             iframe.src = url;
-
-            // Update Active State in Sidebar (Submenu item)
             document.querySelectorAll('.sidebar-submenu-item').forEach(item => item.classList.remove('active-sub'));
-            
-            // If the click came from sidebar (event.target exists inside sidebar)
             if(event && event.target && event.target.classList.contains('sidebar-submenu-item')) {
                 event.target.classList.add('active-sub');
             }
-
-            // Handle Mobile
             closeMobileSidebar();
         }
 
@@ -1168,7 +1337,6 @@
             sidebar.classList.toggle('show-mobile');
         }
 
-        // Fetch Data Functions (Preserved)
         async function fetchTaskData() {
             const spreadsheetId = '1aq7CXHNkpkWoJLhTDWkYG9CrszsRAY0v4sswWZC6fYE';
             const range = 'Task-Data!A2:C2';
@@ -1213,9 +1381,7 @@
 
         document.addEventListener('DOMContentLoaded', () => {
             showContent('home');
-            fetchTaskData();
-            fetchCheckListData();
-            fetchFMSData();
+            // Fetching moved to handleLogin to prevent data loading before login
 
             const sidebarToggle = document.getElementById('sidebarToggle');
             const sidebar = document.getElementById('sidebar');
@@ -1228,6 +1394,13 @@
                     icon.classList.toggle('bi-chevron-right');
                 });
             }
+        });
+        
+        // Allow "Enter" key to login
+        document.getElementById("password").addEventListener("keypress", function(event) {
+          if (event.key === "Enter") {
+            handleLogin();
+          }
         });
     </script>
 </body>
