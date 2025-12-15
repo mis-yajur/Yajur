@@ -47,6 +47,12 @@
             --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
             --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
             --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+            
+            /* Windows-style shadow effects */
+            --shadow-windows: 0 8px 32px rgba(0, 0, 0, 0.15);
+            --border-windows: 1px solid rgba(255, 255, 255, 0.1);
+            --glow-blue: rgba(59, 130, 246, 0.15);
+            --glow-movement: rgba(59, 130, 246, 0.1);
         }
 
         * {
@@ -62,6 +68,13 @@
             min-height: 100vh;
             overflow-x: hidden;
             display: flex;
+        }
+
+        /* Windows-style moving glow effect */
+        @keyframes glow-move {
+            0% { box-shadow: var(--shadow-windows), 0 0 20px var(--glow-blue); }
+            50% { box-shadow: var(--shadow-windows), 0 0 30px var(--glow-movement); }
+            100% { box-shadow: var(--shadow-windows), 0 0 20px var(--glow-blue); }
         }
 
         /* --- LOGIN SCREEN STYLES --- */
@@ -453,9 +466,11 @@
             margin-top: 2rem;
             padding: 1.5rem;
             background: var(--bg-card);
-            border: 1px solid var(--border-light);
+            border: var(--border-windows);
             border-radius: 12px;
-            box-shadow: var(--shadow-sm);
+            box-shadow: var(--shadow-windows);
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.95);
         }
 
         .stat-item {
@@ -500,18 +515,44 @@
         /* Main Cards */
         .main-card {
             background: var(--bg-card);
-            border: 1px solid var(--border-color);
+            border: var(--border-windows);
             border-radius: 12px;
             padding: 1.5rem;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: var(--shadow-sm);
+            box-shadow: var(--shadow-windows);
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.95);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .main-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255, 255, 255, 0.2),
+                transparent
+            );
+            transition: left 0.7s ease;
+        }
+
+        .main-card:hover::before {
+            left: 100%;
         }
 
         .main-card:hover {
             transform: translateY(-4px);
             box-shadow: var(--shadow-lg);
             border-color: var(--primary-light);
+            animation: glow-move 2s infinite;
         }
 
         .card-header {
@@ -580,7 +621,7 @@
             padding: 0.75rem;
             border-radius: 8px;
             text-align: center;
-            border: 1px solid var(--border-light);
+            border: var(--border-windows);
         }
 
         .task-summary-item .label {
@@ -628,7 +669,7 @@
         /* Sub Cards */
         .sub-card {
             background: var(--bg-card);
-            border: 1px solid var(--border-color);
+            border: var(--border-windows);
             border-radius: 12px;
             padding: 1.5rem;
             cursor: pointer;
@@ -637,7 +678,9 @@
             color: inherit;
             display: flex;
             flex-direction: column;
-            box-shadow: var(--shadow-sm);
+            box-shadow: var(--shadow-windows);
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.95);
         }
 
         .sub-card:hover {
@@ -645,6 +688,7 @@
             box-shadow: var(--shadow-lg);
             border-color: var(--accent);
             color: inherit;
+            animation: glow-move 2s infinite;
         }
 
         .sub-icon-box {
@@ -685,7 +729,7 @@
             gap: 0.5rem;
             padding: 0.625rem 1.25rem;
             background: var(--bg-secondary);
-            border: 1px solid var(--border-color);
+            border: var(--border-windows);
             border-radius: 8px;
             color: var(--text-secondary);
             font-weight: 500;
@@ -924,6 +968,22 @@
                     </div>
                 </div>
 
+                <!-- Sales (NEW MODULE ADDED HERE) -->
+                <div class="sidebar-nav-group" id="nav-group-sales">
+                    <div class="sidebar-nav-item" onclick="loadModule('https://script.google.com/macros/s/AKfycbwqDVCjsl0uwTFETU-H9SJ_YpwJjfyRJJmEiBDcLBU6IZLIbOS5w5rFVrmqCQ-lOJ6Ktw/exec', 'Sales Dashboard'); toggleSubmenu('sales-submenu', this)">
+                        <div class="sidebar-nav-item-content">
+                            <i class="bi bi-graph-up-arrow"></i>
+                            <span>Sales</span>
+                        </div>
+                        <i class="bi bi-chevron-down dropdown-icon" style="font-size: 0.8rem; margin-right: 0;"></i>
+                    </div>
+                    <div id="sales-submenu" class="sidebar-submenu">
+                        <a href="#" class="sidebar-submenu-item" onclick="loadModule('https://script.google.com/macros/s/AKfycbwqDVCjsl0uwTFETU-H9SJ_YpwJjfyRJJmEiBDcLBU6IZLIbOS5w5rFVrmqCQ-lOJ6Ktw/exec', 'Sales Dashboard')">
+                            Sales Dashboard
+                        </a>
+                    </div>
+                </div>
+
             </nav>
         </aside>
 
@@ -941,7 +1001,7 @@
                     <p class="text-lg text-gray-600 mt-2">Enterprise Workflow Management Platform Overview</p>
                     <div class="stats-bar mt-6">
                         <div class="stat-item">
-                            <div class="stat-value">6</div>
+                            <div class="stat-value">7</div>
                             <div class="stat-label">Active Modules</div>
                         </div>
                         <div class="stat-item">
@@ -1113,6 +1173,36 @@
                         </div>
                         <div class="card-footer"><span class="card-link">Open Dashboard <i class="bi bi-arrow-right"></i></span></div>
                     </div>
+
+                    <!-- Sales Card (NEW CARD ADDED HERE) -->
+                    <div class="main-card" id="card-sales" onclick="loadModule('https://script.google.com/macros/s/AKfycbwqDVCjsl0uwTFETU-H9SJ_YpwJjfyRJJmEiBDcLBU6IZLIbOS5w5rFVrmqCQ-lOJ6Ktw/exec', 'Sales Dashboard')">
+                        <div class="card-header">
+                            <div class="icon-box">
+                                <i class="bi bi-graph-up-arrow card-icon"></i>
+                            </div>
+                            <div class="card-body">
+                                <h3 class="card-title">Sales</h3>
+                                <span class="badge"> </span>
+                            </div>
+                        </div>
+                        <div class="task-summary-grid">
+                            <div class="task-summary-item">
+                                <span class="label">Total</span>
+                                <span class="value" id="totalSales">0.00</span>
+                            </div>
+                            <div class="task-summary-item">
+                                <span class="label">Target</span>
+                                <span class="value" id="salesTarget">24.00</span>
+                            </div>
+                            <div class="task-summary-item">
+                                <span class="label">Growth</span>
+                                <span class="value" id="salesGrowth">0%</span>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <span class="card-link">Open Dashboard <i class="bi bi-arrow-right"></i></span>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -1149,6 +1239,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         const API_KEY = 'AIzaSyAriKmI0OQAzmO3uH3EAK7598TkQBYT52I';
+        const SALES_SHEET_ID = '1TSheb5J1eGE7Ve_aeAbqe6_7CoOVwwxgxkLLpQB9GlA';
 
         // --- LOGIN CONFIGURATION ---
         const USERS = {
@@ -1158,11 +1249,11 @@
             'Hr':      { pass: '1234', role: 'hr' },
             'SQC':     { pass: '1234', role: 'production' },
             'Office':  { pass: '1234', role: 'office' },
-            'Yasoda':  { pass: '1234', role: 'pms' }
+            'Yasoda':  { pass: '1234', role: 'pms' },
+            'Sales':   { pass: '1234', role: 'sales' } // Added Sales role
         };
 
         // --- UI IDs MAPPING ---
-        // Maps roles to the IDs of Navigation Groups and Dashboard Cards they can see
         const UI_ELEMENTS = {
             'task':       { nav: 'nav-group-task',       card: 'card-task' },
             'checklist':  { nav: 'nav-group-checklist',  card: 'card-checklist' },
@@ -1170,7 +1261,8 @@
             'ims':        { nav: 'nav-group-ims',        card: 'card-ims' },
             'pms':        { nav: 'nav-group-pms',        card: 'card-pms' },
             'hr':         { nav: 'nav-group-hr',         card: 'card-hr' },
-            'production': { nav: 'nav-group-production', card: 'card-production' }
+            'production': { nav: 'nav-group-production', card: 'card-production' },
+            'sales':      { nav: 'nav-group-sales',      card: 'card-sales' }
         };
 
         function handleLogin() {
@@ -1179,37 +1271,31 @@
             const errorMsg = document.getElementById('login-error');
 
             if (USERS[userIn] && USERS[userIn].pass === passIn) {
-                // Success
                 errorMsg.style.display = 'none';
                 document.getElementById('login-overlay').style.display = 'none';
                 document.getElementById('app-wrapper').classList.add('authenticated');
                 
-                // Configure View based on Role
                 configureAccess(USERS[userIn].role);
                 
-                // Initial Data Fetch (Moved here so we don't fetch if not logged in)
                 fetchTaskData();
                 fetchCheckListData();
                 fetchFMSData();
+                fetchSalesData();
             } else {
-                // Error
                 errorMsg.style.display = 'block';
             }
         }
 
         function configureAccess(role) {
-            // 1. Hide EVERYTHING first
             for (let key in UI_ELEMENTS) {
                 document.getElementById(UI_ELEMENTS[key].nav).style.display = 'none';
                 document.getElementById(UI_ELEMENTS[key].card).style.display = 'none';
             }
 
-            // 2. Specific Logic based on Role
             if (role === 'admin') {
-                // Show All
                 for (let key in UI_ELEMENTS) {
-                    document.getElementById(UI_ELEMENTS[key].nav).style.display = 'block'; // 'flex' for nav item usually, but block works for wrapper
-                    if(key === 'fms') document.getElementById(UI_ELEMENTS[key].nav).style.display = 'flex'; // Fix for single item
+                    document.getElementById(UI_ELEMENTS[key].nav).style.display = 'block';
+                    if(key === 'fms') document.getElementById(UI_ELEMENTS[key].nav).style.display = 'flex';
                     document.getElementById(UI_ELEMENTS[key].card).style.display = 'block';
                 }
             } 
@@ -1225,34 +1311,135 @@
             else if (role === 'pms') {
                 showModule('pms');
             }
+            else if (role === 'sales') {
+                showModule('sales');
+            }
             else if (role === 'office') {
-                // Special Case: Task Delegation -> Only "Daily Work"
                 const taskElems = UI_ELEMENTS['task'];
                 document.getElementById(taskElems.nav).style.display = 'block';
                 document.getElementById(taskElems.card).style.display = 'block';
 
-                // Handle Submenu Items hiding
                 document.getElementById('link-delegation-master').style.display = 'none';
                 document.getElementById('link-task-master').style.display = 'none';
-                document.getElementById('link-daily-work').style.display = 'flex'; // Ensure this is visible
+                document.getElementById('link-daily-work').style.display = 'flex';
             }
         }
 
         function showModule(moduleKey) {
             const elems = UI_ELEMENTS[moduleKey];
             if (elems) {
-                // Sidebar item
                 if(moduleKey === 'fms') {
                      document.getElementById(elems.nav).style.display = 'flex';
                 } else {
                      document.getElementById(elems.nav).style.display = 'block';
                 }
-                // Dashboard Card
                 document.getElementById(elems.card).style.display = 'block';
             }
         }
 
-        // --- ORIGINAL FUNCTIONS (Unchanged Logic) ---
+        // --- SALES DATA FETCHING FROM GOOGLE SHEETS ---
+        async function fetchSalesData() {
+            try {
+                const range = 'Sale!A2:C2';
+                const url = `https://sheets.googleapis.com/v4/spreadsheets/${SALES_SHEET_ID}/values/${range}?key=${API_KEY}`;
+                
+                const response = await fetch(url);
+                const data = await response.json();
+                
+                if (data.values && data.values.length > 0) {
+                    const values = data.values[0];
+                    console.log('Raw sales data from sheet:', values);
+                    
+                    // Format and display in Indian Crore format (2 decimal places)
+                    document.getElementById('totalSales').innerText = formatTotalSales(values[0]);
+                    document.getElementById('salesTarget').innerText = formatTarget(values[1]);
+                    document.getElementById('salesGrowth').innerText = formatGrowth(values[2]);
+                    
+                } else {
+                    // No data found - use defaults
+                    document.getElementById('totalSales').innerText = '0.00';
+                    document.getElementById('salesTarget').innerText = '24.00';
+                    document.getElementById('salesGrowth').innerText = '0%';
+                }
+                
+            } catch (error) {
+                console.error('Error fetching sales data:', error);
+                // Fallback data
+                document.getElementById('totalSales').innerText = '0.00';
+                document.getElementById('salesTarget').innerText = '24.00';
+                document.getElementById('salesGrowth').innerText = '0%';
+            }
+        }
+
+        function formatTotalSales(value) {
+            if (!value || value.toString().trim() === '') {
+                return '0.00';
+            }
+            
+            const strValue = value.toString().trim();
+            
+            // Try to parse as number
+            const numValue = parseFloat(strValue.replace(/[^0-9.-]+/g, '')) || 0;
+            
+            if (numValue === 0) return '0.00';
+            
+            // CONVERT FROM MILLIONS TO CRORES
+            // If value is 223.5 (223.5 million), convert to crores:
+            // 223.5 million ÷ 10 = 22.35 Crores
+            const inCrores = numValue / 10;
+            
+            return inCrores.toFixed(2);
+        }
+
+        function formatTarget(value) {
+            if (!value || value.toString().trim() === '') {
+                return '24.00'; // Default target
+            }
+            
+            const strValue = value.toString().trim();
+            
+            // Try to parse as number
+            const numValue = parseFloat(strValue.replace(/[^0-9.-]+/g, '')) || 0;
+            
+            if (numValue === 0) return '0.00';
+            
+            // CONVERT FROM THOUSANDS TO CRORES
+            // If value is 240000 (240 million), convert to crores:
+            // 240 million ÷ 10 = 24 Crores
+            // OR: 240000 ÷ 10000 = 24 Crores
+            const inCrores = numValue / 10000;
+            
+            return inCrores.toFixed(2);
+        }
+
+        function formatGrowth(value) {
+            if (!value || value.toString().trim() === '') {
+                return '0%';
+            }
+            
+            const strValue = value.toString().trim();
+            
+            // Check if it already has percentage
+            if (strValue.includes('%')) {
+                return strValue;
+            }
+            
+            // Try to parse as number
+            const numValue = parseFloat(strValue.replace(/[^0-9.-]+/g, '')) || 0;
+            
+            // Add % sign with 2 decimal places for growth
+            const formatted = Math.abs(numValue).toFixed(2);
+            
+            if (numValue > 0) {
+                return '+' + formatted + '%';
+            } else if (numValue < 0) {
+                return '-' + formatted + '%';
+            } else {
+                return '0%';
+            }
+        }
+
+        // --- ORIGINAL FUNCTIONS ---
 
         function showContent(pageId) {
             document.getElementById('module-container').classList.remove('active-content');
@@ -1302,6 +1489,7 @@
             else if (submenuId === 'pms-submenu') triggerElement = navItems[5]; 
             else if (submenuId === 'hr-submenu') triggerElement = navItems[6]; 
             else if (submenuId === 'production-submenu') triggerElement = navItems[7]; 
+            else if (submenuId === 'sales-submenu') triggerElement = navItems[8];
             
             if(triggerElement) {
                 toggleSubmenu(submenuId, triggerElement);
