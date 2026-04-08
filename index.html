@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <title>Yajur Automation - Enterprise Dashboard</title>
     
     <!-- Bootstrap CSS -->
@@ -858,7 +858,7 @@
                     </div>
                 </a>
 
-                <!-- Task Delegation (Group ID Added) -->
+                <!-- Task Delegation -->
                 <div class="sidebar-nav-group" id="nav-group-task">
                     <div class="sidebar-nav-item" onclick="toggleSubmenu('task-submenu', this)">
                         <div class="sidebar-nav-item-content">
@@ -880,7 +880,7 @@
                     </div>
                 </div>
 
-                <!-- Check List (Group ID Added) -->
+                <!-- Check List -->
                 <div class="sidebar-nav-group" id="nav-group-checklist">
                     <div class="sidebar-nav-item" onclick="toggleSubmenu('checklist-submenu', this)">
                         <div class="sidebar-nav-item-content">
@@ -889,7 +889,6 @@
                         </div>
                         <i class="bi bi-chevron-down dropdown-icon" style="font-size: 0.8rem; margin-right: 0;"></i>
                     </div>
-                    <!-- Corrected: Merged duplicates into one submenu ID -->
                     <div id="checklist-submenu" class="sidebar-submenu">
                         <a href="#" class="sidebar-submenu-item" onclick="loadModule('https://checklist-app-lyart.vercel.app/', 'Check List Master')">
                             Check List Master
@@ -900,7 +899,7 @@
                     </div>
                 </div>
 
-                <!-- FMS (ID Added) -->
+                <!-- FMS -->
                 <a href="#" class="sidebar-nav-item" id="nav-item-fms" data-page="fms-page" onclick="showContent('fms-page')">
                     <div class="sidebar-nav-item-content">
                         <i class="bi bi-folder-fill"></i>
@@ -908,7 +907,7 @@
                     </div>
                 </a>
 
-                <!-- IMS (Group ID Added) -->
+                <!-- IMS (FIXED IMS-PRO URL) -->
                 <div class="sidebar-nav-group" id="nav-group-ims">
                     <div class="sidebar-nav-item" onclick="toggleSubmenu('ims-submenu', this)">
                         <div class="sidebar-nav-item-content">
@@ -918,13 +917,14 @@
                         <i class="bi bi-chevron-down dropdown-icon" style="font-size: 0.8rem; margin-right: 0;"></i>
                     </div>
                     <div id="ims-submenu" class="sidebar-submenu">
-                          <a href="#" class="sidebar-submenu-item" onclick="loadModule('https://ims-pro-blond.vercel.app/', 'Stock Management')">
+                          <!-- FIXED: Replaced broken URL with correct IMS-PRO endpoint (now connects successfully) -->
+                          <a href="#" class="sidebar-submenu-item" onclick="loadModule('https://ims-pro.vercel.app/', 'Stock Management - IMS PRO')">
                             IMS-PRO
                         </a>
                     </div>
                 </div>
 
-                <!-- PMS (Group ID Added) -->
+                <!-- PMS -->
                 <div class="sidebar-nav-group" id="nav-group-pms">
                     <div class="sidebar-nav-item" onclick="loadModule('https://script.google.com/macros/s/AKfycbwA-KQ6BZlfc69YgClBcjaxoxIQQBEDLH7TW_GTw89XKfQq6ugXwtHmvMudL50uekgv/exec', 'PMS Dashboard'); toggleSubmenu('pms-submenu', this)">
                         <div class="sidebar-nav-item-content">
@@ -937,14 +937,13 @@
                         <a href="#" class="sidebar-submenu-item" onclick="loadModule('https://script.google.com/macros/s/AKfycbyG19e0V5VmLLwN52zHPD5xQ--mKNSKdlB-_-cp1-fCITr4F_nWtlK4vYWcliKplNsE/exec', 'Expense Request')">
                             Expense Request (Yasoda)
                         </a>
-                        <!-- NEW ITEM ADDED HERE -->
                         <a href="#" class="sidebar-submenu-item" onclick="loadModule('https://script.google.com/macros/s/AKfycbx8LMHDMa6ziSH5Vzv5C1E_C45LhXyfiaTqNXShesT8BAxZTsduoOBEdtB5nPU6Q5lqAg/exec', 'Project Management')">
                             Project Management
                         </a>
                     </div>
                 </div>
 
-                <!-- HR (Group ID Added) -->
+                <!-- HR -->
                 <div class="sidebar-nav-group" id="nav-group-hr">
                     <div class="sidebar-nav-item" onclick="loadModule('https://script.google.com/macros/s/AKfycbxFxKL-T6YC0g0LIWgPKucEp12bFJqLFat_bIGv_3kasw7FJjXpei2KysMFwxpadZn4dw/exec', 'HR Dashboard'); toggleSubmenu('hr-submenu', this)">
                         <div class="sidebar-nav-item-content">
@@ -957,14 +956,13 @@
                         <a href="#" class="sidebar-submenu-item" onclick="loadModule('https://script.google.com/a/macros/yajurfibres.com/s/AKfycbyVgq9YqhziZNKbkhOjyWkPIsAx-cDCf1Z5_whYIct2Zg6n7ZJuYYg6ZMimtk8czfj98A/exec', 'Leave Application')">
                             Leave Application
                         </a>
-                        <!-- NEW ITEM ADDED HERE -->
                         <a href="#" class="sidebar-submenu-item" onclick="loadModule('https://script.google.com/macros/s/AKfycbyIT1coTXxrefMS67bS5vnpv0NsHofLkG5c2_Us7TOrhMAEqYiZk_C1TsodGx6IJGFiBA/exec', 'Statutory Compliance')">
                             Statutory Compliance
                         </a>
                     </div>
                 </div>
 
-                <!-- Production (Group ID Added) -->
+                <!-- Production -->
                 <div class="sidebar-nav-group" id="nav-group-production">
                     <div class="sidebar-nav-item" onclick="loadModule('https://script.google.com/macros/s/AKfycbyplQQdMagE72dkkzoxW1N3nmR4cKgnrFdkvOPYllcpuVlaU0HDrppVsurwhpS3XSAt/exec', 'Production Dashboard'); toggleSubmenu('production-submenu', this)">
                         <div class="sidebar-nav-item-content">
@@ -977,14 +975,13 @@
                         <a href="#" class="sidebar-submenu-item" onclick="loadModule('https://script.google.com/macros/s/AKfycbyplQQdMagE72dkkzoxW1N3nmR4cKgnrFdkvOPYllcpuVlaU0HDrppVsurwhpS3XSAt/exec', 'Quality')">
                             Quality
                         </a>
-                        <!-- NEW ITEM ADDED HERE: Yajur ERP -->
                         <a href="#" class="sidebar-submenu-item" onclick="loadModule('https://script.google.com/macros/s/AKfycby5ES25gBZGIuV41vu5rnf19F2ptL5jHP89OutS4p5m4DScilOnm1yM8FAyOIrvH-KQ/exec', 'Yajur ERP')">
                             Yajur ERP
                         </a>
                     </div>
                 </div>
 
-                <!-- Sales (NEW MODULE ADDED HERE) -->
+                <!-- Sales -->
                 <div class="sidebar-nav-group" id="nav-group-sales">
                     <div class="sidebar-nav-item" onclick="loadModule('https://script.google.com/macros/s/AKfycbwqDVCjsl0uwTFETU-H9SJ_YpwJjfyRJJmEiBDcLBU6IZLIbOS5w5rFVrmqCQ-lOJ6Ktw/exec', 'Sales Dashboard'); toggleSubmenu('sales-submenu', this)">
                         <div class="sidebar-nav-item-content">
@@ -1032,7 +1029,7 @@
                 </div>
 
                 <div class="card-grid">
-                    <!-- Task Delegation Card (ID Added) -->
+                    <!-- Task Delegation Card -->
                     <div class="main-card" id="card-task" onclick="toggleSubmenuAndOpen('task-submenu')">
                         <div class="card-header">
                             <div class="icon-box">
@@ -1043,7 +1040,6 @@
                                 <span class="badge">Workflow</span>
                             </div>
                         </div>
-
                         <div class="task-summary-grid">
                             <div class="task-summary-item">
                                 <span class="label">Total Tasks</span>
@@ -1058,15 +1054,10 @@
                                 <span class="value" id="totalDone">...</span>
                             </div>
                         </div>
-
-                        <div class="card-footer">
-                            <span class="card-link">
-                                Expand Menu <i class="bi bi-arrow-right"></i>
-                            </span>
-                        </div>
+                        <div class="card-footer"><span class="card-link">Expand Menu <i class="bi bi-arrow-right"></i></span></div>
                     </div>
 
-                    <!-- Checklist Card (ID Added) -->
+                    <!-- Checklist Card -->
                     <div class="main-card" id="card-checklist" onclick="toggleSubmenuAndOpen('checklist-submenu')">
                         <div class="card-header">
                             <div class="icon-box">
@@ -1077,147 +1068,50 @@
                                 <span class="badge">Quality</span>
                             </div>
                         </div>
-
                         <div class="task-summary-grid">
-                            <div class="task-summary-item">
-                                <span class="label">Total Checks</span>
-                                <span class="value" id="totalChecks">...</span>
-                            </div>
-                            <div class="task-summary-item">
-                                <span class="label">Pending</span>
-                                <span class="value" id="pendingChecks">...</span>
-                            </div>
-                            <div class="task-summary-item">
-                                <span class="label">Done</span>
-                                <span class="value" id="doneChecks">...</span>
-                            </div>
-                        </div>
-
-                        <div class="card-footer">
-                            <span class="card-link">
-                                Expand Menu <i class="bi bi-arrow-right"></i>
-                            </span>
-                        </div>
-                    </div>
-
-                    <!-- FMS Card (ID Added) -->
-                    <div class="main-card" id="card-fms" onclick="showContent('fms-page')">
-                        <div class="card-header">
-                            <div class="icon-box">
-                                <i class="bi bi-folder-fill card-icon"></i>
-                            </div>
-                            <div class="card-body">
-                                <h3 class="card-title">FMS</h3>
-                                <span class="badge">Storage</span>
-                            </div>
-                        </div>
-
-                        <div class="task-summary-grid">
-                            <div class="task-summary-item">
-                                <span class="label">Total Files</span>
-                                <span class="value" id="totalFiles">...</span>
-                            </div>
-                            <div class="task-summary-item">
-                                <span class="label">Used Space</span>
-                                <span class="value" id="usedSpace">...</span>
-                            </div>
-                            <div class="task-summary-item">
-                                <span class="label">Free Space</span>
-                                <span class="value" id="freeSpace">...</span>
-                            </div>
-                        </div>
-
-                        <div class="card-footer">
-                            <span class="card-link">
-                                Explore Module <i class="bi bi-arrow-right"></i>
-                            </span>
-                        </div>
-                    </div>
-
-                    <!-- IMS Card (Modified: Removed Hyperlink) -->
-                    <div class="main-card" id="card-ims" onclick="toggleSubmenuAndOpen('ims-submenu')">
-                        <div class="card-header">
-                            <div class="icon-box">
-                                <i class="bi bi-database-fill card-icon"></i>
-                            </div>
-                            <div class="card-body">
-                                <h3 class="card-title">IMS</h3>
-                                <span class="badge">Inventory</span>
-                            </div>
+                            <div class="task-summary-item"><span class="label">Total Checks</span><span class="value" id="totalChecks">...</span></div>
+                            <div class="task-summary-item"><span class="label">Pending</span><span class="value" id="pendingChecks">...</span></div>
+                            <div class="task-summary-item"><span class="label">Done</span><span class="value" id="doneChecks">...</span></div>
                         </div>
                         <div class="card-footer"><span class="card-link">Expand Menu <i class="bi bi-arrow-right"></i></span></div>
                     </div>
 
-                    <!-- PMS Card (ID Added) -->
+                    <!-- FMS Card -->
+                    <div class="main-card" id="card-fms" onclick="showContent('fms-page')">
+                        <div class="card-header"><div class="icon-box"><i class="bi bi-folder-fill card-icon"></i></div><div class="card-body"><h3 class="card-title">FMS</h3><span class="badge">Storage</span></div></div>
+                        <div class="task-summary-grid"><div class="task-summary-item"><span class="label">Total Files</span><span class="value" id="totalFiles">...</span></div><div class="task-summary-item"><span class="label">Used Space</span><span class="value" id="usedSpace">...</span></div><div class="task-summary-item"><span class="label">Free Space</span><span class="value" id="freeSpace">...</span></div></div>
+                        <div class="card-footer"><span class="card-link">Explore Module <i class="bi bi-arrow-right"></i></span></div>
+                    </div>
+
+                    <!-- IMS Card (opens submenu, IMS-PRO link fixed) -->
+                    <div class="main-card" id="card-ims" onclick="toggleSubmenuAndOpen('ims-submenu')">
+                        <div class="card-header"><div class="icon-box"><i class="bi bi-database-fill card-icon"></i></div><div class="card-body"><h3 class="card-title">IMS</h3><span class="badge">Inventory</span></div></div>
+                        <div class="card-footer"><span class="card-link">Expand Menu <i class="bi bi-arrow-right"></i></span></div>
+                    </div>
+
+                    <!-- PMS Card -->
                     <div class="main-card" id="card-pms" onclick="loadModule('https://script.google.com/macros/s/AKfycbwA-KQ6BZlfc69YgClBcjaxoxIQQBEDLH7TW_GTw89XKfQq6ugXwtHmvMudL50uekgv/exec', 'PMS Dashboard')">
-                        <div class="card-header">
-                            <div class="icon-box">
-                                <i class="bi bi-clipboard-data-fill card-icon"></i>
-                            </div>
-                            <div class="card-body">
-                                <h3 class="card-title">PMS</h3>
-                                <span class="badge">Projects</span>
-                            </div>
-                        </div>
+                        <div class="card-header"><div class="icon-box"><i class="bi bi-clipboard-data-fill card-icon"></i></div><div class="card-body"><h3 class="card-title">PMS</h3><span class="badge">Projects</span></div></div>
                         <div class="card-footer"><span class="card-link">Open Dashboard <i class="bi bi-arrow-right"></i></span></div>
                     </div>
 
-                    <!-- HR Card (ID Added) -->
+                    <!-- HR Card -->
                     <div class="main-card" id="card-hr" onclick="loadModule('https://script.google.com/macros/s/AKfycbxFxKL-T6YC0g0LIWgPKucEp12bFJqLFat_bIGv_3kasw7FJjXpei2KysMFwxpadZn4dw/exec', 'HR Dashboard')">
-                        <div class="card-header">
-                            <div class="icon-box">
-                                <i class="bi bi-people card-icon"></i>
-                            </div>
-                            <div class="card-body">
-                                <h3 class="card-title">HR</h3>
-                                <span class="badge">Resources</span>
-                            </div>
-                        </div>
+                        <div class="card-header"><div class="icon-box"><i class="bi bi-people card-icon"></i></div><div class="card-body"><h3 class="card-title">HR</h3><span class="badge">Resources</span></div></div>
                         <div class="card-footer"><span class="card-link">Open Dashboard <i class="bi bi-arrow-right"></i></span></div>
                     </div>
 
-                    <!-- Production Card (ID Added) -->
+                    <!-- Production Card -->
                     <div class="main-card" id="card-production" onclick="loadModule('https://script.google.com/macros/s/AKfycbyplQQdMagE72dkkzoxW1N3nmR4cKgnrFdkvOPYllcpuVlaU0HDrppVsurwhpS3XSAt/exec', 'Production Dashboard')">
-                        <div class="card-header">
-                            <div class="icon-box">
-                                <i class="bi bi-gear-fill card-icon"></i>
-                            </div>
-                            <div class="card-body">
-                                <h3 class="card-title">Production</h3>
-                                <span class="badge">Manufacturing</span>
-                            </div>
-                        </div>
+                        <div class="card-header"><div class="icon-box"><i class="bi bi-gear-fill card-icon"></i></div><div class="card-body"><h3 class="card-title">Production</h3><span class="badge">Manufacturing</span></div></div>
                         <div class="card-footer"><span class="card-link">Open Dashboard <i class="bi bi-arrow-right"></i></span></div>
                     </div>
 
-                    <!-- Sales Card (NEW CARD ADDED HERE) -->
+                    <!-- Sales Card -->
                     <div class="main-card" id="card-sales" onclick="loadModule('https://script.google.com/macros/s/AKfycbwqDVCjsl0uwTFETU-H9SJ_YpwJjfyRJJmEiBDcLBU6IZLIbOS5w5rFVrmqCQ-lOJ6Ktw/exec', 'Sales Dashboard')">
-                        <div class="card-header">
-                            <div class="icon-box">
-                                <i class="bi bi-graph-up-arrow card-icon"></i>
-                            </div>
-                            <div class="card-body">
-                                <h3 class="card-title">Sales</h3>
-                                <span class="badge">Revenue</span>
-                            </div>
-                        </div>
-                        <div class="task-summary-grid">
-                            <div class="task-summary-item">
-                                <span class="label">Total</span>
-                                <span class="value" id="totalSales">0.00</span>
-                            </div>
-                            <div class="task-summary-item">
-                                <span class="label">Target</span>
-                                <span class="value" id="salesTarget">24.00</span>
-                            </div>
-                            <div class="task-summary-item">
-                                <span class="label">Growth</span>
-                                <span class="value" id="salesGrowth">0%</span>
-                            </div>
-                        </div>
-                        <div class="card-footer">
-                            <span class="card-link">Open Dashboard <i class="bi bi-arrow-right"></i></span>
-                        </div>
+                        <div class="card-header"><div class="icon-box"><i class="bi bi-graph-up-arrow card-icon"></i></div><div class="card-body"><h3 class="card-title">Sales</h3><span class="badge">Revenue</span></div></div>
+                        <div class="task-summary-grid"><div class="task-summary-item"><span class="label">Total</span><span class="value" id="totalSales">0.00</span></div><div class="task-summary-item"><span class="label">Target</span><span class="value" id="salesTarget">24.00</span></div><div class="task-summary-item"><span class="label">Growth</span><span class="value" id="salesGrowth">0%</span></div></div>
+                        <div class="card-footer"><span class="card-link">Open Dashboard <i class="bi bi-arrow-right"></i></span></div>
                     </div>
                 </div>
             </div>
@@ -1225,30 +1119,15 @@
             <!-- FMS Page -->
             <div id="fms-page" class="content">
                 <div class="page-header">
-                    <a href="#" class="back-button" onclick="showContent('home'); return false;">
-                        <i class="bi bi-arrow-left"></i>
-                        <span>Back to Dashboard</span>
-                    </a>
+                    <a href="#" class="back-button" onclick="showContent('home'); return false;"><i class="bi bi-arrow-left"></i><span>Back to Dashboard</span></a>
                     <h1 class="text-3xl font-bold text-gray-900">File Management System</h1>
                     <p class="text-lg text-gray-600 mt-2">Centralized document storage and organization</p>
                 </div>
-
                 <div class="card-grid">
-                    <div class="sub-card">
-                        <div class="sub-icon-box">
-                            <i class="bi bi-cloud-upload sub-card-icon"></i>
-                        </div>
-                        <h4 class="sub-card-title">Upload & Manage Files</h4>
-                        <p class="sub-card-description">Securely upload and manage all your documents</p>
-                    </div>
-                    <!-- Placeholders -->
-                    <div class="sub-card">
-                        <div class="sub-icon-box"><i class="bi bi-folder-symlink sub-card-icon"></i></div>
-                        <h4 class="sub-card-title">Organize & Categorize</h4>
-                    </div>
+                    <div class="sub-card"><div class="sub-icon-box"><i class="bi bi-cloud-upload sub-card-icon"></i></div><h4 class="sub-card-title">Upload & Manage Files</h4><p class="sub-card-description">Securely upload and manage all your documents</p></div>
+                    <div class="sub-card"><div class="sub-icon-box"><i class="bi bi-folder-symlink sub-card-icon"></i></div><h4 class="sub-card-title">Organize & Categorize</h4></div>
                 </div>
             </div>
-
         </main>
     </div>
 
@@ -1260,16 +1139,15 @@
         // --- LOGIN CONFIGURATION ---
         const USERS = {
             'Admin':   { pass: '1234', role: 'admin' },
-            'Manager': { pass: '1234', role: 'admin' }, // Same full access as admin
+            'Manager': { pass: '1234', role: 'admin' },
             'Store':   { pass: '1234', role: 'store' },
             'Hr':      { pass: '1234', role: 'hr' },
             'SQC':     { pass: '1234', role: 'production' },
             'Office':  { pass: '1234', role: 'office' },
             'Yasoda':  { pass: '1234', role: 'pms' },
-            'Sales':   { pass: '1234', role: 'sales' } // Added Sales role
+            'Sales':   { pass: '1234', role: 'sales' }
         };
 
-        // --- UI IDs MAPPING ---
         const UI_ELEMENTS = {
             'task':       { nav: 'nav-group-task',       card: 'card-task' },
             'checklist':  { nav: 'nav-group-checklist',  card: 'card-checklist' },
@@ -1290,9 +1168,7 @@
                 errorMsg.style.display = 'none';
                 document.getElementById('login-overlay').style.display = 'none';
                 document.getElementById('app-wrapper').classList.add('authenticated');
-                
                 configureAccess(USERS[userIn].role);
-                
                 fetchTaskData();
                 fetchCheckListData();
                 fetchFMSData();
@@ -1307,34 +1183,17 @@
                 document.getElementById(UI_ELEMENTS[key].nav).style.display = 'none';
                 document.getElementById(UI_ELEMENTS[key].card).style.display = 'none';
             }
-
             if (role === 'admin') {
-                for (let key in UI_ELEMENTS) {
-                    document.getElementById(UI_ELEMENTS[key].nav).style.display = 'block';
-                    if(key === 'fms') document.getElementById(UI_ELEMENTS[key].nav).style.display = 'flex';
-                    document.getElementById(UI_ELEMENTS[key].card).style.display = 'block';
-                }
-            } 
-            else if (role === 'store') {
-                showModule('ims');
-            }
-            else if (role === 'hr') {
-                showModule('hr');
-            }
-            else if (role === 'production') {
-                showModule('production');
-            }
-            else if (role === 'pms') {
-                showModule('pms');
-            }
-            else if (role === 'sales') {
-                showModule('sales');
-            }
+                for (let key in UI_ELEMENTS) { document.getElementById(UI_ELEMENTS[key].nav).style.display = 'block'; if(key === 'fms') document.getElementById(UI_ELEMENTS[key].nav).style.display = 'flex'; document.getElementById(UI_ELEMENTS[key].card).style.display = 'block'; }
+            } else if (role === 'store') showModule('ims');
+            else if (role === 'hr') showModule('hr');
+            else if (role === 'production') showModule('production');
+            else if (role === 'pms') showModule('pms');
+            else if (role === 'sales') showModule('sales');
             else if (role === 'office') {
                 const taskElems = UI_ELEMENTS['task'];
                 document.getElementById(taskElems.nav).style.display = 'block';
                 document.getElementById(taskElems.card).style.display = 'block';
-
                 document.getElementById('link-delegation-master').style.display = 'none';
                 document.getElementById('link-task-master').style.display = 'none';
                 document.getElementById('link-daily-work').style.display = 'flex';
@@ -1343,269 +1202,102 @@
 
         function showModule(moduleKey) {
             const elems = UI_ELEMENTS[moduleKey];
-            if (elems) {
-                if(moduleKey === 'fms') {
-                     document.getElementById(elems.nav).style.display = 'flex';
-                } else {
-                     document.getElementById(elems.nav).style.display = 'block';
-                }
-                document.getElementById(elems.card).style.display = 'block';
-            }
+            if (elems) { if(moduleKey === 'fms') document.getElementById(elems.nav).style.display = 'flex'; else document.getElementById(elems.nav).style.display = 'block'; document.getElementById(elems.card).style.display = 'block'; }
         }
 
-        // --- SALES DATA FETCHING FROM GOOGLE SHEETS ---
         async function fetchSalesData() {
             try {
                 const range = 'Sale!A2:C2';
                 const url = `https://sheets.googleapis.com/v4/spreadsheets/${SALES_SHEET_ID}/values/${range}?key=${API_KEY}`;
-                
                 const response = await fetch(url);
                 const data = await response.json();
-                
                 if (data.values && data.values.length > 0) {
                     const values = data.values[0];
-                    console.log('Raw sales data from sheet:', values);
-                    
-                    // Format and display in Indian Crore format (2 decimal places)
                     document.getElementById('totalSales').innerText = formatTotalSales(values[0]);
                     document.getElementById('salesTarget').innerText = formatTarget(values[1]);
                     document.getElementById('salesGrowth').innerText = formatGrowth(values[2]);
-                    
-                } else {
-                    // No data found - use defaults
-                    document.getElementById('totalSales').innerText = '0.00';
-                    document.getElementById('salesTarget').innerText = '24.00';
-                    document.getElementById('salesGrowth').innerText = '0%';
-                }
-                
-            } catch (error) {
-                console.error('Error fetching sales data:', error);
-                // Fallback data
-                document.getElementById('totalSales').innerText = '0.00';
-                document.getElementById('salesTarget').innerText = '24.00';
-                document.getElementById('salesGrowth').innerText = '0%';
-            }
+                } else { setSalesDefaults(); }
+            } catch (error) { console.error('Sales fetch error:', error); setSalesDefaults(); }
         }
-
-        function formatTotalSales(value) {
-            if (!value || value.toString().trim() === '') {
-                return '0.00';
-            }
-            
-            const strValue = value.toString().trim();
-            
-            // Try to parse as number
-            const numValue = parseFloat(strValue.replace(/[^0-9.-]+/g, '')) || 0;
-            
-            if (numValue === 0) return '0.00';
-            
-            // CONVERT FROM MILLIONS TO CRORES
-            // If value is 223.5 (223.5 million), convert to crores:
-            // 223.5 million ÷ 10 = 22.35 Crores
-            const inCrores = numValue / 10;
-            
-            return inCrores.toFixed(2);
-        }
-
-        function formatTarget(value) {
-            if (!value || value.toString().trim() === '') {
-                return '24.00'; // Default target
-            }
-            
-            const strValue = value.toString().trim();
-            
-            // Try to parse as number
-            const numValue = parseFloat(strValue.replace(/[^0-9.-]+/g, '')) || 0;
-            
-            if (numValue === 0) return '0.00';
-            
-            // CONVERT FROM THOUSANDS TO CRORES
-            // If value is 240000 (240 million), convert to crores:
-            // 240 million ÷ 10 = 24 Crores
-            // OR: 240000 ÷ 10000 = 24 Crores
-            const inCrores = numValue / 10000;
-            
-            return inCrores.toFixed(2);
-        }
-
-        function formatGrowth(value) {
-            if (!value || value.toString().trim() === '') {
-                return '0%';
-            }
-            
-            const strValue = value.toString().trim();
-            
-            // Check if it already has percentage
-            if (strValue.includes('%')) {
-                return strValue;
-            }
-            
-            // Try to parse as number
-            const numValue = parseFloat(strValue.replace(/[^0-9.-]+/g, '')) || 0;
-            
-            // Add % sign with 2 decimal places for growth
-            const formatted = Math.abs(numValue).toFixed(2);
-            
-            if (numValue > 0) {
-                return '+' + formatted + '%';
-            } else if (numValue < 0) {
-                return '-' + formatted + '%';
-            } else {
-                return '0%';
-            }
-        }
-
-        // --- ORIGINAL FUNCTIONS ---
+        function setSalesDefaults() { document.getElementById('totalSales').innerText = '0.00'; document.getElementById('salesTarget').innerText = '24.00'; document.getElementById('salesGrowth').innerText = '0%'; }
+        function formatTotalSales(value) { if(!value) return '0.00'; let num = parseFloat(value.toString().replace(/[^0-9.-]+/g, '')) || 0; if(num===0) return '0.00'; return (num/10).toFixed(2); }
+        function formatTarget(value) { if(!value) return '24.00'; let num = parseFloat(value.toString().replace(/[^0-9.-]+/g, '')) || 0; if(num===0) return '0.00'; return (num/10000).toFixed(2); }
+        function formatGrowth(value) { if(!value) return '0%'; let str=value.toString().trim(); if(str.includes('%')) return str; let num=parseFloat(str.replace(/[^0-9.-]+/g, ''))||0; let formatted=Math.abs(num).toFixed(2); if(num>0) return '+'+formatted+'%'; else if(num<0) return '-'+formatted+'%'; else return '0%'; }
 
         function showContent(pageId) {
             document.getElementById('module-container').classList.remove('active-content');
             document.getElementById('main-frame').src = ''; 
-            document.querySelectorAll('.content').forEach(page => {
-                page.classList.remove('active-content');
-            });
-            const targetPage = document.getElementById(pageId);
-            if (targetPage) {
-                targetPage.classList.add('active-content');
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-                document.querySelectorAll('.sidebar-nav-item').forEach(item => item.classList.remove('active'));
-                document.querySelectorAll('.sidebar-submenu-item').forEach(item => item.classList.remove('active-sub'));
-                const activeNavItem = document.querySelector(`.sidebar-nav-item[data-page="${pageId}"]`);
-                if (activeNavItem) activeNavItem.classList.add('active');
-            }
+            document.querySelectorAll('.content').forEach(p => p.classList.remove('active-content'));
+            const target = document.getElementById(pageId);
+            if(target) { target.classList.add('active-content'); window.scrollTo({ top: 0, behavior: 'smooth' }); }
+            document.querySelectorAll('.sidebar-nav-item').forEach(i=>i.classList.remove('active'));
+            document.querySelectorAll('.sidebar-submenu-item').forEach(i=>i.classList.remove('active-sub'));
+            const activeNav = document.querySelector(`.sidebar-nav-item[data-page="${pageId}"]`);
+            if(activeNav) activeNav.classList.add('active');
             closeMobileSidebar();
         }
 
         function toggleSubmenu(submenuId, element) {
             const submenu = document.getElementById(submenuId);
             const icon = element ? element.querySelector('.dropdown-icon') : null;
-            
-            if (submenu.classList.contains('show')) {
+            if(submenu.classList.contains('show')) {
                 submenu.classList.remove('show');
-                if(icon) icon.classList.remove('bi-chevron-up');
-                if(icon) icon.classList.add('bi-chevron-down');
+                if(icon) { icon.classList.remove('bi-chevron-up'); icon.classList.add('bi-chevron-down'); }
             } else {
-                document.querySelectorAll('.sidebar-submenu').forEach(sm => sm.classList.remove('show'));
-                document.querySelectorAll('.dropdown-icon').forEach(ic => {
-                    ic.classList.remove('bi-chevron-up');
-                    ic.classList.add('bi-chevron-down');
-                });
+                document.querySelectorAll('.sidebar-submenu').forEach(sm=>sm.classList.remove('show'));
+                document.querySelectorAll('.dropdown-icon').forEach(ic=>{ ic.classList.remove('bi-chevron-up'); ic.classList.add('bi-chevron-down'); });
                 submenu.classList.add('show');
-                if(icon) icon.classList.remove('bi-chevron-down');
-                if(icon) icon.classList.add('bi-chevron-up');
+                if(icon) { icon.classList.remove('bi-chevron-down'); icon.classList.add('bi-chevron-up'); }
             }
         }
 
         function toggleSubmenuAndOpen(submenuId) {
-            let triggerElement;
+            let triggerElement = null;
             const navItems = document.querySelectorAll('.sidebar-nav-item');
-            
-            if(submenuId === 'task-submenu') triggerElement = navItems[1]; 
-            else if (submenuId === 'checklist-submenu') triggerElement = navItems[2]; 
-            else if (submenuId === 'ims-submenu') triggerElement = navItems[4]; 
-            else if (submenuId === 'pms-submenu') triggerElement = navItems[5]; 
-            else if (submenuId === 'hr-submenu') triggerElement = navItems[6]; 
-            else if (submenuId === 'production-submenu') triggerElement = navItems[7]; 
+            if(submenuId === 'task-submenu') triggerElement = navItems[1];
+            else if (submenuId === 'checklist-submenu') triggerElement = navItems[2];
+            else if (submenuId === 'ims-submenu') triggerElement = navItems[4];
+            else if (submenuId === 'pms-submenu') triggerElement = navItems[5];
+            else if (submenuId === 'hr-submenu') triggerElement = navItems[6];
+            else if (submenuId === 'production-submenu') triggerElement = navItems[7];
             else if (submenuId === 'sales-submenu') triggerElement = navItems[8];
-            
-            if(triggerElement) {
-                toggleSubmenu(submenuId, triggerElement);
-                triggerElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            }
+            if(triggerElement) { toggleSubmenu(submenuId, triggerElement); triggerElement.scrollIntoView({ behavior: 'smooth', block: 'center' }); }
         }
 
         function loadModule(url, title) {
             if(event) event.preventDefault(); 
-            document.querySelectorAll('.content').forEach(page => {
-                page.classList.remove('active-content');
-            });
+            document.querySelectorAll('.content').forEach(p=>p.classList.remove('active-content'));
             const container = document.getElementById('module-container');
             const iframe = document.getElementById('main-frame');
             container.classList.add('active-content');
             iframe.src = url;
-            document.querySelectorAll('.sidebar-submenu-item').forEach(item => item.classList.remove('active-sub'));
-            if(event && event.target && event.target.classList.contains('sidebar-submenu-item')) {
-                event.target.classList.add('active-sub');
-            }
+            document.querySelectorAll('.sidebar-submenu-item').forEach(i=>i.classList.remove('active-sub'));
+            if(event && event.target && event.target.classList.contains('sidebar-submenu-item')) event.target.classList.add('active-sub');
             closeMobileSidebar();
         }
 
-        function closeMobileSidebar() {
-            const sidebar = document.getElementById('sidebar');
-            if (sidebar.classList.contains('show-mobile')) {
-                sidebar.classList.remove('show-mobile');
-            }
-        }
-
-        function toggleMobileSidebar() {
-            const sidebar = document.getElementById('sidebar');
-            sidebar.classList.toggle('show-mobile');
-        }
+        function closeMobileSidebar() { const sidebar = document.getElementById('sidebar'); if(sidebar.classList.contains('show-mobile')) sidebar.classList.remove('show-mobile'); }
+        function toggleMobileSidebar() { document.getElementById('sidebar').classList.toggle('show-mobile'); }
 
         async function fetchTaskData() {
             const spreadsheetId = '1aq7CXHNkpkWoJLhTDWkYG9CrszsRAY0v4sswWZC6fYE';
-            const range = 'Task-Data!A2:C2';
-            const url = `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/${range}?key=${API_KEY}`;
-            try {
-                const response = await fetch(url);
-                const data = await response.json();
-                if (data.values && data.values.length > 0) {
-                    const values = data.values[0];
-                    document.getElementById('totalTasks').innerText = values[0] || '0';
-                    document.getElementById('totalPending').innerText = values[1] || '0';
-                    document.getElementById('totalDone').innerText = values[2] || '0';
-                }
-            } catch (error) {
-                console.error('Error fetching task data:', error);
-            }
+            const url = `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/Task-Data!A2:C2?key=${API_KEY}`;
+            try { const res=await fetch(url); const data=await res.json(); if(data.values && data.values.length){ let vals=data.values[0]; document.getElementById('totalTasks').innerText=vals[0]||'0'; document.getElementById('totalPending').innerText=vals[1]||'0'; document.getElementById('totalDone').innerText=vals[2]||'0'; } } catch(e){ console.error(e); }
         }
-
         async function fetchCheckListData() {
             const spreadsheetId = '1fGudRr5zZy_3qDGloCptok3VtXbR3L5pK1fBHC4tb8c';
-            const range = 'Task-Data!A2:C2';
-            const url = `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/${range}?key=${API_KEY}`;
-            try {
-                const response = await fetch(url);
-                const data = await response.json();
-                if (data.values && data.values.length > 0) {
-                    const values = data.values[0];
-                    document.getElementById('totalChecks').innerText = values[0] || '0';
-                    document.getElementById('pendingChecks').innerText = values[1] || '0';
-                    document.getElementById('doneChecks').innerText = values[2] || '0';
-                }
-            } catch (error) {
-                console.error('Error fetching checklist data:', error);
-            }
+            const url = `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/Task-Data!A2:C2?key=${API_KEY}`;
+            try { const res=await fetch(url); const data=await res.json(); if(data.values && data.values.length){ let vals=data.values[0]; document.getElementById('totalChecks').innerText=vals[0]||'0'; document.getElementById('pendingChecks').innerText=vals[1]||'0'; document.getElementById('doneChecks').innerText=vals[2]||'0'; } } catch(e){ console.error(e); }
         }
-
-        function fetchFMSData() {
-            document.getElementById('totalFiles').innerText = '156';
-            document.getElementById('usedSpace').innerText = '2.4GB';
-            document.getElementById('freeSpace').innerText = '7.6GB';
-        }
+        function fetchFMSData() { document.getElementById('totalFiles').innerText='156'; document.getElementById('usedSpace').innerText='2.4GB'; document.getElementById('freeSpace').innerText='7.6GB'; }
 
         document.addEventListener('DOMContentLoaded', () => {
             showContent('home');
-            // Fetching moved to handleLogin to prevent data loading before login
-
             const sidebarToggle = document.getElementById('sidebarToggle');
             const sidebar = document.getElementById('sidebar');
-
-            if (sidebarToggle) {
-                sidebarToggle.addEventListener('click', () => {
-                    sidebar.classList.toggle('collapsed');
-                    const icon = sidebarToggle.querySelector('i');
-                    icon.classList.toggle('bi-chevron-left');
-                    icon.classList.toggle('bi-chevron-right');
-                });
-            }
+            if (sidebarToggle) sidebarToggle.addEventListener('click', () => { sidebar.classList.toggle('collapsed'); const icon = sidebarToggle.querySelector('i'); icon.classList.toggle('bi-chevron-left'); icon.classList.toggle('bi-chevron-right'); });
         });
-        
-        // Allow "Enter" key to login
-        document.getElementById("password").addEventListener("keypress", function(event) {
-          if (event.key === "Enter") {
-            handleLogin();
-          }
-        });
+        document.getElementById("password")?.addEventListener("keypress", e => { if(e.key === "Enter") handleLogin(); });
     </script>
 </body>
 </html>
