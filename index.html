@@ -910,19 +910,17 @@
 
                <!-- IMS (Group ID Added) -->
 <div class="sidebar-nav-group" id="nav-group-ims">
-    <div class="sidebar-nav-item" onclick="toggleSubmenu('ims-submenu', this)">
-        <div class="sidebar-nav-item-content">
-            <i class="bi bi-database-fill"></i>
-            <span>IMS</span>
-        </div>
-        <i class="bi bi-chevron-down dropdown-icon" style="font-size: 0.8rem; margin-right: 0;"></i>
-    </div>
-    <div id="ims-submenu" class="sidebar-submenu">
-        <!-- Changed to target="_blank" to open in new tab and avoid iframe blocking -->
-        <a href="https://ims-pro-blond.vercel.app/" target="_blank" class="sidebar-submenu-item">
-            IMS-PRO <i class="bi bi-box-arrow-up-right" style="font-size: 0.7rem; margin-left: 5px;"></i>
-        </a>
-    </div>
+<div class="sidebar-nav-item" onclick="toggleSubmenu('ims-submenu', this)">
+<div class="sidebar-nav-item-content">
+<i class="bi bi-database-fill"></i>
+<span>IMS</span>
+</div>
+<i class="bi bi-chevron-down dropdown-icon" style="font-size: 0.8rem; margin-right: 0;"></i>
+</div>
+<div id="ims-submenu" class="sidebar-submenu">
+<a href="https://ims-pro-blond.vercel.app/" class="sidebar-submenu-item" onclick="loadModule('https://ims-pro-blond.vercel.app/', 'Stock Management')">
+IMS-PRO
+</a>
 </div>
 
                 <!-- PMS (Group ID Added) -->
