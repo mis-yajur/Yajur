@@ -375,7 +375,7 @@
             top: 1.5rem;
             transition: all 0.2s ease;
             box-shadow: var(--shadow-md);
-            z-index: 10;
+            z-index: 1000;
         }
 
         .sidebar-toggle:hover {
@@ -909,19 +909,21 @@
                 </a>
 
                <!-- IMS (Group ID Added) -->
-<div class="sidebar-nav-group" id="nav-group-ims">
-<div class="sidebar-nav-item" onclick="toggleSubmenu('ims-submenu', this)">
-<div class="sidebar-nav-item-content">
-<i class="bi bi-database-fill"></i>
-<span>IMS</span>
-</div>
-<i class="bi bi-chevron-down dropdown-icon" style="font-size: 0.8rem; margin-right: 0;"></i>
-</div>
-<div id="ims-submenu" class="sidebar-submenu">
-<a href="https://ims-pro-blond.vercel.app/" class="sidebar-submenu-item" onclick="loadModule('https://ims-pro-blond.vercel.app/', 'Stock Management')">
-IMS-PRO
-</a>
-</div>
+                <div class="sidebar-nav-group" id="nav-group-ims">
+                    <div class="sidebar-nav-item" onclick="toggleSubmenu('ims-submenu', this)">
+                        <div class="sidebar-nav-item-content">
+                            <i class="bi bi-database-fill"></i>
+                            <span>IMS</span>
+                        </div>
+                        <i class="bi bi-chevron-down dropdown-icon" style="font-size: 0.8rem; margin-right: 0;"></i>
+                    </div>
+                    <div id="ims-submenu" class="sidebar-submenu">
+                        <!-- FIXED: Changed href to # to prevent new tab and load in dashboard -->
+                        <a href="#" class="sidebar-submenu-item" onclick="loadModule('https://ims-pro-blond.vercel.app/', 'Stock Management')">
+                            IMS-PRO
+                        </a>
+                    </div>
+                </div>
 
                 <!-- PMS (Group ID Added) -->
                 <div class="sidebar-nav-group" id="nav-group-pms">
@@ -1419,9 +1421,6 @@ IMS-PRO
             if (numValue === 0) return '0.00';
             
             // CONVERT FROM THOUSANDS TO CRORES
-            // If value is 240000 (240 million), convert to crores:
-            // 240 million ÷ 10 = 24 Crores
-            // OR: 240000 ÷ 10000 = 24 Crores
             const inCrores = numValue / 10000;
             
             return inCrores.toFixed(2);
@@ -1490,6 +1489,7 @@ IMS-PRO
                 });
                 submenu.classList.add('show');
                 if(icon) icon.classList.remove('bi-chevron-down');
+                if(icon) icon.classList.remove('bi-chevron-up'); // Ensure we clear old state
                 if(icon) icon.classList.add('bi-chevron-up');
             }
         }
@@ -1584,7 +1584,6 @@ IMS-PRO
 
         document.addEventListener('DOMContentLoaded', () => {
             showContent('home');
-            // Fetching moved to handleLogin to prevent data loading before login
 
             const sidebarToggle = document.getElementById('sidebarToggle');
             const sidebar = document.getElementById('sidebar');
