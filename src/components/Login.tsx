@@ -60,8 +60,8 @@ export const Login = ({ onLogin }: LoginProps) => {
             animate={{ opacity: 1, y: 0 }}
             className="flex items-center gap-6"
           >
-            <div className="w-20 h-20 bg-blue-600 rounded-[2rem] flex items-center justify-center text-white shadow-2xl shadow-blue-500/40 border border-blue-400">
-              <Building2 size={40} />
+            <div className="w-24 h-24 bg-white rounded-[2rem] flex items-center justify-center p-4 shadow-2xl shadow-black/50 border border-slate-700">
+              <img src="https://i.ibb.co/KxMxh3Hw/logo.png" alt="Logo" className="w-full h-full object-contain" />
             </div>
             <div>
               <h1 className="text-5xl font-black text-white tracking-tighter leading-none">YAJUR</h1>

@@ -79,8 +79,8 @@ export const Navigation = ({ user, onLogout, activeModuleUrl, onSelectModule, ro
         {/* Superior Branding */}
         <div className={`p-8 flex items-center justify-between relative`}>
           <div className="flex items-center gap-4 overflow-hidden">
-            <div className={`flex-shrink-0 w-12 h-12 rounded-2xl bg-${config.primary} flex items-center justify-center text-white shadow-xl shadow-${config.primary}/20`}>
-              <Building2 size={24} />
+            <div className={`flex-shrink-0 w-12 h-12 rounded-2xl bg-white flex items-center justify-center p-1.5 shadow-xl shadow-black/5 border border-slate-100`}>
+              <img src="https://i.ibb.co/KxMxh3Hw/logo.png" alt="Logo" className="w-full h-full object-contain" />
             </div>
             {!isCollapsed && (
               <motion.div 
