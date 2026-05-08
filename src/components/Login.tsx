@@ -48,78 +48,63 @@ export const Login = ({ onLogin }: LoginProps) => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 flex items-center justify-center font-sans overflow-hidden relative">
-      {/* Cinematic Dark Background */}
-      <div className="absolute inset-0 z-0">
-        <motion.div
-          animate={{ scale: [1, 1.05, 1], opacity: [0.2, 0.4, 0.2] }}
-          transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-          className="w-full h-full"
-        >
-          <img 
-            src="https://images.unsplash.com/photo-1558591710-4b4a1ae0f04d?auto=format&fit=crop&q=80&w=2000" 
-            alt="Infrastructure" 
-            className="w-full h-full object-cover grayscale brightness-50"
-          />
-        </motion.div>
-        <div className="absolute inset-0 bg-gradient-to-br from-slate-950 via-slate-950/90 to-transparent" />
-      </div>
-
-      {/* Industrial Texture Overlay */}
-      <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-10 pointer-events-none" />
-
+    <div className="min-h-screen bg-slate-50 flex items-center justify-center p-4 lg:p-0 font-sans overflow-hidden">
       <motion.div 
-        initial={{ opacity: 0, y: 40 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="w-full max-w-lg mx-4 z-10"
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={{ opacity: 1, scale: 1 }}
+        className="w-full max-w-5xl bg-white rounded-[2.5rem] shadow-[0_40px_100px_-20px_rgba(0,0,0,0.15)] overflow-hidden flex flex-col lg:flex-row min-h-[650px] mx-4"
       >
-        <div className="bg-white/[0.03] backdrop-blur-3xl border border-white/10 p-10 lg:p-14 rounded-[3rem] shadow-[0_50px_100px_-20px_rgba(0,0,0,0.5)] relative overflow-hidden group">
-          <div className="absolute top-0 right-0 w-64 h-64 bg-teal-500/10 blur-[100px] -mr-32 -mt-32 transition-all group-hover:bg-teal-500/20" />
-          
-          <div className="flex flex-col items-center mb-12 text-center">
+        {/* Left Side: Login Form */}
+        <div className="flex-1 p-10 lg:p-20 flex flex-col justify-center">
+          <div className="mb-12">
             <motion.div 
-              whileHover={{ rotate: 5, scale: 1.05 }}
-              className="w-24 h-24 bg-white rounded-3xl flex items-center justify-center p-5 mb-8 shadow-2xl relative"
+              initial={{ x: -20, opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              className="flex items-center gap-3 mb-4"
             >
-              <div className="absolute inset-0 bg-teal-500/20 blur-2xl opacity-0 hover:opacity-100 transition-opacity" />
-              <img src="https://i.ibb.co/KxMxh3Hw/logo.png" alt="Logo" className="w-full h-full object-contain relative z-10" />
+              <div className="w-10 h-10 bg-white rounded-xl shadow-xl p-2 border border-slate-100">
+                <img src="https://i.ibb.co/KxMxh3Hw/logo.png" alt="Logo" className="w-full h-full object-contain" />
+              </div>
+              <h1 className="text-2xl font-black text-slate-800 tracking-tight">YAJUR NODE</h1>
             </motion.div>
-            <h1 className="text-4xl font-black text-white tracking-widest uppercase leading-none">YAJUR</h1>
-            <div className={`h-1.5 w-32 bg-teal-500 mt-4 rounded-full shadow-[0_0_20px_rgba(20,184,166,0.5)]`} />
-            <p className="text-[11px] font-bold text-slate-500 tracking-[0.5em] uppercase mt-6 ml-2">Enterprise Node Access</p>
+            <h1 className="text-4xl font-black text-slate-800 tracking-tight mb-2">Sign In</h1>
+            <div className="h-1.5 w-12 bg-orange-500 rounded-full" />
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-8">
-            <div className="space-y-3">
-              <label className="text-[10px] font-black text-teal-400 tracking-[0.3em] uppercase px-1">Identifier</label>
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <div className="space-y-2">
+              <label className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] px-1">Username</label>
               <div className="relative group">
-                <div className="absolute inset-y-0 left-0 pl-6 flex items-center pointer-events-none text-slate-500 group-focus-within:text-teal-400 transition-colors">
-                  <UserIcon size={20} />
+                <div className="absolute inset-y-0 left-0 pl-6 flex items-center pointer-events-none text-slate-300 group-focus-within:text-orange-500 transition-colors">
+                  <UserIcon size={18} />
                 </div>
                 <input 
                   type="text"
-                  required
-                  placeholder="USERNAME"
+                  placeholder="Enter your identifier"
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
-                  className="block w-full pl-16 pr-6 py-5 bg-black/50 border border-white/5 rounded-3xl outline-none focus:border-teal-500/40 focus:bg-black/70 transition-all text-white text-sm font-bold tracking-widest placeholder:text-slate-700"
+                  className="block w-full pl-14 pr-6 py-4.5 bg-slate-50 border-2 border-transparent rounded-[1.25rem] text-sm font-bold text-slate-700 focus:outline-none focus:border-orange-500/20 focus:bg-white transition-all placeholder:text-slate-300"
+                  required
                 />
               </div>
             </div>
 
-            <div className="space-y-3">
-              <label className="text-[10px] font-black text-teal-400 tracking-[0.3em] uppercase px-1">Protocol Key</label>
+            <div className="space-y-2">
+              <div className="flex justify-between items-center px-1">
+                <label className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Password</label>
+                <button type="button" className="text-[9px] font-black text-orange-500 hover:underline uppercase tracking-widest">Forgot password?</button>
+              </div>
               <div className="relative group">
-                <div className="absolute inset-y-0 left-0 pl-6 flex items-center pointer-events-none text-slate-500 group-focus-within:text-teal-400 transition-colors">
-                  <Lock size={20} />
+                <div className="absolute inset-y-0 left-0 pl-6 flex items-center pointer-events-none text-slate-300 group-focus-within:text-orange-500 transition-colors">
+                  <Lock size={18} />
                 </div>
                 <input 
                   type="password"
-                  required
                   placeholder="••••••••"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="block w-full pl-16 pr-6 py-5 bg-black/50 border border-white/5 rounded-3xl outline-none focus:border-teal-500/40 focus:bg-black/70 transition-all text-white text-sm font-bold tracking-widest placeholder:text-slate-700"
+                  className="block w-full pl-14 pr-6 py-4.5 bg-slate-50 border-2 border-transparent rounded-[1.25rem] text-sm font-bold text-slate-700 focus:outline-none focus:border-orange-500/20 focus:bg-white transition-all placeholder:text-slate-300"
+                  required
                 />
               </div>
             </div>
@@ -127,31 +112,70 @@ export const Login = ({ onLogin }: LoginProps) => {
             <AnimatePresence>
               {error && (
                 <motion.div 
-                  initial={{ opacity: 0, height: 0 }}
-                  animate={{ opacity: 1, height: 'auto' }}
-                  className="bg-rose-500/10 border border-rose-500/20 text-rose-400 p-5 rounded-2xl text-xs font-bold tracking-wide flex items-center gap-4"
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  className="flex items-center gap-3 p-4 bg-rose-50 text-rose-600 rounded-2xl text-[11px] font-bold border border-rose-100"
                 >
-                  <div className="w-2 h-2 rounded-full bg-rose-500 animate-pulse shrink-0" />
+                  <div className="w-1.5 h-1.5 rounded-full bg-rose-500 animate-pulse" />
                   {error}
                 </motion.div>
               )}
             </AnimatePresence>
 
             <button
+              type="submit"
               disabled={isLoading}
-              className="group relative w-full overflow-hidden py-5 bg-teal-600 text-white rounded-[2rem] font-black text-xs tracking-[0.3em] uppercase hover:bg-teal-500 transition-all shadow-[0_15px_60px_-10px_rgba(20,184,166,0.4)] flex items-center justify-center gap-4 active:scale-[0.98] disabled:opacity-50"
+              className="w-full flex items-center justify-center gap-3 py-5 px-6 bg-gradient-to-r from-orange-500 to-rose-500 text-white rounded-[1.25rem] font-black text-xs uppercase tracking-[0.2em] shadow-2xl shadow-orange-200 hover:shadow-orange-300 hover:scale-[1.02] active:scale-[0.98] transition-all disabled:opacity-50 mt-8"
             >
-              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000" />
               {isLoading ? (
-                <div className="w-6 h-6 border-3 border-white/20 border-t-white rounded-full animate-spin" />
+                <div className="w-5 h-5 border-2 border-white/20 border-t-white rounded-full animate-spin" />
               ) : (
-                <>Enter Control Hub <ChevronRight size={20} className="group-hover:translate-x-1 transition-transform" /></>
+                <>Sign into Node <ChevronRight size={18} /></>
               )}
             </button>
+
+            <p className="text-center text-[10px] font-bold text-slate-400 uppercase tracking-widest pt-4">
+              Access Restricted // <button type="button" className="text-orange-500 font-black hover:underline">Authorization Guide</button>
+            </p>
           </form>
+        </div>
+
+        {/* Right Side: Visual Content */}
+        <div className="hidden lg:flex flex-1 bg-gradient-to-br from-orange-400 via-rose-500 to-fuchsia-600 p-20 flex-col justify-center items-center text-center relative overflow-hidden">
+          {/* Abstract background elements inspired by screenshot 2 */}
+          <div className="absolute top-0 right-0 w-full h-full opacity-20">
+            <div className="absolute top-10 right-10 w-64 h-64 border-[40px] border-white rounded-full blur-2xl" />
+            <div className="absolute -bottom-20 -left-20 w-96 h-96 border-[60px] border-white rounded-full blur-3xl" />
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] border-[1px] border-white rounded-full" />
+            <div className="absolute top-1/3 left-1/4 w-32 h-32 border-[20px] border-white rounded-full" />
+          </div>
           
-          <div className="mt-16 text-center">
-            <p className="text-[10px] font-black text-slate-700 tracking-[0.5em] uppercase">Private Infrastructure // Security Level 4 // 2026</p>
+          <div className="relative z-10 space-y-6">
+            <motion.div
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.2 }}
+            >
+              <h2 className="text-5xl font-black text-white tracking-tight mb-4 leading-tight">Welcome <br /> Back!</h2>
+              <div className="w-12 h-1 bg-white/40 mx-auto rounded-full mb-8" />
+              <p className="text-white font-medium text-lg leading-relaxed max-w-xs mx-auto opacity-90">
+                Central Intelligence & 
+                Operational Control Center
+              </p>
+            </motion.div>
+            
+            <div className="pt-10 flex flex-wrap justify-center gap-3">
+              {['V4.2', 'Secure', 'Synced'].map((tag) => (
+                <span key={tag} className="px-5 py-2 bg-white/10 backdrop-blur-md rounded-xl text-[9px] font-black text-white uppercase tracking-[0.3em] border border-white/20 whitespace-nowrap">
+                  {tag}
+                </span>
+              ))}
+            </div>
+          </div>
+
+          <div className="absolute bottom-10 left-0 right-0 text-center">
+            <p className="text-[9px] font-black text-white/40 uppercase tracking-[0.5em]">SYSTEM PROTOCOL v4.2.0 // 2026</p>
           </div>
         </div>
       </motion.div>

@@ -74,14 +74,14 @@ export const Navigation = ({ user, onLogout, activeModuleUrl, onSelectModule, ro
           width: isCollapsed ? 64 : 240,
           x: isMobileMenuOpen ? 0 : (typeof window !== 'undefined' && window.innerWidth < 1024 ? -240 : 0)
         }}
-        className={`h-screen bg-${config.sidebar} z-[95] flex flex-col transition-all duration-500 shadow-2xl relative flex-shrink-0 text-${config.sidebarText}`}
+        className={`h-screen bg-gradient-to-br ${config.sidebarGradient} z-[95] flex flex-col transition-all duration-500 shadow-2xl relative flex-shrink-0 text-${config.sidebarText}`}
       >
         {/* Superior Branding */}
-        <div className={`p-6 flex items-center justify-between relative border-b border-white/5 mb-4`}>
+        <div className={`p-6 flex items-center justify-between relative border-b border-white/10 mb-4`}>
           <div className="flex items-center gap-4 overflow-hidden">
             <motion.div 
               whileHover={{ rotate: -5, scale: 1.1 }}
-              className={`flex-shrink-0 w-10 h-10 rounded-2xl bg-white p-2 shadow-2xl shadow-black/40 relative z-10 transition-transform`}
+              className={`flex-shrink-0 w-10 h-10 rounded-2xl bg-white p-2 shadow-2xl shadow-black/20 relative z-10 transition-transform`}
             >
               <img src="https://i.ibb.co/KxMxh3Hw/logo.png" alt="Logo" className="w-full h-full object-contain" />
             </motion.div>
@@ -92,14 +92,14 @@ export const Navigation = ({ user, onLogout, activeModuleUrl, onSelectModule, ro
                 className="whitespace-nowrap"
               >
                 <h1 className="text-sm font-black text-white tracking-[0.2em] leading-none uppercase">YAJUR</h1>
-                <div className={`h-1 w-full bg-${config.accent} mt-2 rounded-full opacity-60 shadow-[0_0_10px_rgba(20,184,166,0.5)]`} />
+                <div className={`h-1 w-full bg-white/40 mt-2 rounded-full shadow-[0_0_10px_rgba(255,255,255,0.3)]`} />
               </motion.div>
             )}
           </div>
           
           <button 
             onClick={() => setIsCollapsed(!isCollapsed)}
-            className={`hidden lg:flex absolute -right-3 top-8 w-6 h-6 bg-${config.sidebar} border border-white/10 rounded-full items-center justify-center text-${config.sidebarText}/60 hover:text-white shadow-2xl transition-all hover:scale-110 z-[110]`}
+            className={`hidden lg:flex absolute -right-3 top-8 w-6 h-6 bg-white border border-slate-100 rounded-full items-center justify-center text-slate-800 shadow-2xl transition-all hover:scale-110 z-[110]`}
           >
             {isCollapsed ? <ChevronRight size={12} /> : <ChevronLeft size={12} />}
           </button>
@@ -110,7 +110,7 @@ export const Navigation = ({ user, onLogout, activeModuleUrl, onSelectModule, ro
           <button
             onClick={() => { onSelectModule(null); setIsMobileMenuOpen(false); }}
             className={`w-full flex items-center gap-2.5 p-2.5 rounded-lg transition-all group
-              ${!activeModuleUrl ? `bg-${config.primary} text-white shadow-lg` : `text-${config.sidebarText}/60 hover:bg-white/5 hover:text-white`}`}
+              ${!activeModuleUrl ? `bg-white/20 text-white shadow-lg` : `text-white/60 hover:bg-white/10 hover:text-white`}`}
           >
             <LayoutDashboard size={16} />
             {!isCollapsed && <span className="text-[10px] font-bold tracking-wider uppercase truncate">Overview</span>}
@@ -210,7 +210,7 @@ export const Navigation = ({ user, onLogout, activeModuleUrl, onSelectModule, ro
           
           <button
             onClick={onLogout}
-            className={`w-full flex items-center gap-2.5 p-2.5 mt-1 rounded-lg text-rose-400 hover:bg-rose-900/20 transition-all font-bold text-[9px] tracking-widest uppercase group ${isCollapsed ? 'justify-center' : ''}`}
+            className={`w-full flex items-center gap-2.5 p-2.5 mt-1 rounded-lg text-white/60 hover:text-white hover:bg-white/10 transition-all font-bold text-[9px] tracking-widest uppercase group ${isCollapsed ? 'justify-center' : ''}`}
           >
             <LogOut size={16} className="group-hover:-translate-x-1 transition-transform" />
             {!isCollapsed && <span>End Session</span>}

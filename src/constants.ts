@@ -119,38 +119,64 @@ export const THEME_PLATES: Record<ThemePlate, {
   text: string; 
   accent: string;
   sidebar: string;
+  sidebarGradient: string;
   sidebarText: string;
   sidebarActive: string;
 }> = {
-  slate: {
-    name: 'Yajur Pro',
-    primary: 'teal-600',
+  rose: {
+    name: 'Architect Pink',
+    primary: 'pink-600',
     bg: 'white',
     text: 'slate-900',
-    accent: 'teal-600',
-    sidebar: 'slate-900',
-    sidebarText: 'slate-300',
-    sidebarActive: 'teal-600'
+    accent: 'pink-500',
+    sidebar: 'pink-600',
+    sidebarGradient: 'from-pink-500 via-rose-500 to-fuchsia-600',
+    sidebarText: 'white',
+    sidebarActive: 'bg-white/20'
+  },
+  amethyst: {
+    name: 'Royal Purple',
+    primary: 'purple-600',
+    bg: 'white',
+    text: 'slate-900',
+    accent: 'purple-500',
+    sidebar: 'purple-600',
+    sidebarGradient: 'from-purple-600 to-violet-700',
+    sidebarText: 'white',
+    sidebarActive: 'bg-white/20'
+  },
+  ocean: {
+    name: 'Berylline',
+    primary: 'cyan-600',
+    bg: 'white',
+    text: 'slate-900',
+    accent: 'cyan-500',
+    sidebar: 'cyan-600',
+    sidebarGradient: 'from-cyan-500 to-blue-600',
+    sidebarText: 'white',
+    sidebarActive: 'bg-white/20'
+  },
+  slate: {
+    name: 'Enterprise Orange',
+    primary: 'orange-600',
+    bg: 'white',
+    text: 'slate-900',
+    accent: 'orange-500',
+    sidebar: 'orange-600',
+    sidebarGradient: 'from-orange-400 to-orange-600',
+    sidebarText: 'white',
+    sidebarActive: 'bg-white/20'
   },
   midnight: {
-    name: 'Deep Node',
-    primary: 'slate-900',
+    name: 'Midnight Teal',
+    primary: 'teal-600',
     bg: 'slate-50',
     text: 'slate-900',
-    accent: 'teal-600',
-    sidebar: 'slate-950',
-    sidebarText: 'slate-400',
-    sidebarActive: 'slate-800'
-  },
-  emerald: {
-    name: 'Industrial',
-    primary: 'teal-700',
-    bg: 'white',
-    text: 'slate-900',
-    accent: 'teal-600',
-    sidebar: 'emerald-950',
-    sidebarText: 'emerald-300',
-    sidebarActive: 'teal-700'
+    accent: 'teal-500',
+    sidebar: 'teal-800',
+    sidebarGradient: 'from-teal-800 to-slate-900',
+    sidebarText: 'white',
+    sidebarActive: 'bg-white/10'
   }
 };
 
