@@ -114,35 +114,35 @@ export const MODULES = [
 
 export const THEME_PLATES: Record<ThemePlate, { name: string; primary: string; bg: string; text: string; accent: string }> = {
   slate: {
-    name: 'Yajur Standard',
-    primary: 'blue-600',
+    name: 'Yajur Pro',
+    primary: 'teal-600',
     bg: 'white',
     text: 'slate-900',
-    accent: 'blue-500'
+    accent: 'teal-500'
   },
   midnight: {
-    name: 'Deep Enterprise',
+    name: 'Deep Node',
     primary: 'slate-900',
     bg: 'slate-50',
     text: 'slate-900',
-    accent: 'blue-600'
+    accent: 'teal-600'
   },
   emerald: {
-    name: 'Eco Industrial',
+    name: 'Industrial',
     primary: 'teal-700',
     bg: 'white',
     text: 'slate-900',
     accent: 'teal-600'
   },
   amethyst: {
-    name: 'Royal Node',
-    primary: 'indigo-700',
+    name: 'Unified',
+    primary: 'slate-800',
     bg: 'white',
     text: 'slate-900',
-    accent: 'indigo-600'
+    accent: 'slate-600'
   },
   rose: {
-    name: 'Critical Alert',
+    name: 'Alert Mode',
     primary: 'rose-700',
     bg: 'white',
     text: 'slate-900',

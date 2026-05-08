@@ -106,7 +106,7 @@ export const Navigation = ({ user, onLogout, activeModuleUrl, onSelectModule, ro
           <button
             onClick={() => { onSelectModule(null); setIsMobileMenuOpen(false); }}
             className={`w-full flex items-center gap-2.5 p-2.5 rounded-lg transition-all group
-              ${!activeModuleUrl ? `bg-blue-600 text-white shadow-lg shadow-blue-500/20` : 'text-slate-400 hover:bg-slate-800/50 hover:text-white'}`}
+              ${!activeModuleUrl ? `bg-teal-600 text-white shadow-lg shadow-teal-500/20` : 'text-slate-400 hover:bg-slate-800/50 hover:text-white'}`}
           >
             <LayoutDashboard size={16} />
             {!isCollapsed && <span className="text-[10px] font-bold tracking-wider uppercase truncate">Overview</span>}
@@ -139,7 +139,7 @@ export const Navigation = ({ user, onLogout, activeModuleUrl, onSelectModule, ro
                       ? `bg-slate-800 text-white shadow-sm` 
                       : 'text-slate-400 hover:bg-slate-800/50 hover:text-white'}`}
                 >
-                  <div className={`transition-transform duration-300 ${isActive ? 'scale-110' : 'group-hover:scale-110 text-slate-500 group-hover:text-blue-400'}`}>
+                  <div className={`transition-transform duration-300 ${isActive ? 'scale-110' : 'group-hover:scale-110 text-slate-500 group-hover:text-teal-400'}`}>
                     <LucideIcon name={module.icon} size={16} />
                   </div>
                   {!isCollapsed && (
@@ -155,7 +155,7 @@ export const Navigation = ({ user, onLogout, activeModuleUrl, onSelectModule, ro
                   
                   {/* Active Indicator */}
                   {isActive && !isCollapsed && (
-                    <div className="absolute right-0 top-1/2 -translate-y-1/2 w-1 h-4 bg-blue-500 rounded-l-full" />
+                    <div className="absolute right-0 top-1/2 -translate-y-1/2 w-1 h-4 bg-teal-500 rounded-l-full" />
                   )}
                 </button>
 
@@ -173,7 +173,7 @@ export const Navigation = ({ user, onLogout, activeModuleUrl, onSelectModule, ro
                           onClick={() => { onSelectModule(item.url); setIsMobileMenuOpen(false); }}
                           className={`w-full text-left p-2 rounded-lg text-[10px] font-bold tracking-widest uppercase transition-all
                             ${activeModuleUrl === item.url 
-                              ? `text-blue-400 bg-blue-400/5` 
+                              ? `text-teal-400 bg-teal-400/5` 
                               : 'text-slate-500 hover:text-slate-300 hover:bg-slate-800/30'}`}
                         >
                           {item.title}
@@ -190,14 +190,14 @@ export const Navigation = ({ user, onLogout, activeModuleUrl, onSelectModule, ro
         {/* User / Profile Section */}
         <div className="p-2 border-t border-slate-800 bg-slate-900/50 mt-auto">
           <div className={`flex items-center gap-2 p-2 rounded-lg bg-slate-800/50 border border-slate-800 ${isCollapsed ? 'justify-center' : ''}`}>
-            <div className={`w-7 h-7 rounded bg-blue-600 flex items-center justify-center text-white text-[10px] font-black shrink-0`}>
+            <div className={`w-7 h-7 rounded bg-teal-600 flex items-center justify-center text-white text-[10px] font-black shrink-0`}>
               {user.username.charAt(0)}
             </div>
             {!isCollapsed && (
               <div className="min-w-0 flex-1">
                 <p className="text-[10px] font-bold text-white truncate">{user.username}</p>
                 <div className="flex items-center gap-1">
-                  <ShieldCheck size={8} className="text-blue-400" />
+                  <ShieldCheck size={8} className="text-teal-400" />
                   <p className="text-[8px] font-bold text-slate-500 tracking-widest uppercase truncate">{role}</p>
                 </div>
               </div>

@@ -100,8 +100,8 @@ export const Dashboard = ({ user, modules, onSelectModule, onTogglePin }: Dashbo
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 py-2">
         <div className="space-y-0.5">
           <h1 className="text-xl lg:text-2xl font-black text-slate-900 tracking-tight flex items-center gap-2">
-            <span className="w-1 h-6 bg-blue-600 rounded-full" />
-            Terminal / <span className="text-blue-600 uppercase">{user.username}</span>
+            <span className="w-1 h-6 bg-teal-600 rounded-full" />
+            Terminal / <span className="text-teal-600 uppercase">{user.username}</span>
           </h1>
           <p className="text-slate-500 font-medium text-[10px] uppercase tracking-wider">
             Operational Control Center
@@ -119,7 +119,7 @@ export const Dashboard = ({ user, modules, onSelectModule, onTogglePin }: Dashbo
               placeholder="Search..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="block w-full pl-8 pr-2 py-1.5 bg-white border border-slate-200 rounded-lg text-[11px] focus:outline-none focus:ring-1 focus:ring-blue-100 transition-all shadow-sm"
+              className="block w-full pl-8 pr-2 py-1.5 bg-white border border-slate-200 rounded-lg text-[11px] focus:outline-none focus:ring-1 focus:ring-teal-100 transition-all shadow-sm"
             />
           </div>
 
@@ -129,7 +129,7 @@ export const Dashboard = ({ user, modules, onSelectModule, onTogglePin }: Dashbo
                 key={p}
                 onClick={() => setTheme(p)}
                 className={`w-5 h-5 rounded transition-all
-                  ${theme === p ? 'ring-2 ring-blue-500 ring-offset-1' : 'opacity-40 hover:opacity-100'} 
+                  ${theme === p ? 'ring-2 ring-teal-500 ring-offset-1' : 'opacity-40 hover:opacity-100'} 
                   bg-${THEME_PLATES[p].primary}`}
               />
             ))}
@@ -217,22 +217,22 @@ const ModuleCard = ({ module, index, onSelect }: any) => {
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: index * 0.02 }}
       whileHover={{ y: -2 }}
-      className="group bg-white border border-slate-100 p-4 rounded-xl shadow-sm hover:shadow-md hover:border-blue-200 transition-all cursor-pointer flex flex-col h-full"
+      className="group bg-white border border-slate-100 p-4 rounded-xl shadow-sm hover:shadow-md hover:border-teal-200 transition-all cursor-pointer flex flex-col h-full"
       onClick={() => onSelect(module.url || module.id)}
     >
       <div className="flex items-center gap-3 mb-3">
-        <div className="p-2 bg-slate-50 text-slate-400 group-hover:bg-blue-600 group-hover:text-white rounded-lg transition-colors">
+        <div className="p-2 bg-slate-50 text-slate-400 group-hover:bg-teal-600 group-hover:text-white rounded-lg transition-colors">
           <LucideIcon name={module.icon} size={16} />
         </div>
         {module.badge && (
-          <span className="ml-auto px-1 py-0.5 bg-blue-50 text-blue-600 text-[7px] font-black tracking-widest uppercase rounded">
+          <span className="ml-auto px-1 py-0.5 bg-teal-50 text-teal-600 text-[7px] font-black tracking-widest uppercase rounded">
             {module.badge}
           </span>
         )}
       </div>
 
       <div className="flex-1">
-        <h3 className="text-xs font-black text-slate-900 mb-1 group-hover:text-blue-600 transition-colors uppercase tracking-tight">
+        <h3 className="text-xs font-black text-slate-900 mb-1 group-hover:text-teal-600 transition-colors uppercase tracking-tight">
           {module.title}
         </h3>
         <p className="text-[10px] text-slate-400 font-medium leading-tight line-clamp-2">
@@ -241,7 +241,7 @@ const ModuleCard = ({ module, index, onSelect }: any) => {
       </div>
 
       <div className="mt-3 pt-2 border-t border-slate-50 flex items-center justify-end">
-        <ChevronRight size={12} className="text-slate-300 group-hover:text-blue-400 transition-colors" />
+        <ChevronRight size={12} className="text-slate-300 group-hover:text-teal-400 transition-colors" />
       </div>
     </motion.div>
   );
