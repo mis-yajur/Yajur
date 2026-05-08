@@ -83,7 +83,7 @@ function AppContent() {
       {/* Main Viewport */}
       <main 
         className={`flex-1 flex flex-col min-w-0 transition-all duration-700 
-          ${activeModuleUrl ? 'pl-0' : 'lg:pl-[260px]'}`}
+          ${activeModuleUrl ? 'pl-0' : 'lg:pl-[240px]'}`}
       >
         <AnimatePresence mode="wait">
           <motion.div

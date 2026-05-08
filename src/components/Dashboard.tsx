@@ -95,40 +95,41 @@ export const Dashboard = ({ user, modules, onSelectModule, onTogglePin }: Dashbo
   );
 
   return (
-    <div className="p-4 lg:p-6 space-y-8 max-w-[1700px] mx-auto pb-20">
+    <div className="p-3 lg:p-5 space-y-6 max-w-[1700px] mx-auto pb-16">
       {/* Header */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 py-4">
-        <div className="space-y-1">
-          <h1 className="text-2xl lg:text-3xl font-black text-slate-900 tracking-tight">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 py-2">
+        <div className="space-y-0.5">
+          <h1 className="text-xl lg:text-2xl font-black text-slate-900 tracking-tight flex items-center gap-2">
+            <span className="w-1 h-6 bg-blue-600 rounded-full" />
             Terminal / <span className="text-blue-600 uppercase">{user.username}</span>
           </h1>
-          <p className="text-slate-500 font-medium text-xs lg:text-sm">
-            Operational dashboard for vertical enterprise integration.
+          <p className="text-slate-500 font-medium text-[10px] uppercase tracking-wider">
+            Operational Control Center
           </p>
         </div>
 
-        <div className="flex flex-wrap items-center gap-3">
+        <div className="flex items-center gap-2">
           {/* Quick Search */}
-          <div className="relative group w-full sm:w-64">
-            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-              <Search className="text-slate-400 group-focus-within:text-blue-600 transition-colors" size={14} />
+          <div className="relative group w-48 sm:w-56">
+            <div className="absolute inset-y-0 left-0 pl-2.5 flex items-center pointer-events-none">
+              <Search className="text-slate-400 group-focus-within:text-blue-600 transition-colors" size={12} />
             </div>
             <input 
               type="text"
-              placeholder="Search nodes..."
+              placeholder="Search..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="block w-full pl-10 pr-3 py-2 bg-white border border-slate-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-blue-100 transition-all shadow-sm"
+              className="block w-full pl-8 pr-2 py-1.5 bg-white border border-slate-200 rounded-lg text-[11px] focus:outline-none focus:ring-1 focus:ring-blue-100 transition-all shadow-sm"
             />
           </div>
 
-          <div className="flex items-center gap-1 p-1 bg-white border border-slate-200 rounded-xl shadow-sm">
+          <div className="flex items-center gap-1 p-1 bg-white border border-slate-200 rounded-lg shadow-sm">
             {(Object.keys(THEME_PLATES) as ThemePlate[]).map((p) => (
               <button
                 key={p}
                 onClick={() => setTheme(p)}
-                className={`w-7 h-7 rounded-lg transition-all flex items-center justify-center
-                  ${theme === p ? 'ring-2 ring-blue-500' : 'opacity-40 hover:opacity-100'} 
+                className={`w-5 h-5 rounded transition-all
+                  ${theme === p ? 'ring-2 ring-blue-500 ring-offset-1' : 'opacity-40 hover:opacity-100'} 
                   bg-${THEME_PLATES[p].primary}`}
               />
             ))}
@@ -136,54 +137,54 @@ export const Dashboard = ({ user, modules, onSelectModule, onTogglePin }: Dashbo
         </div>
       </div>
 
-      {/* Overview Cards - Professional Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      {/* Overview Cards */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
         <InsightCard 
-          label="Sales Pipeline" 
+          label="Sales" 
           value={`₹${salesData.total.toFixed(1)} Cr`} 
-          subValue={`${salesData.growth > 0 ? '+' : ''}${salesData.growth}% Growth`}
+          subValue="Current Pipeline"
           icon={TrendingUp}
           color="blue"
         />
         <InsightCard 
-          label="Pending Tasks" 
+          label="Queue" 
           value={taskStats.pending} 
-          subValue="Real-time queue"
+          subValue="Tasks Pending"
           icon={Activity}
           color="indigo"
         />
         <InsightCard 
-          label="System Node" 
+          label="Node" 
           value="ACTIVE" 
-          subValue="Latency 12ms"
+          subValue="System Status"
           icon={Zap}
           color="emerald"
         />
         <InsightCard 
-          label="Security Role" 
+          label="Credential" 
           value={user.role.toUpperCase()} 
-          subValue="Standard Clearance"
+          subValue="Access Level"
           icon={ShieldCheck}
           color="slate"
         />
       </div>
 
       {/* Main Grid */}
-      <section className="space-y-4">
-        <div className="flex items-center gap-2">
-          <div className="w-1 h-3 bg-blue-600 rounded-full" />
-          <h2 className="text-[10px] font-black text-slate-400 tracking-[0.2em] uppercase">
-            Operational Ecosystem
+      <section className="space-y-3">
+        <div className="flex items-center gap-2 opacity-50">
+          <LayoutGrid size={12} className="text-slate-600" />
+          <h2 className="text-[9px] font-black text-slate-500 tracking-[0.2em] uppercase">
+            Available Modules
           </h2>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-3">
           {filteredOther.length > 0 ? (
             filteredOther.map((m, i) => (
               <ModuleCard key={m.id} module={m} index={i} onSelect={onSelectModule} />
             ))
           ) : (
-            <div className="col-span-full py-12 text-center bg-white border border-dashed border-slate-200 rounded-3xl">
-              <p className="text-slate-400 font-bold uppercase tracking-widest text-[10px]">No assets found</p>
+            <div className="col-span-full py-8 text-center bg-white border border-dashed border-slate-200 rounded-2xl">
+              <p className="text-slate-400 font-bold uppercase tracking-widest text-[9px]">Inventory Empty</p>
             </div>
           )}
         </div>
@@ -194,16 +195,16 @@ export const Dashboard = ({ user, modules, onSelectModule, onTogglePin }: Dashbo
 
 const InsightCard = ({ label, value, subValue, icon: Icon, color }: any) => {
   return (
-    <div className="bg-white border border-slate-200 p-4 rounded-2xl shadow-sm hover:shadow-md transition-all">
-      <div className="flex items-center justify-between mb-3">
-        <p className="text-[10px] font-bold text-slate-400 tracking-wider uppercase">{label}</p>
-        <div className={`p-1.5 rounded-lg bg-${color}-50 text-${color}-600`}>
-          <Icon size={14} />
+    <div className="bg-white border border-slate-100 p-3 rounded-xl shadow-sm">
+      <div className="flex items-center gap-2 mb-2">
+        <div className={`p-1 rounded bg-${color}-50 text-${color}-600`}>
+          <Icon size={12} />
         </div>
+        <p className="text-[9px] font-bold text-slate-400 tracking-wider uppercase">{label}</p>
       </div>
       <div>
-        <h3 className="text-xl font-black text-slate-900">{value}</h3>
-        <p className="text-[10px] font-bold text-slate-500 mt-0.5">{subValue}</p>
+        <h3 className="text-lg font-black text-slate-900 leading-none">{value}</h3>
+        <p className="text-[8px] font-bold text-slate-400 mt-1 uppercase tracking-tighter">{subValue}</p>
       </div>
     </div>
   );
@@ -212,35 +213,35 @@ const InsightCard = ({ label, value, subValue, icon: Icon, color }: any) => {
 const ModuleCard = ({ module, index, onSelect }: any) => {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 10 }}
+      initial={{ opacity: 0, y: 5 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: index * 0.03 }}
-      whileHover={{ y: -4 }}
-      className="group bg-white border border-slate-200 p-5 rounded-2xl shadow-sm hover:shadow-xl transition-all cursor-pointer flex flex-col h-full"
+      transition={{ delay: index * 0.02 }}
+      whileHover={{ y: -2 }}
+      className="group bg-white border border-slate-100 p-4 rounded-xl shadow-sm hover:shadow-md hover:border-blue-200 transition-all cursor-pointer flex flex-col h-full"
       onClick={() => onSelect(module.url || module.id)}
     >
-      <div className="flex items-start justify-between mb-4">
-        <div className={`p-2.5 bg-slate-50 text-slate-400 group-hover:bg-blue-600 group-hover:text-white rounded-xl transition-all duration-300`}>
-          <LucideIcon name={module.icon} size={20} />
+      <div className="flex items-center gap-3 mb-3">
+        <div className="p-2 bg-slate-50 text-slate-400 group-hover:bg-blue-600 group-hover:text-white rounded-lg transition-colors">
+          <LucideIcon name={module.icon} size={16} />
         </div>
         {module.badge && (
-          <span className="px-1.5 py-0.5 bg-slate-100 text-slate-500 text-[8px] font-black tracking-widest uppercase rounded">
+          <span className="ml-auto px-1 py-0.5 bg-blue-50 text-blue-600 text-[7px] font-black tracking-widest uppercase rounded">
             {module.badge}
           </span>
         )}
       </div>
 
       <div className="flex-1">
-        <h3 className="text-sm font-black text-slate-900 mb-1 group-hover:text-blue-600 transition-colors">
+        <h3 className="text-xs font-black text-slate-900 mb-1 group-hover:text-blue-600 transition-colors uppercase tracking-tight">
           {module.title}
         </h3>
-        <p className="text-[11px] text-slate-500 font-medium leading-tight line-clamp-2">
+        <p className="text-[10px] text-slate-400 font-medium leading-tight line-clamp-2">
           {module.description}
         </p>
       </div>
 
-      <div className="mt-4 pt-3 border-t border-slate-50 flex items-center justify-end">
-        <ChevronRight size={14} className="text-slate-300 group-hover:text-blue-400 transition-colors" />
+      <div className="mt-3 pt-2 border-t border-slate-50 flex items-center justify-end">
+        <ChevronRight size={12} className="text-slate-300 group-hover:text-blue-400 transition-colors" />
       </div>
     </motion.div>
   );

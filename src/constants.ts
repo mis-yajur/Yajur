@@ -114,45 +114,45 @@ export const MODULES = [
 
 export const THEME_PLATES: Record<ThemePlate, { name: string; primary: string; bg: string; text: string; accent: string }> = {
   slate: {
-    name: 'Slate Executive',
+    name: 'Yajur Standard',
     primary: 'blue-600',
-    bg: 'slate-50',
+    bg: 'white',
     text: 'slate-900',
     accent: 'blue-500'
   },
   midnight: {
-    name: 'Midnight Pro',
+    name: 'Deep Enterprise',
     primary: 'slate-900',
-    bg: 'slate-950',
-    text: 'slate-50',
-    accent: 'blue-400'
+    bg: 'slate-50',
+    text: 'slate-900',
+    accent: 'blue-600'
   },
   emerald: {
-    name: 'Emerald Eco',
-    primary: 'emerald-600',
-    bg: 'emerald-50/30',
-    text: 'emerald-950',
-    accent: 'emerald-500'
+    name: 'Eco Industrial',
+    primary: 'teal-700',
+    bg: 'white',
+    text: 'slate-900',
+    accent: 'teal-600'
   },
   amethyst: {
-    name: 'Amethyst Bold',
-    primary: 'purple-600',
-    bg: 'purple-50/30',
-    text: 'purple-950',
-    accent: 'purple-500'
+    name: 'Royal Node',
+    primary: 'indigo-700',
+    bg: 'white',
+    text: 'slate-900',
+    accent: 'indigo-600'
   },
   rose: {
-    name: 'Rose Quartz',
-    primary: 'rose-600',
-    bg: 'rose-50/30',
-    text: 'rose-950',
-    accent: 'rose-500'
+    name: 'Critical Alert',
+    primary: 'rose-700',
+    bg: 'white',
+    text: 'slate-900',
+    accent: 'rose-600'
   },
   ocean: {
-    name: 'Ocean Deep',
-    primary: 'sky-600',
-    bg: 'sky-50/30',
-    text: 'sky-950',
-    accent: 'sky-500'
+    name: 'Berylline',
+    primary: 'cyan-700',
+    bg: 'white',
+    text: 'slate-900',
+    accent: 'cyan-600'
   }
 };
