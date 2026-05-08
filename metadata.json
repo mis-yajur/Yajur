@@ -1,0 +1,10 @@
+{
+  "name": "Yajur Fibres LTD.",
+  "description": "Enterprise dashboard and workflow management platform for Yajur Fibres modules.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone",
+    "fullscreen"
+  ],
+  "majorCapabilities": []
+}
