@@ -49,24 +49,24 @@ export const Login = ({ onLogin }: LoginProps) => {
 
   return (
     <div className="min-h-screen bg-slate-950 flex items-center justify-center font-sans overflow-hidden relative">
-      {/* Cinematic Industrial Background */}
+      {/* Cinematic Dark Background */}
       <div className="absolute inset-0 z-0">
         <motion.div
-          animate={{ scale: [1, 1.05, 1], opacity: [0.2, 0.3, 0.2] }}
+          animate={{ scale: [1, 1.05, 1], opacity: [0.2, 0.4, 0.2] }}
           transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
           className="w-full h-full"
         >
           <img 
             src="https://images.unsplash.com/photo-1558591710-4b4a1ae0f04d?auto=format&fit=crop&q=80&w=2000" 
-            alt="Yajur Infrastructure" 
-            className="w-full h-full object-cover grayscale"
+            alt="Infrastructure" 
+            className="w-full h-full object-cover grayscale brightness-50"
           />
         </motion.div>
         <div className="absolute inset-0 bg-gradient-to-br from-slate-950 via-slate-950/90 to-transparent" />
       </div>
 
-      {/* Grid Pattern Overlay */}
-      <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-20 pointer-events-none" />
+      {/* Industrial Texture Overlay */}
+      <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-10 pointer-events-none" />
 
       <motion.div 
         initial={{ opacity: 0, y: 40 }}
@@ -86,12 +86,12 @@ export const Login = ({ onLogin }: LoginProps) => {
             </motion.div>
             <h1 className="text-4xl font-black text-white tracking-widest uppercase leading-none">YAJUR</h1>
             <div className={`h-1.5 w-32 bg-teal-500 mt-4 rounded-full shadow-[0_0_20px_rgba(20,184,166,0.5)]`} />
-            <p className="text-[11px] font-bold text-slate-500 tracking-[0.5em] uppercase mt-6 ml-2">Enterprise Access Node</p>
+            <p className="text-[11px] font-bold text-slate-500 tracking-[0.5em] uppercase mt-6 ml-2">Enterprise Node Access</p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-8">
             <div className="space-y-3">
-              <label className="text-[10px] font-black text-teal-400 tracking-[0.3em] uppercase px-1">Node Identifier</label>
+              <label className="text-[10px] font-black text-teal-400 tracking-[0.3em] uppercase px-1">Identifier</label>
               <div className="relative group">
                 <div className="absolute inset-y-0 left-0 pl-6 flex items-center pointer-events-none text-slate-500 group-focus-within:text-teal-400 transition-colors">
                   <UserIcon size={20} />
@@ -108,7 +108,7 @@ export const Login = ({ onLogin }: LoginProps) => {
             </div>
 
             <div className="space-y-3">
-              <label className="text-[10px] font-black text-teal-400 tracking-[0.3em] uppercase px-1">Security Key</label>
+              <label className="text-[10px] font-black text-teal-400 tracking-[0.3em] uppercase px-1">Protocol Key</label>
               <div className="relative group">
                 <div className="absolute inset-y-0 left-0 pl-6 flex items-center pointer-events-none text-slate-500 group-focus-within:text-teal-400 transition-colors">
                   <Lock size={20} />
@@ -145,7 +145,7 @@ export const Login = ({ onLogin }: LoginProps) => {
               {isLoading ? (
                 <div className="w-6 h-6 border-3 border-white/20 border-t-white rounded-full animate-spin" />
               ) : (
-                <>Initialize Authorization <ChevronRight size={20} className="group-hover:translate-x-1 transition-transform" /></>
+                <>Enter Control Hub <ChevronRight size={20} className="group-hover:translate-x-1 transition-transform" /></>
               )}
             </button>
           </form>

@@ -119,42 +119,38 @@ export const THEME_PLATES: Record<ThemePlate, {
   text: string; 
   accent: string;
   sidebar: string;
-  sidebarGradient: string;
   sidebarText: string;
   sidebarActive: string;
 }> = {
   slate: {
-    name: 'Architect Teal',
+    name: 'Yajur Pro',
     primary: 'teal-600',
     bg: 'white',
     text: 'slate-900',
-    accent: 'teal-500',
-    sidebar: 'teal-600',
-    sidebarGradient: 'from-[#3AC47D] to-[#2DA069]',
-    sidebarText: 'white',
-    sidebarActive: 'bg-white/15'
+    accent: 'teal-600',
+    sidebar: 'slate-900',
+    sidebarText: 'slate-300',
+    sidebarActive: 'teal-600'
   },
   midnight: {
-    name: 'Enterprise Dark',
+    name: 'Deep Node',
     primary: 'slate-900',
     bg: 'slate-50',
     text: 'slate-900',
-    accent: 'slate-800',
-    sidebar: 'slate-900',
-    sidebarGradient: 'from-[#2c3e50] to-[#000000]',
-    sidebarText: 'slate-300',
-    sidebarActive: 'bg-white/5'
+    accent: 'teal-600',
+    sidebar: 'slate-950',
+    sidebarText: 'slate-400',
+    sidebarActive: 'slate-800'
   },
   emerald: {
-    name: 'Vibrant Industrial',
-    primary: 'emerald-600',
+    name: 'Industrial',
+    primary: 'teal-700',
     bg: 'white',
     text: 'slate-900',
-    accent: 'emerald-500',
-    sidebar: 'emerald-600',
-    sidebarGradient: 'from-[#16a085] to-[#27ae60]',
-    sidebarText: 'white',
-    sidebarActive: 'bg-white/10'
+    accent: 'teal-600',
+    sidebar: 'emerald-950',
+    sidebarText: 'emerald-300',
+    sidebarActive: 'teal-700'
   }
 };
 
