@@ -119,68 +119,42 @@ export const THEME_PLATES: Record<ThemePlate, {
   text: string; 
   accent: string;
   sidebar: string;
+  sidebarGradient: string;
   sidebarText: string;
   sidebarActive: string;
 }> = {
   slate: {
-    name: 'Yajur Pro',
+    name: 'Architect Teal',
     primary: 'teal-600',
     bg: 'white',
     text: 'slate-900',
     accent: 'teal-500',
-    sidebar: 'slate-900',
-    sidebarText: 'slate-300',
-    sidebarActive: 'teal-600'
+    sidebar: 'teal-600',
+    sidebarGradient: 'from-teal-600 to-emerald-500',
+    sidebarText: 'white',
+    sidebarActive: 'bg-white/10'
   },
   midnight: {
-    name: 'Deep Node',
+    name: 'Enterprise Dark',
     primary: 'slate-900',
     bg: 'slate-50',
     text: 'slate-900',
     accent: 'teal-600',
-    sidebar: 'slate-950',
-    sidebarText: 'slate-400',
-    sidebarActive: 'slate-800'
+    sidebar: 'slate-900',
+    sidebarGradient: 'from-slate-900 to-slate-800',
+    sidebarText: 'slate-300',
+    sidebarActive: 'bg-white/5'
   },
   emerald: {
-    name: 'Industrial',
-    primary: 'teal-700',
+    name: 'Vibrant Industrial',
+    primary: 'emerald-600',
     bg: 'white',
     text: 'slate-900',
-    accent: 'teal-600',
-    sidebar: 'emerald-950',
-    sidebarText: 'emerald-300',
-    sidebarActive: 'teal-700'
-  },
-  amethyst: {
-    name: 'Unified',
-    primary: 'slate-800',
-    bg: 'white',
-    text: 'slate-900',
-    accent: 'slate-600',
-    sidebar: 'slate-900',
-    sidebarText: 'slate-400',
-    sidebarActive: 'slate-800'
-  },
-  rose: {
-    name: 'Alert Mode',
-    primary: 'rose-700',
-    bg: 'white',
-    text: 'slate-900',
-    accent: 'rose-600',
-    sidebar: 'rose-950',
-    sidebarText: 'rose-300',
-    sidebarActive: 'rose-700'
-  },
-  ocean: {
-    name: 'Berylline',
-    primary: 'cyan-700',
-    bg: 'white',
-    text: 'slate-900',
-    accent: 'cyan-600',
-    sidebar: 'cyan-950',
-    sidebarText: 'cyan-300',
-    sidebarActive: 'cyan-700'
+    accent: 'emerald-500',
+    sidebar: 'emerald-600',
+    sidebarGradient: 'from-emerald-600 to-teal-500',
+    sidebarText: 'white',
+    sidebarActive: 'bg-white/10'
   }
 };
 

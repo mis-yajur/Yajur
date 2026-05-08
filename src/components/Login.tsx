@@ -48,172 +48,113 @@ export const Login = ({ onLogin }: LoginProps) => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 flex font-sans overflow-hidden relative">
-      {/* Dynamic Background */}
-      <AnimatePresence mode="wait">
+    <div className="min-h-screen bg-slate-950 flex items-center justify-center font-sans overflow-hidden relative">
+      {/* Cinematic Industrial Background */}
+      <div className="absolute inset-0 z-0">
         <motion.div
-          key={bgImage}
-          initial={{ opacity: 0, scale: 1.1 }}
-          animate={{ opacity: 0.4, scale: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 2 }}
-          className="absolute inset-0 z-0"
+          animate={{ scale: [1, 1.05, 1], opacity: [0.2, 0.3, 0.2] }}
+          transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
+          className="w-full h-full"
         >
           <img 
-            src={bgImage} 
-            alt="Industrial Background" 
-            className="w-full h-full object-cover grayscale brightness-50"
+            src="https://images.unsplash.com/photo-1558591710-4b4a1ae0f04d?auto=format&fit=crop&q=80&w=2000" 
+            alt="Yajur Infrastructure" 
+            className="w-full h-full object-cover grayscale"
           />
         </motion.div>
-      </AnimatePresence>
+        <div className="absolute inset-0 bg-gradient-to-br from-slate-950 via-slate-950/90 to-transparent" />
+      </div>
 
-      {/* Lighting Effects */}
-      <div className="absolute inset-0 bg-gradient-to-tr from-slate-950 via-slate-950/80 to-teal-500/10 z-[1]" />
-      
-      {/* Decorative Grid */}
-      <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-10 z-[2]" />
+      {/* Grid Pattern Overlay */}
+      <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-20 pointer-events-none" />
 
-      <div className="relative z-10 w-full flex flex-col lg:flex-row">
-        {/* Left Side: Branding & Info */}
-        <div className="hidden lg:flex flex-1 flex-col justify-between p-16">
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            className="flex items-center gap-4"
-          >
-            <div className="w-12 h-12 bg-white rounded-xl p-2 shadow-2xl flex items-center justify-center">
-              <img src="https://i.ibb.co/KxMxh3Hw/logo.png" alt="Logo" className="w-full h-full object-contain" />
-            </div>
-            <div>
-              <h2 className="text-xl font-black text-white tracking-widest uppercase">Yajur Fibres</h2>
-              <div className="h-1 w-full bg-teal-500 mt-1 rounded-full shadow-[0_0_10px_#14b8a6]" />
-            </div>
-          </motion.div>
-
-          <div className="space-y-12">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
+      <motion.div 
+        initial={{ opacity: 0, y: 40 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="w-full max-w-lg mx-4 z-10"
+      >
+        <div className="bg-white/[0.03] backdrop-blur-3xl border border-white/10 p-10 lg:p-14 rounded-[3rem] shadow-[0_50px_100px_-20px_rgba(0,0,0,0.5)] relative overflow-hidden group">
+          <div className="absolute top-0 right-0 w-64 h-64 bg-teal-500/10 blur-[100px] -mr-32 -mt-32 transition-all group-hover:bg-teal-500/20" />
+          
+          <div className="flex flex-col items-center mb-12 text-center">
+            <motion.div 
+              whileHover={{ rotate: 5, scale: 1.05 }}
+              className="w-24 h-24 bg-white rounded-3xl flex items-center justify-center p-5 mb-8 shadow-2xl relative"
             >
-              <h1 className="text-6xl font-black text-white tracking-tighter leading-tight max-w-xl">
-                Precision <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-emerald-400">Enterprise</span> Control.
-              </h1>
-              <p className="text-slate-400 text-lg font-medium mt-6 max-w-md border-l-2 border-teal-500/50 pl-6">
-                Integrated operational nodes for the next generation of industrial excellence.
-              </p>
+              <div className="absolute inset-0 bg-teal-500/20 blur-2xl opacity-0 hover:opacity-100 transition-opacity" />
+              <img src="https://i.ibb.co/KxMxh3Hw/logo.png" alt="Logo" className="w-full h-full object-contain relative z-10" />
             </motion.div>
-
-            <div className="grid grid-cols-2 gap-6 max-w-lg">
-              {[
-                { icon: Cpu, label: 'Node Processing', val: 'Active' },
-                { icon: Database, label: 'Vault Status', val: 'Locked' },
-                { icon: Activity, label: 'Systems', val: 'Nominal' },
-                { icon: ShieldCheck, label: 'Security', val: 'Level 4' }
-              ].map((stat, i) => (
-                <motion.div
-                  key={i}
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: 0.3 + (i * 0.1) }}
-                  className="bg-white/5 border border-white/10 backdrop-blur-md p-4 rounded-2xl group hover:bg-white/10 transition-all cursor-default"
-                >
-                  <stat.icon className="text-teal-400 mb-2 group-hover:scale-110 transition-transform" size={20} />
-                  <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">{stat.label}</p>
-                  <p className="text-xs font-black text-white uppercase tracking-tight mt-1">{stat.val}</p>
-                </motion.div>
-              ))}
-            </div>
+            <h1 className="text-4xl font-black text-white tracking-widest uppercase leading-none">YAJUR</h1>
+            <div className={`h-1.5 w-32 bg-teal-500 mt-4 rounded-full shadow-[0_0_20px_rgba(20,184,166,0.5)]`} />
+            <p className="text-[11px] font-bold text-slate-500 tracking-[0.5em] uppercase mt-6 ml-2">Enterprise Access Node</p>
           </div>
 
-          <p className="text-slate-500 text-[10px] font-black tracking-[0.4em] uppercase">Private Internal Grid // 2026</p>
-        </div>
-
-        {/* Right Side: Login Form */}
-        <div className="flex-1 flex items-center justify-center p-6 lg:p-12">
-          <motion.div 
-            initial={{ opacity: 0, scale: 0.9, x: 20 }}
-            animate={{ opacity: 1, scale: 1, x: 0 }}
-            className="w-full max-w-md bg-white/10 backdrop-blur-2xl p-10 lg:p-12 rounded-[2.5rem] shadow-[0_40px_100px_-20px_rgba(0,0,0,0.5)] border border-white/20 relative"
-          >
-            {/* Branding for Mobile */}
-            <div className="lg:hidden flex flex-col items-center mb-12">
-              <div className="w-16 h-16 bg-white rounded-2xl p-3 mb-4 shadow-2xl">
-                <img src="https://i.ibb.co/KxMxh3Hw/logo.png" alt="Logo" className="w-full h-full object-contain" />
+          <form onSubmit={handleSubmit} className="space-y-8">
+            <div className="space-y-3">
+              <label className="text-[10px] font-black text-teal-400 tracking-[0.3em] uppercase px-1">Node Identifier</label>
+              <div className="relative group">
+                <div className="absolute inset-y-0 left-0 pl-6 flex items-center pointer-events-none text-slate-500 group-focus-within:text-teal-400 transition-colors">
+                  <UserIcon size={20} />
+                </div>
+                <input 
+                  type="text"
+                  required
+                  placeholder="USERNAME"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  className="block w-full pl-16 pr-6 py-5 bg-black/50 border border-white/5 rounded-3xl outline-none focus:border-teal-500/40 focus:bg-black/70 transition-all text-white text-sm font-bold tracking-widest placeholder:text-slate-700"
+                />
               </div>
-              <h2 className="text-xl font-black text-white tracking-widest uppercase">Yajur Fibres</h2>
             </div>
 
-            <div className="mb-10 text-center lg:text-left">
-              <h3 className="text-3xl font-black text-white tracking-tight">Identity Hub</h3>
-              <p className="text-slate-400 font-medium text-sm mt-2">Accessing centralized operational node.</p>
+            <div className="space-y-3">
+              <label className="text-[10px] font-black text-teal-400 tracking-[0.3em] uppercase px-1">Security Key</label>
+              <div className="relative group">
+                <div className="absolute inset-y-0 left-0 pl-6 flex items-center pointer-events-none text-slate-500 group-focus-within:text-teal-400 transition-colors">
+                  <Lock size={20} />
+                </div>
+                <input 
+                  type="password"
+                  required
+                  placeholder="••••••••"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="block w-full pl-16 pr-6 py-5 bg-black/50 border border-white/5 rounded-3xl outline-none focus:border-teal-500/40 focus:bg-black/70 transition-all text-white text-sm font-bold tracking-widest placeholder:text-slate-700"
+                />
+              </div>
             </div>
 
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <div className="space-y-2">
-                <label className="text-[10px] font-black text-teal-400 tracking-[0.2em] uppercase px-1">Identifier</label>
-                <div className="relative group">
-                  <div className="absolute inset-y-0 left-0 pl-5 flex items-center pointer-events-none">
-                    <UserIcon className="text-slate-500 group-focus-within:text-teal-400 transition-colors" size={18} />
-                  </div>
-                  <input 
-                    type="text"
-                    required
-                    placeholder="Terminal ID / User"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                    className="block w-full pl-14 pr-5 py-4 bg-black/40 border border-white/10 rounded-2xl outline-none focus:border-teal-500 focus:bg-black/60 transition-all text-white text-sm font-semibold placeholder:text-slate-600 shadow-inner"
-                  />
-                </div>
-              </div>
+            <AnimatePresence>
+              {error && (
+                <motion.div 
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: 'auto' }}
+                  className="bg-rose-500/10 border border-rose-500/20 text-rose-400 p-5 rounded-2xl text-xs font-bold tracking-wide flex items-center gap-4"
+                >
+                  <div className="w-2 h-2 rounded-full bg-rose-500 animate-pulse shrink-0" />
+                  {error}
+                </motion.div>
+              )}
+            </AnimatePresence>
 
-              <div className="space-y-2">
-                <label className="text-[10px] font-black text-teal-400 tracking-[0.2em] uppercase px-1">Access Key</label>
-                <div className="relative group">
-                  <div className="absolute inset-y-0 left-0 pl-5 flex items-center pointer-events-none">
-                    <Lock className="text-slate-500 group-focus-within:text-teal-400 transition-colors" size={18} />
-                  </div>
-                  <input 
-                    type="password"
-                    required
-                    placeholder="Security Token"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    className="block w-full pl-14 pr-5 py-4 bg-black/40 border border-white/10 rounded-2xl outline-none focus:border-teal-500 focus:bg-black/60 transition-all text-white text-sm font-semibold placeholder:text-slate-600 shadow-inner"
-                  />
-                </div>
-              </div>
-
-              <AnimatePresence>
-                {error && (
-                  <motion.div 
-                    initial={{ opacity: 0, height: 0 }}
-                    animate={{ opacity: 1, height: 'auto' }}
-                    className="bg-rose-500/10 border border-rose-500/20 text-rose-400 p-4 rounded-xl text-[10px] font-bold tracking-wide flex items-center gap-3 overflow-hidden"
-                  >
-                    <div className="w-1.5 h-1.5 rounded-full bg-rose-500 animate-pulse shrink-0" />
-                    {error}
-                  </motion.div>
-                )}
-              </AnimatePresence>
-
-              <button
-                disabled={isLoading}
-                className="group relative w-full overflow-hidden py-4 bg-teal-600 text-white rounded-2xl font-black text-xs tracking-widest uppercase hover:bg-teal-500 transition-all shadow-[0_10px_30px_-10px_rgba(20,184,166,0.3)] flex items-center justify-center gap-3 active:scale-[0.98] disabled:opacity-50"
-              >
-                {isLoading ? (
-                  <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                ) : (
-                  <>
-                    Connect Terminal
-                    <ChevronRight size={18} className="group-hover:translate-x-1 transition-transform" />
-                  </>
-                )}
-              </button>
-            </form>
-          </motion.div>
+            <button
+              disabled={isLoading}
+              className="group relative w-full overflow-hidden py-5 bg-teal-600 text-white rounded-[2rem] font-black text-xs tracking-[0.3em] uppercase hover:bg-teal-500 transition-all shadow-[0_15px_60px_-10px_rgba(20,184,166,0.4)] flex items-center justify-center gap-4 active:scale-[0.98] disabled:opacity-50"
+            >
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000" />
+              {isLoading ? (
+                <div className="w-6 h-6 border-3 border-white/20 border-t-white rounded-full animate-spin" />
+              ) : (
+                <>Initialize Authorization <ChevronRight size={20} className="group-hover:translate-x-1 transition-transform" /></>
+              )}
+            </button>
+          </form>
+          
+          <div className="mt-16 text-center">
+            <p className="text-[10px] font-black text-slate-700 tracking-[0.5em] uppercase">Private Infrastructure // Security Level 4 // 2026</p>
+          </div>
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 };
