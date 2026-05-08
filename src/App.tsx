@@ -3,33 +3,38 @@ import { AnimatePresence, motion } from 'motion/react';
 import { Navigation } from './components/Navigation';
 import { Dashboard } from './components/Dashboard';
 import { ModuleFrame } from './components/ModuleFrame';
-import { FMSPage } from './components/FMSPage';
 import { Login } from './components/Login';
-import { User } from './types';
+import { User, Module } from './types';
+import { ThemeProvider, useTheme } from './context/ThemeContext';
+import { MODULES } from './constants';
 
-export default function App() {
+function AppContent() {
   const [user, setUser] = useState<User | null>(null);
   const [activeModuleUrl, setActiveModuleUrl] = useState<string | null>(null);
-  const [isNavVisible, setIsNavVisible] = useState(true);
+  const [modules, setModules] = useState<Module[]>(() => {
+    const savedPins = localStorage.getItem('yajur-pins');
+    const pinIds = savedPins ? JSON.parse(savedPins) : [];
+    return MODULES.map(m => ({ ...m, pinned: pinIds.includes(m.id) }));
+  });
 
-  // Auto-hide navigation logic
+  const { config } = useTheme();
+
   useEffect(() => {
-    if (activeModuleUrl) {
-      // In a real "Auto Hide" request, we might hide the nav entirely
-      // but usually users want a way to get back. So we just ensure it is manageable.
-      // For this app, we'll keep the sidebar but allow it to be collapsed.
-    }
-  }, [activeModuleUrl]);
+    const pinIds = modules.filter(m => m.pinned).map(m => m.id);
+    localStorage.setItem('yajur-pins', JSON.stringify(pinIds));
+  }, [modules]);
+
+  const togglePin = (moduleId: string) => {
+    setModules(prev => prev.map(m => 
+      m.id === moduleId ? { ...m, pinned: !m.pinned } : m
+    ));
+  };
 
   if (!user) {
     return <Login onLogin={setUser} />;
   }
 
   const renderContent = () => {
-    if (activeModuleUrl === 'fms-page') {
-      return <FMSPage onBack={() => setActiveModuleUrl(null)} />;
-    }
-    
     if (activeModuleUrl) {
       return (
         <div className="relative w-full h-full">
@@ -40,17 +45,20 @@ export default function App() {
 
     return (
       <Dashboard 
-        role={user.role} 
+        user={user}
+        modules={modules}
         onSelectModule={(url) => setActiveModuleUrl(url)} 
+        onTogglePin={togglePin}
       />
     );
   };
 
   return (
-    <div className="flex h-screen bg-slate-50 font-sans text-slate-800 overflow-hidden">
+    <div className={`flex h-screen bg-${config.bg} font-sans text-slate-800 overflow-hidden`}>
+      {/* Dynamic Sidebar */}
       <div 
-        className={`fixed inset-y-0 left-0 z-50 transition-transform duration-500 ease-in-out transform 
-          ${activeModuleUrl && activeModuleUrl !== 'fms-page' ? '-translate-x-full hover:translate-x-0' : 'translate-x-0'}
+        className={`fixed inset-y-0 left-0 z-50 transition-all duration-700 ease-in-out transform 
+          ${activeModuleUrl ? '-translate-x-full hover:translate-x-0' : 'translate-x-0'}
           ${activeModuleUrl ? 'shadow-2xl' : ''}`}
       >
         <Navigation 
@@ -61,50 +69,64 @@ export default function App() {
           onSelectModule={setActiveModuleUrl}
         />
         
-        {/* Module View Floating Toggle */}
-        {activeModuleUrl && activeModuleUrl !== 'fms-page' && (
-          <div className="absolute top-1/2 -right-12 -translate-y-1/2 w-12 h-24 bg-blue-600 rounded-r-2xl flex items-center justify-center cursor-pointer shadow-lg shadow-blue-500/20 group animate-pulse hover:animate-none">
-            <div className="rotate-90 text-white font-bold text-xs tracking-widest whitespace-nowrap group-hover:scale-110 transition-transform">
-              MENU
-            </div>
+        {/* Module View Floating Edge Toggle */}
+        {activeModuleUrl && (
+          <div className="absolute top-1/2 -right-8 -translate-y-1/2 w-8 h-32 flex items-center justify-center cursor-pointer group">
+             <div className={`w-1 h-12 bg-${config.primary}/20 group-hover:bg-${config.primary} group-hover:h-20 rounded-full transition-all duration-500`} />
+             <div className="absolute left-full ml-4 opacity-0 group-hover:opacity-100 transition-opacity bg-white px-3 py-1.5 rounded-lg border border-slate-200 shadow-xl pointer-events-none whitespace-nowrap text-[10px] font-black tracking-widest text-slate-500 uppercase">
+               Show Sidebar
+             </div>
           </div>
         )}
       </div>
       
+      {/* Main Viewport */}
       <main 
-        className={`flex-1 flex flex-col min-w-0 transition-all duration-500 
-          ${activeModuleUrl && activeModuleUrl !== 'fms-page' ? 'w-full' : 'lg:ml-0'}`}
+        className={`flex-1 flex flex-col min-w-0 transition-all duration-700 
+          ${activeModuleUrl ? 'w-full' : 'sm:pl-0 lg:pl-0'}`}
       >
         <AnimatePresence mode="wait">
           <motion.div
             key={activeModuleUrl || 'dashboard'}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
-            className="w-full h-full"
+            exit={{ opacity: 0, scale: 1.02 }}
+            transition={{ duration: 0.5, ease: 'easeInOut' }}
+            className="w-full h-full overflow-y-auto custom-scrollbar"
           >
             {renderContent()}
           </motion.div>
         </AnimatePresence>
       </main>
 
-      {/* Global Style Overrides */}
+      {/* Corporate Global Style System */}
       <style dangerouslySetInnerHTML={{ __html: `
         .custom-scrollbar::-webkit-scrollbar {
-          width: 4px;
+          width: 6px;
         }
         .custom-scrollbar::-webkit-scrollbar-track {
           background: transparent;
         }
         .custom-scrollbar::-webkit-scrollbar-thumb {
-          background: #e2e8f0;
+          background: rgba(0,0,0,0.05);
           border-radius: 10px;
         }
         .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-          background: #cbd5e1;
+          background: rgba(0,0,0,0.1);
+        }
+        body {
+          -webkit-font-smoothing: antialiased;
+          -moz-osx-font-smoothing: grayscale;
         }
       `}} />
     </div>
+  );
+}
+
+export default function App() {
+  return (
+    <ThemeProvider>
+      <AppContent />
+    </ThemeProvider>
   );
 }

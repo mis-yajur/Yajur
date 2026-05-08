@@ -1,5 +1,7 @@
 export type Role = 'admin' | 'store' | 'hr' | 'production' | 'pms' | 'sales' | 'office';
 
+export type ThemePlate = 'slate' | 'midnight' | 'emerald' | 'amethyst' | 'rose' | 'ocean';
+
 export interface User {
   username: string;
   role: Role;
@@ -12,6 +14,7 @@ export interface Module {
   url?: string;
   badge?: string;
   description?: string;
+  pinned?: boolean;
   items?: SubModule[];
 }
 

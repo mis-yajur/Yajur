@@ -1,4 +1,4 @@
-import { Role } from './types';
+import { Role, ThemePlate } from './types';
 
 export const USER_CREDENTIALS: Record<string, { pass: string; role: Role }> = {
   'Admin': { pass: '1234', role: 'admin' },
@@ -34,14 +34,6 @@ export const MODULES = [
       { id: 'checklist-master', title: 'Check List Master', url: 'https://checklist-app-lyart.vercel.app/' },
       { id: 'utility-checklist', title: 'Utility Check List', url: 'https://script.google.com/macros/s/AKfycby8SdwQWVCYazXCIl4IVZNadm9hgJWzIqEIl-YuEXRlBo4cFE8paqfJj9fkbKJEnlG1Fg/exec' }
     ]
-  },
-  {
-    id: 'fms',
-    title: 'FMS',
-    icon: 'FolderTree',
-    badge: 'Storage',
-    description: 'Centralized document storage and organization.',
-    url: 'fms-page' // Specialized internal page
   },
   {
     id: 'ims',
@@ -119,3 +111,48 @@ export const MODULES = [
     ]
   }
 ];
+
+export const THEME_PLATES: Record<ThemePlate, { name: string; primary: string; bg: string; text: string; accent: string }> = {
+  slate: {
+    name: 'Slate Executive',
+    primary: 'blue-600',
+    bg: 'slate-50',
+    text: 'slate-900',
+    accent: 'blue-500'
+  },
+  midnight: {
+    name: 'Midnight Pro',
+    primary: 'slate-900',
+    bg: 'slate-950',
+    text: 'slate-50',
+    accent: 'blue-400'
+  },
+  emerald: {
+    name: 'Emerald Eco',
+    primary: 'emerald-600',
+    bg: 'emerald-50/30',
+    text: 'emerald-950',
+    accent: 'emerald-500'
+  },
+  amethyst: {
+    name: 'Amethyst Bold',
+    primary: 'purple-600',
+    bg: 'purple-50/30',
+    text: 'purple-950',
+    accent: 'purple-500'
+  },
+  rose: {
+    name: 'Rose Quartz',
+    primary: 'rose-600',
+    bg: 'rose-50/30',
+    text: 'rose-950',
+    accent: 'rose-500'
+  },
+  ocean: {
+    name: 'Ocean Deep',
+    primary: 'sky-600',
+    bg: 'sky-50/30',
+    text: 'sky-950',
+    accent: 'sky-500'
+  }
+};
