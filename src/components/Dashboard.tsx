@@ -95,130 +95,95 @@ export const Dashboard = ({ user, modules, onSelectModule, onTogglePin }: Dashbo
   );
 
   return (
-    <div className="p-4 lg:p-8 space-y-10 max-w-[1700px] mx-auto pb-20">
-      {/* Dynamic Navigation Bar / Header */}
-      <div className="flex flex-col xl:flex-row xl:items-end justify-between gap-8 py-6">
-        <div className="space-y-4">
-          <motion.div 
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            className={`inline-flex items-center gap-2 px-3 py-1 bg-${config.primary}/5 border border-${config.primary}/10 rounded-full`}
-          >
-            <div className={`w-1.5 h-1.5 rounded-full bg-${config.primary} animate-pulse`} />
-            <span className={`text-[10px] font-black text-${config.primary} tracking-[0.2em] uppercase`}>
-              Enterprise Portal Alpha
-            </span>
-          </motion.div>
-          
-          <div className="space-y-1">
-            <h1 className="text-4xl lg:text-5xl font-black text-slate-900 tracking-tight">
-              Welcome back, <span className={`text-${config.primary}`}>{user.username}</span>
-            </h1>
-            <p className="text-slate-500 font-medium text-sm lg:text-base max-w-xl">
-              Manage your industrial ecosystem with real-time insights and vertical integration.
-            </p>
-          </div>
+    <div className="p-4 lg:p-6 space-y-8 max-w-[1700px] mx-auto pb-20">
+      {/* Header */}
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 py-4">
+        <div className="space-y-1">
+          <h1 className="text-2xl lg:text-3xl font-black text-slate-900 tracking-tight">
+            Terminal / <span className="text-blue-600 uppercase">{user.username}</span>
+          </h1>
+          <p className="text-slate-500 font-medium text-xs lg:text-sm">
+            Operational dashboard for vertical enterprise integration.
+          </p>
         </div>
 
-        <div className="flex flex-wrap items-center gap-4">
+        <div className="flex flex-wrap items-center gap-3">
           {/* Quick Search */}
           <div className="relative group w-full sm:w-64">
-            <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-              <Search className="text-slate-400 group-focus-within:text-blue-600 transition-colors" size={18} />
+            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <Search className="text-slate-400 group-focus-within:text-blue-600 transition-colors" size={14} />
             </div>
             <input 
               type="text"
-              placeholder="Search assets..."
+              placeholder="Search nodes..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="block w-full pl-12 pr-4 py-3 bg-white border border-slate-200 rounded-2xl text-sm focus:outline-none focus:ring-4 focus:ring-blue-100/50 transition-all shadow-sm"
+              className="block w-full pl-10 pr-3 py-2 bg-white border border-slate-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-blue-100 transition-all shadow-sm"
             />
           </div>
 
-          {/* Theme Plates */}
-          <div className="flex items-center gap-1.5 p-1.5 bg-white border border-slate-200 rounded-2xl shadow-sm">
+          <div className="flex items-center gap-1 p-1 bg-white border border-slate-200 rounded-xl shadow-sm">
             {(Object.keys(THEME_PLATES) as ThemePlate[]).map((p) => (
               <button
                 key={p}
                 onClick={() => setTheme(p)}
-                className={`w-9 h-9 rounded-xl transition-all flex items-center justify-center relative
-                  ${theme === p ? 'scale-110 shadow-lg ring-2 ring-slate-200 ring-offset-2' : 'opacity-40 hover:opacity-100 hover:scale-105'} 
+                className={`w-7 h-7 rounded-lg transition-all flex items-center justify-center
+                  ${theme === p ? 'ring-2 ring-blue-500' : 'opacity-40 hover:opacity-100'} 
                   bg-${THEME_PLATES[p].primary}`}
-                title={THEME_PLATES[p].name}
-              >
-                {theme === p && <ShieldCheck size={14} className="text-white" />}
-              </button>
+              />
             ))}
           </div>
         </div>
       </div>
 
-      {/* Overview Cards - Dynamic Stats */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      {/* Overview Cards - Professional Grid */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <InsightCard 
           label="Sales Pipeline" 
           value={`₹${salesData.total.toFixed(1)} Cr`} 
-          subValue={`${salesData.growth > 0 ? '+' : ''}${salesData.growth}% Forecast`}
+          subValue={`${salesData.growth > 0 ? '+' : ''}${salesData.growth}% Growth`}
           icon={TrendingUp}
           color="blue"
         />
         <InsightCard 
-          label="Task Velocity" 
+          label="Pending Tasks" 
           value={taskStats.pending} 
-          subValue={`${taskStats.done} Resolved Today`}
+          subValue="Real-time queue"
           icon={Activity}
           color="indigo"
         />
         <InsightCard 
-          label="System Status" 
-          value="NOMINAL" 
-          subValue="99.9% Uptime Active"
+          label="System Node" 
+          value="ACTIVE" 
+          subValue="Latency 12ms"
           icon={Zap}
           color="emerald"
         />
         <InsightCard 
-          label="Access Level" 
+          label="Security Role" 
           value={user.role.toUpperCase()} 
-          subValue="Full Node Permission"
+          subValue="Standard Clearance"
           icon={ShieldCheck}
           color="slate"
         />
       </div>
 
-      {/* Pinned Section */}
-      {pinnedModules.length > 0 && (
-        <section className="space-y-6 pt-4">
-          <div className="flex items-center justify-between">
-            <h2 className="flex items-center gap-3 text-xs font-black text-slate-400 tracking-[0.3em] uppercase">
-              <Star className="text-amber-500" size={14} fill="currentColor" />
-              Pinned Workflows
-            </h2>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {pinnedModules.map((m, i) => (
-              <ModuleCard key={m.id} module={m} index={i} onSelect={onSelectModule} onTogglePin={onTogglePin} isPinned={true} />
-            ))}
-          </div>
-        </section>
-      )}
-
       {/* Main Grid */}
-      <section className="space-y-6 pt-4">
-        <h2 className="flex items-center gap-3 text-xs font-black text-slate-400 tracking-[0.3em] uppercase">
-          <LayoutGrid size={14} />
-          Operational Ecosystem
-        </h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+      <section className="space-y-4">
+        <div className="flex items-center gap-2">
+          <div className="w-1 h-3 bg-blue-600 rounded-full" />
+          <h2 className="text-[10px] font-black text-slate-400 tracking-[0.2em] uppercase">
+            Operational Ecosystem
+          </h2>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-4">
           {filteredOther.length > 0 ? (
             filteredOther.map((m, i) => (
-              <ModuleCard key={m.id} module={m} index={i} onSelect={onSelectModule} onTogglePin={onTogglePin} isPinned={false} />
+              <ModuleCard key={m.id} module={m} index={i} onSelect={onSelectModule} />
             ))
           ) : (
-            <div className="col-span-full py-20 text-center bg-white border border-dashed border-slate-300 rounded-[2.5rem]">
-              <div className="w-16 h-16 bg-slate-50 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Search size={32} className="text-slate-300" />
-              </div>
-              <p className="text-slate-500 font-bold uppercase tracking-widest text-xs">No resources matching filters</p>
+            <div className="col-span-full py-12 text-center bg-white border border-dashed border-slate-200 rounded-3xl">
+              <p className="text-slate-400 font-bold uppercase tracking-widest text-[10px]">No assets found</p>
             </div>
           )}
         </div>
@@ -229,85 +194,53 @@ export const Dashboard = ({ user, modules, onSelectModule, onTogglePin }: Dashbo
 
 const InsightCard = ({ label, value, subValue, icon: Icon, color }: any) => {
   return (
-    <div className="group bg-white border border-slate-200 p-6 rounded-[2rem] shadow-sm hover:shadow-xl transition-all duration-500 relative overflow-hidden">
-      <div className={`absolute -right-4 -bottom-4 opacity-10 group-hover:scale-125 transition-transform duration-700 text-${color}-600`}>
-        <Icon size={120} />
+    <div className="bg-white border border-slate-200 p-4 rounded-2xl shadow-sm hover:shadow-md transition-all">
+      <div className="flex items-center justify-between mb-3">
+        <p className="text-[10px] font-bold text-slate-400 tracking-wider uppercase">{label}</p>
+        <div className={`p-1.5 rounded-lg bg-${color}-50 text-${color}-600`}>
+          <Icon size={14} />
+        </div>
       </div>
-      <div className="relative z-10 space-y-4">
-        <div className={`w-12 h-12 rounded-2xl bg-${color}-50 text-${color}-600 flex items-center justify-center`}>
-          <Icon size={24} />
-        </div>
-        <div>
-          <p className="text-[10px] font-black text-slate-400 tracking-widest uppercase mb-1">{label}</p>
-          <div className="flex items-baseline gap-2">
-            <h3 className="text-2xl font-black text-slate-900">{value}</h3>
-          </div>
-          <p className="text-[10px] font-bold text-slate-500 mt-1">{subValue}</p>
-        </div>
+      <div>
+        <h3 className="text-xl font-black text-slate-900">{value}</h3>
+        <p className="text-[10px] font-bold text-slate-500 mt-0.5">{subValue}</p>
       </div>
     </div>
   );
 };
 
-const ModuleCard = ({ module, index, onSelect, onTogglePin, isPinned }: any) => {
-  const { config } = useTheme();
-  
+const ModuleCard = ({ module, index, onSelect }: any) => {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 30 }}
+      initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: index * 0.05, duration: 0.5, ease: 'backOut' }}
-      whileHover={{ y: -8 }}
-      className={`group relative bg-white border border-slate-200 p-8 rounded-[2.5rem] shadow-sm hover:shadow-2xl transition-all duration-500 cursor-pointer flex flex-col h-full
-        ${isPinned ? `ring-2 ring-${config.primary}` : ''}`}
+      transition={{ delay: index * 0.03 }}
+      whileHover={{ y: -4 }}
+      className="group bg-white border border-slate-200 p-5 rounded-2xl shadow-sm hover:shadow-xl transition-all cursor-pointer flex flex-col h-full"
       onClick={() => onSelect(module.url || module.id)}
     >
-      {/* Decorative Blob */}
-      <div className={`absolute top-0 right-0 w-32 h-32 bg-${config.primary}/5 rounded-full -mr-16 -mt-16 group-hover:scale-150 transition-transform duration-700`} />
-      
-      <div className="relative z-10 flex flex-col h-full">
-        <div className="flex items-start justify-between mb-8">
-          <div className={`p-4 bg-${config.primary}/10 text-${config.primary} rounded-2xl group-hover:bg-${config.primary} group-hover:text-white transition-all duration-500 shadow-sm shadow-${config.primary}/20`}>
-            <LucideIcon name={module.icon} size={28} />
-          </div>
-          
-          <div className="flex flex-col items-end gap-2">
-            <button 
-              onClick={(e) => { e.stopPropagation(); onTogglePin(module.id); }}
-              className={`p-2 rounded-xl transition-all duration-300 ${isPinned ? 'bg-amber-50 text-amber-500' : 'bg-slate-50 text-slate-400 hover:text-slate-600 opacity-0 group-hover:opacity-100'}`}
-            >
-              <Pin size={16} fill={isPinned ? 'currentColor' : 'none'} className={isPinned ? '' : '-rotate-45'} />
-            </button>
-            {module.badge && (
-              <span className={`px-2 py-0.5 bg-slate-100 text-slate-500 text-[9px] font-black tracking-widest uppercase rounded-lg`}>
-                {module.badge}
-              </span>
-            )}
-          </div>
+      <div className="flex items-start justify-between mb-4">
+        <div className={`p-2.5 bg-slate-50 text-slate-400 group-hover:bg-blue-600 group-hover:text-white rounded-xl transition-all duration-300`}>
+          <LucideIcon name={module.icon} size={20} />
         </div>
+        {module.badge && (
+          <span className="px-1.5 py-0.5 bg-slate-100 text-slate-500 text-[8px] font-black tracking-widest uppercase rounded">
+            {module.badge}
+          </span>
+        )}
+      </div>
 
-        <div className="flex-1">
-          <h3 className={`text-xl font-black text-slate-900 mb-2 group-hover:text-${config.primary} transition-colors`}>
-            {module.title}
-          </h3>
-          <p className="text-sm text-slate-500 font-medium leading-relaxed line-clamp-2">
-            {module.description}
-          </p>
-        </div>
+      <div className="flex-1">
+        <h3 className="text-sm font-black text-slate-900 mb-1 group-hover:text-blue-600 transition-colors">
+          {module.title}
+        </h3>
+        <p className="text-[11px] text-slate-500 font-medium leading-tight line-clamp-2">
+          {module.description}
+        </p>
+      </div>
 
-        <div className="mt-8 pt-6 border-t border-slate-50 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <div className="flex -space-x-2">
-              {[1, 2, 3].map(i => (
-                <div key={i} className="w-5 h-5 rounded-full bg-slate-200 border-2 border-white" />
-              ))}
-            </div>
-            <span className="text-[9px] font-black text-slate-400 tracking-wider uppercase">Active Nodes</span>
-          </div>
-          <div className={`w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center text-slate-400 group-hover:bg-${config.primary} group-hover:text-white transition-all duration-500`}>
-            <ChevronRight size={20} />
-          </div>
-        </div>
+      <div className="mt-4 pt-3 border-t border-slate-50 flex items-center justify-end">
+        <ChevronRight size={14} className="text-slate-300 group-hover:text-blue-400 transition-colors" />
       </div>
     </motion.div>
   );

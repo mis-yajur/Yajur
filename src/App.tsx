@@ -83,15 +83,15 @@ function AppContent() {
       {/* Main Viewport */}
       <main 
         className={`flex-1 flex flex-col min-w-0 transition-all duration-700 
-          ${activeModuleUrl ? 'w-full' : 'sm:pl-0 lg:pl-0'}`}
+          ${activeModuleUrl ? 'pl-0' : 'lg:pl-[260px]'}`}
       >
         <AnimatePresence mode="wait">
           <motion.div
             key={activeModuleUrl || 'dashboard'}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            exit={{ opacity: 0, scale: 1.02 }}
-            transition={{ duration: 0.5, ease: 'easeInOut' }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3, ease: 'easeInOut' }}
             className="w-full h-full overflow-y-auto custom-scrollbar"
           >
             {renderContent()}

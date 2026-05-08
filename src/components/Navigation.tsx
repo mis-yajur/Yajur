@@ -71,15 +71,15 @@ export const Navigation = ({ user, onLogout, activeModuleUrl, onSelectModule, ro
       <motion.nav
         initial={false}
         animate={{ 
-          width: isCollapsed ? 88 : 300,
-          x: isMobileMenuOpen ? 0 : (typeof window !== 'undefined' && window.innerWidth < 1024 ? -300 : 0)
+          width: isCollapsed ? 72 : 260,
+          x: isMobileMenuOpen ? 0 : (typeof window !== 'undefined' && window.innerWidth < 1024 ? -260 : 0)
         }}
-        className={`h-screen bg-white border-r border-slate-100 z-[95] flex flex-col transition-all duration-500 shadow-[20px_0_60px_-15px_rgba(0,0,0,0.03)] overflow-visible relative flex-shrink-0`}
+        className={`h-screen bg-slate-900 z-[95] flex flex-col transition-all duration-500 shadow-2xl relative flex-shrink-0 text-slate-300`}
       >
         {/* Superior Branding */}
-        <div className={`p-8 flex items-center justify-between relative`}>
-          <div className="flex items-center gap-4 overflow-hidden">
-            <div className={`flex-shrink-0 w-12 h-12 rounded-2xl bg-white flex items-center justify-center p-1.5 shadow-xl shadow-black/5 border border-slate-100`}>
+        <div className={`p-6 flex items-center justify-between relative`}>
+          <div className="flex items-center gap-3 overflow-hidden">
+            <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-white p-1 shadow-lg">
               <img src="https://i.ibb.co/KxMxh3Hw/logo.png" alt="Logo" className="w-full h-full object-contain" />
             </div>
             {!isCollapsed && (
@@ -88,36 +88,35 @@ export const Navigation = ({ user, onLogout, activeModuleUrl, onSelectModule, ro
                 animate={{ opacity: 1 }}
                 className="whitespace-nowrap"
               >
-                <h1 className="text-lg font-black text-slate-900 tracking-tight leading-none uppercase">YAJUR</h1>
-                <p className="text-[10px] font-black text-slate-400 tracking-[0.2em] mt-1">FIBRES LTD</p>
+                <h1 className="text-sm font-black text-white tracking-widest leading-none uppercase">YAJUR</h1>
               </motion.div>
             )}
           </div>
           
           <button 
             onClick={() => setIsCollapsed(!isCollapsed)}
-            className="hidden lg:flex absolute -right-4 top-10 w-9 h-9 bg-white border border-slate-200 rounded-xl items-center justify-center text-slate-400 hover:text-blue-600 hover:border-blue-600 shadow-lg transform translate-x-1/2 transition-all hover:scale-110 z-[110]"
+            className="hidden lg:flex absolute -right-3 top-7 w-6 h-6 bg-slate-800 border border-slate-700 rounded-full items-center justify-center text-slate-400 hover:text-white shadow-xl transform transition-all hover:scale-110 z-[110]"
           >
-            {isCollapsed ? <ChevronRight size={16} /> : <ChevronLeft size={16} />}
+            {isCollapsed ? <ChevronRight size={12} /> : <ChevronLeft size={12} />}
           </button>
         </div>
 
-        {/* Global Action Section */}
-        <div className="px-4 mb-8">
+        {/* Global Action Section - Simplified */}
+        <div className="px-3 mb-6">
           <button
             onClick={() => { onSelectModule(null); setIsMobileMenuOpen(false); }}
-            className={`w-full flex items-center gap-4 p-4 rounded-2xl transition-all group
-              ${!activeModuleUrl ? `bg-${config.primary}/5 text-${config.primary} border border-${config.primary}/10` : 'text-slate-400 hover:bg-slate-50 hover:text-slate-900'}`}
+            className={`w-full flex items-center gap-3 p-3 rounded-xl transition-all group
+              ${!activeModuleUrl ? `bg-blue-600 text-white shadow-lg shadow-blue-500/20` : 'text-slate-400 hover:bg-slate-800/50 hover:text-white'}`}
           >
-            <LayoutDashboard size={20} className={activeModuleUrl ? '' : `text-${config.primary}`} />
-            {!isCollapsed && <span className="text-xs font-black tracking-widest uppercase truncate">Overview</span>}
+            <LayoutDashboard size={18} />
+            {!isCollapsed && <span className="text-[11px] font-bold tracking-wider uppercase truncate">Overview</span>}
           </button>
         </div>
 
         {/* Main Resource Grid */}
-        <div className="flex-1 px-4 overflow-y-auto custom-scrollbar space-y-2">
+        <div className="flex-1 px-3 overflow-y-auto custom-scrollbar-dark space-y-1">
           {!isCollapsed && (
-            <p className="px-4 py-2 text-[10px] font-black text-slate-300 tracking-[0.3em] uppercase">Modules</p>
+            <p className="px-3 py-2 text-[9px] font-black text-slate-500 tracking-[0.2em] uppercase">Enterprise Nodes</p>
           )}
           
           {filteredModules.map((module) => {
@@ -135,23 +134,28 @@ export const Navigation = ({ user, onLogout, activeModuleUrl, onSelectModule, ro
                       setIsMobileMenuOpen(false);
                     }
                   }}
-                  className={`w-full flex items-center gap-4 p-4 rounded-2xl transition-all group overflow-hidden relative
+                  className={`w-full flex items-center gap-3 p-3 rounded-xl transition-all group relative
                     ${isActive 
-                      ? `bg-${config.primary} text-white shadow-xl shadow-${config.primary}/20` 
-                      : 'text-slate-500 hover:bg-slate-50 hover:text-slate-900'}`}
+                      ? `bg-slate-800 text-white shadow-sm` 
+                      : 'text-slate-400 hover:bg-slate-800/50 hover:text-white'}`}
                 >
-                  <div className={`relative z-10 transition-transform duration-300 ${isActive ? 'scale-110' : 'group-hover:scale-110'}`}>
-                    <LucideIcon name={module.icon} size={20} />
+                  <div className={`transition-transform duration-300 ${isActive ? 'scale-110' : 'group-hover:scale-110 text-slate-500 group-hover:text-blue-400'}`}>
+                    <LucideIcon name={module.icon} size={18} />
                   </div>
                   {!isCollapsed && (
-                    <div className="flex-1 text-left relative z-10">
-                      <p className={`text-xs font-black tracking-widest uppercase truncate ${isActive ? 'text-white' : 'text-slate-600'}`}>
+                    <div className="flex-1 text-left">
+                      <p className={`text-[11px] font-bold tracking-wide uppercase truncate ${isActive ? 'text-white' : ''}`}>
                         {module.title}
                       </p>
                     </div>
                   )}
                   {!isCollapsed && hasSubmenu && (
-                    <ChevronDown size={14} className={`transition-transform duration-300 ${openSubmenu === module.id ? 'rotate-180' : ''}`} />
+                    <ChevronDown size={12} className={`transition-transform duration-300 ${openSubmenu === module.id ? 'rotate-180' : ''}`} />
+                  )}
+                  
+                  {/* Active Indicator */}
+                  {isActive && !isCollapsed && (
+                    <div className="absolute right-0 top-1/2 -translate-y-1/2 w-1 h-4 bg-blue-500 rounded-l-full" />
                   )}
                 </button>
 
@@ -161,16 +165,16 @@ export const Navigation = ({ user, onLogout, activeModuleUrl, onSelectModule, ro
                       initial={{ height: 0, opacity: 0 }}
                       animate={{ height: 'auto', opacity: 1 }}
                       exit={{ height: 0, opacity: 0 }}
-                      className="overflow-hidden space-y-1 px-4"
+                      className="overflow-hidden space-y-1 ml-4 border-l border-slate-800 pl-4 py-1"
                     >
                       {module.items.map(item => (
                         <button
                           key={item.id}
                           onClick={() => { onSelectModule(item.url); setIsMobileMenuOpen(false); }}
-                          className={`w-full text-left p-3 rounded-xl text-[10px] font-black tracking-widest uppercase transition-all
+                          className={`w-full text-left p-2 rounded-lg text-[10px] font-bold tracking-widest uppercase transition-all
                             ${activeModuleUrl === item.url 
-                              ? `text-${config.primary} bg-${config.primary}/10` 
-                              : 'text-slate-400 hover:text-slate-600 hover:bg-slate-50'}`}
+                              ? `text-blue-400 bg-blue-400/5` 
+                              : 'text-slate-500 hover:text-slate-300 hover:bg-slate-800/30'}`}
                         >
                           {item.title}
                         </button>
@@ -184,17 +188,17 @@ export const Navigation = ({ user, onLogout, activeModuleUrl, onSelectModule, ro
         </div>
 
         {/* User / Profile Section */}
-        <div className="p-4 border-t border-slate-50 bg-slate-50/50">
-          <div className={`flex items-center gap-4 p-4 rounded-2xl bg-white border border-slate-200 shadow-sm ${isCollapsed ? 'justify-center px-0' : ''}`}>
-            <div className={`w-10 h-10 rounded-xl bg-slate-100 flex items-center justify-center text-slate-600 font-black shrink-0 shadow-inner`}>
+        <div className="p-3 border-t border-slate-800 bg-slate-900/50 mt-auto">
+          <div className={`flex items-center gap-3 p-3 rounded-xl bg-slate-800/50 border border-slate-800 ${isCollapsed ? 'justify-center' : ''}`}>
+            <div className={`w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center text-white text-xs font-black shrink-0`}>
               {user.username.charAt(0)}
             </div>
             {!isCollapsed && (
               <div className="min-w-0 flex-1">
-                <p className="text-sm font-black text-slate-900 truncate">{user.username}</p>
+                <p className="text-xs font-bold text-white truncate">{user.username}</p>
                 <div className="flex items-center gap-1">
-                  <ShieldCheck size={10} className="text-blue-500" />
-                  <p className="text-[10px] font-black text-slate-400 tracking-widest uppercase truncate">{role}</p>
+                  <ShieldCheck size={10} className="text-blue-400" />
+                  <p className="text-[9px] font-bold text-slate-500 tracking-widest uppercase truncate">{role}</p>
                 </div>
               </div>
             )}
@@ -202,10 +206,10 @@ export const Navigation = ({ user, onLogout, activeModuleUrl, onSelectModule, ro
           
           <button
             onClick={onLogout}
-            className={`w-full flex items-center gap-4 p-4 mt-2 rounded-2xl text-rose-500 hover:bg-rose-50 transition-all font-black text-[10px] tracking-widest uppercase group ${isCollapsed ? 'justify-center' : ''}`}
+            className={`w-full flex items-center gap-3 p-3 mt-2 rounded-xl text-rose-400 hover:bg-rose-900/20 transition-all font-bold text-[10px] tracking-widest uppercase group ${isCollapsed ? 'justify-center' : ''}`}
           >
-            <LogOut size={20} className="group-hover:-translate-x-1 transition-transform" />
-            {!isCollapsed && <span>Logout</span>}
+            <LogOut size={18} className="group-hover:-translate-x-1 transition-transform" />
+            {!isCollapsed && <span>End Session</span>}
           </button>
         </div>
       </motion.nav>
