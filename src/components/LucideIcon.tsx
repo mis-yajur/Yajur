@@ -3,6 +3,7 @@ import { LucideProps } from 'lucide-react';
 
 interface IconProps extends LucideProps {
   name: string;
+  className?: string;
 }
 
 export const LucideIcon = ({ name, ...props }: IconProps) => {

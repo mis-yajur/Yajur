@@ -44,13 +44,15 @@ export default function App() {
 
   return (
     <div className="flex h-screen bg-slate-50 font-sans text-slate-800">
-      <Navigation 
-        user={user} 
-        role={user.role}
-        onLogout={() => { setUser(null); setActiveModuleUrl(null); }} 
-        activeModuleUrl={activeModuleUrl}
-        onSelectModule={setActiveModuleUrl}
-      />
+      {(!activeModuleUrl || activeModuleUrl === 'fms-page') && (
+        <Navigation 
+          user={user} 
+          role={user.role}
+          onLogout={() => { setUser(null); setActiveModuleUrl(null); }} 
+          activeModuleUrl={activeModuleUrl}
+          onSelectModule={setActiveModuleUrl}
+        />
+      )}
       
       <main className={`flex-1 flex flex-col min-w-0 transition-all duration-300 ${activeModuleUrl ? 'p-0 overflow-hidden' : 'p-6 lg:p-10 overflow-y-auto'}`}>
         <AnimatePresence mode="wait">
