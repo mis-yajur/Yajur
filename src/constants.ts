@@ -130,18 +130,18 @@ export const THEME_PLATES: Record<ThemePlate, {
     text: 'slate-900',
     accent: 'teal-500',
     sidebar: 'teal-600',
-    sidebarGradient: 'from-teal-600 to-emerald-500',
+    sidebarGradient: 'from-[#3AC47D] to-[#2DA069]',
     sidebarText: 'white',
-    sidebarActive: 'bg-white/10'
+    sidebarActive: 'bg-white/15'
   },
   midnight: {
     name: 'Enterprise Dark',
     primary: 'slate-900',
     bg: 'slate-50',
     text: 'slate-900',
-    accent: 'teal-600',
+    accent: 'slate-800',
     sidebar: 'slate-900',
-    sidebarGradient: 'from-slate-900 to-slate-800',
+    sidebarGradient: 'from-[#2c3e50] to-[#000000]',
     sidebarText: 'slate-300',
     sidebarActive: 'bg-white/5'
   },
@@ -152,7 +152,7 @@ export const THEME_PLATES: Record<ThemePlate, {
     text: 'slate-900',
     accent: 'emerald-500',
     sidebar: 'emerald-600',
-    sidebarGradient: 'from-emerald-600 to-teal-500',
+    sidebarGradient: 'from-[#16a085] to-[#27ae60]',
     sidebarText: 'white',
     sidebarActive: 'bg-white/10'
   }
