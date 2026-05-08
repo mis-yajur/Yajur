@@ -31,7 +31,11 @@ export default function App() {
     }
     
     if (activeModuleUrl) {
-      return <ModuleFrame url={activeModuleUrl} onBack={() => setActiveModuleUrl(null)} />;
+      return (
+        <div className="relative w-full h-full">
+          <ModuleFrame url={activeModuleUrl} onBack={() => setActiveModuleUrl(null)} />
+        </div>
+      );
     }
 
     return (
@@ -43,8 +47,12 @@ export default function App() {
   };
 
   return (
-    <div className="flex h-screen bg-slate-50 font-sans text-slate-800">
-      {(!activeModuleUrl || activeModuleUrl === 'fms-page') && (
+    <div className="flex h-screen bg-slate-50 font-sans text-slate-800 overflow-hidden">
+      <div 
+        className={`fixed inset-y-0 left-0 z-50 transition-transform duration-500 ease-in-out transform 
+          ${activeModuleUrl && activeModuleUrl !== 'fms-page' ? '-translate-x-full hover:translate-x-0' : 'translate-x-0'}
+          ${activeModuleUrl ? 'shadow-2xl' : ''}`}
+      >
         <Navigation 
           user={user} 
           role={user.role}
@@ -52,17 +60,29 @@ export default function App() {
           activeModuleUrl={activeModuleUrl}
           onSelectModule={setActiveModuleUrl}
         />
-      )}
+        
+        {/* Module View Floating Toggle */}
+        {activeModuleUrl && activeModuleUrl !== 'fms-page' && (
+          <div className="absolute top-1/2 -right-12 -translate-y-1/2 w-12 h-24 bg-blue-600 rounded-r-2xl flex items-center justify-center cursor-pointer shadow-lg shadow-blue-500/20 group animate-pulse hover:animate-none">
+            <div className="rotate-90 text-white font-bold text-xs tracking-widest whitespace-nowrap group-hover:scale-110 transition-transform">
+              MENU
+            </div>
+          </div>
+        )}
+      </div>
       
-      <main className={`flex-1 flex flex-col min-w-0 transition-all duration-300 ${activeModuleUrl ? 'p-0 overflow-hidden' : 'p-6 lg:p-10 overflow-y-auto'}`}>
+      <main 
+        className={`flex-1 flex flex-col min-w-0 transition-all duration-500 
+          ${activeModuleUrl && activeModuleUrl !== 'fms-page' ? 'w-full' : 'lg:ml-0'}`}
+      >
         <AnimatePresence mode="wait">
           <motion.div
             key={activeModuleUrl || 'dashboard'}
-            initial={{ opacity: 0, scale: 0.98 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 1.02 }}
-            transition={{ duration: 0.25, ease: 'easeOut' }}
-            className="w-full h-full max-w-[1600px] mx-auto"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="w-full h-full"
           >
             {renderContent()}
           </motion.div>

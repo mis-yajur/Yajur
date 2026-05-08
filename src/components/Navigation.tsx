@@ -69,7 +69,7 @@ export const Navigation = ({ user, onLogout, activeModuleUrl, onSelectModule, ro
           width: isCollapsed ? 80 : 280,
           x: isMobileMenuOpen ? 0 : (typeof window !== 'undefined' && window.innerWidth < 1024 ? -280 : 0)
         }}
-        className={`fixed lg:sticky top-0 h-screen bg-white border-r border-slate-200 z-50 flex flex-col transition-all duration-300 shadow-sm overflow-visible`}
+        className={`h-screen bg-white border-r border-slate-200 z-50 flex flex-col transition-all duration-300 shadow-sm overflow-visible`}
       >
         {/* Header */}
         <div className={`p-6 flex items-center justify-between relative`}>
