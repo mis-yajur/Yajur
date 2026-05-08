@@ -112,47 +112,81 @@ export const MODULES = [
   }
 ];
 
-export const THEME_PLATES: Record<ThemePlate, { name: string; primary: string; bg: string; text: string; accent: string }> = {
+export const THEME_PLATES: Record<ThemePlate, { 
+  name: string; 
+  primary: string; 
+  bg: string; 
+  text: string; 
+  accent: string;
+  sidebar: string;
+  sidebarText: string;
+  sidebarActive: string;
+}> = {
   slate: {
     name: 'Yajur Pro',
     primary: 'teal-600',
     bg: 'white',
     text: 'slate-900',
-    accent: 'teal-500'
+    accent: 'teal-500',
+    sidebar: 'slate-900',
+    sidebarText: 'slate-300',
+    sidebarActive: 'teal-600'
   },
   midnight: {
     name: 'Deep Node',
     primary: 'slate-900',
     bg: 'slate-50',
     text: 'slate-900',
-    accent: 'teal-600'
+    accent: 'teal-600',
+    sidebar: 'slate-950',
+    sidebarText: 'slate-400',
+    sidebarActive: 'slate-800'
   },
   emerald: {
     name: 'Industrial',
     primary: 'teal-700',
     bg: 'white',
     text: 'slate-900',
-    accent: 'teal-600'
+    accent: 'teal-600',
+    sidebar: 'emerald-950',
+    sidebarText: 'emerald-300',
+    sidebarActive: 'teal-700'
   },
   amethyst: {
     name: 'Unified',
     primary: 'slate-800',
     bg: 'white',
     text: 'slate-900',
-    accent: 'slate-600'
+    accent: 'slate-600',
+    sidebar: 'slate-900',
+    sidebarText: 'slate-400',
+    sidebarActive: 'slate-800'
   },
   rose: {
     name: 'Alert Mode',
     primary: 'rose-700',
     bg: 'white',
     text: 'slate-900',
-    accent: 'rose-600'
+    accent: 'rose-600',
+    sidebar: 'rose-950',
+    sidebarText: 'rose-300',
+    sidebarActive: 'rose-700'
   },
   ocean: {
     name: 'Berylline',
     primary: 'cyan-700',
     bg: 'white',
     text: 'slate-900',
-    accent: 'cyan-600'
+    accent: 'cyan-600',
+    sidebar: 'cyan-950',
+    sidebarText: 'cyan-300',
+    sidebarActive: 'cyan-700'
   }
 };
+
+export const INDUSTRIAL_ASSETS = [
+  'https://images.unsplash.com/photo-1558591710-4b4a1ae0f04d?auto=format&fit=crop&q=80&w=2000',
+  'https://images.unsplash.com/photo-1544724569-5f546fd6f2b5?auto=format&fit=crop&q=80&w=2000',
+  'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=2000',
+  'https://images.unsplash.com/photo-1565514020179-026b92b84bb6?auto=format&fit=crop&q=80&w=2000'
+];

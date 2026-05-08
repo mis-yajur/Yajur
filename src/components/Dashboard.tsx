@@ -97,40 +97,41 @@ export const Dashboard = ({ user, modules, onSelectModule, onTogglePin }: Dashbo
   return (
     <div className="p-3 lg:p-5 space-y-6 max-w-[1700px] mx-auto pb-16">
       {/* Header */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 py-2">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 py-2 border-b border-slate-100 mb-2">
         <div className="space-y-0.5">
-          <h1 className="text-xl lg:text-2xl font-black text-slate-900 tracking-tight flex items-center gap-2">
-            <span className="w-1 h-6 bg-teal-600 rounded-full" />
-            Terminal / <span className="text-teal-600 uppercase">{user.username}</span>
+          <h1 className={`text-xl lg:text-2xl font-black text-slate-900 tracking-tight flex items-center gap-2 transition-colors`}>
+            <span className={`w-1 h-6 bg-${config.primary} rounded-full transition-colors`} />
+            Terminal / <span className={`text-${config.accent} uppercase transition-colors`}>{user.username}</span>
           </h1>
-          <p className="text-slate-500 font-medium text-[10px] uppercase tracking-wider">
-            Operational Control Center
+          <p className="text-slate-400 font-bold text-[9px] uppercase tracking-[0.2em]">
+            Operational Intelligence Grid
           </p>
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-3">
           {/* Quick Search */}
           <div className="relative group w-48 sm:w-56">
-            <div className="absolute inset-y-0 left-0 pl-2.5 flex items-center pointer-events-none">
-              <Search className="text-slate-400 group-focus-within:text-blue-600 transition-colors" size={12} />
+            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <Search className={`text-slate-400 group-focus-within:text-${config.accent} transition-colors`} size={14} />
             </div>
             <input 
               type="text"
-              placeholder="Search..."
+              placeholder="Search components..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="block w-full pl-8 pr-2 py-1.5 bg-white border border-slate-200 rounded-lg text-[11px] focus:outline-none focus:ring-1 focus:ring-teal-100 transition-all shadow-sm"
+              className={`block w-full pl-9 pr-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-[11px] font-semibold focus:outline-none focus:ring-4 focus:ring-${config.accent}/10 focus:border-${config.accent}/40 transition-all shadow-sm focus:bg-white`}
             />
           </div>
 
-          <div className="flex items-center gap-1 p-1 bg-white border border-slate-200 rounded-lg shadow-sm">
+          <div className="flex items-center gap-1.5 p-1.5 bg-white border border-slate-200 rounded-xl shadow-sm">
             {(Object.keys(THEME_PLATES) as ThemePlate[]).map((p) => (
               <button
                 key={p}
                 onClick={() => setTheme(p)}
-                className={`w-5 h-5 rounded transition-all
-                  ${theme === p ? 'ring-2 ring-teal-500 ring-offset-1' : 'opacity-40 hover:opacity-100'} 
+                className={`w-5 h-5 rounded-lg transition-all transform active:scale-95
+                  ${theme === p ? `ring-2 ring-${THEME_PLATES[p].primary} ring-offset-2 scale-110` : 'opacity-30 hover:opacity-100 hover:scale-105'} 
                   bg-${THEME_PLATES[p].primary}`}
+                title={THEME_PLATES[p].name}
               />
             ))}
           </div>
@@ -138,34 +139,34 @@ export const Dashboard = ({ user, modules, onSelectModule, onTogglePin }: Dashbo
       </div>
 
       {/* Overview Cards */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         <InsightCard 
-          label="Sales" 
+          label="Sales Intelligence" 
           value={`₹${salesData.total.toFixed(1)} Cr`} 
-          subValue="Current Pipeline"
+          subValue="Revenue Realization"
           icon={TrendingUp}
-          color="blue"
+          themeColor={config.accent}
         />
         <InsightCard 
-          label="Queue" 
+          label="Operations Queue" 
           value={taskStats.pending} 
-          subValue="Tasks Pending"
+          subValue="Active Delegations"
           icon={Activity}
-          color="indigo"
+          themeColor="slate-400"
         />
         <InsightCard 
-          label="Node" 
-          value="ACTIVE" 
-          subValue="System Status"
+          label="Core Engine" 
+          value="SYNCED" 
+          subValue="Connection Status"
           icon={Zap}
-          color="emerald"
+          themeColor={config.primary}
         />
         <InsightCard 
-          label="Credential" 
+          label="Access Level" 
           value={user.role.toUpperCase()} 
-          subValue="Access Level"
+          subValue="Security Clearance"
           icon={ShieldCheck}
-          color="slate"
+          themeColor="slate-900"
         />
       </div>
 
@@ -193,55 +194,63 @@ export const Dashboard = ({ user, modules, onSelectModule, onTogglePin }: Dashbo
   );
 };
 
-const InsightCard = ({ label, value, subValue, icon: Icon, color }: any) => {
+const InsightCard = ({ label, value, subValue, icon: Icon, themeColor }: any) => {
   return (
-    <div className="bg-white border border-slate-100 p-3 rounded-xl shadow-sm">
-      <div className="flex items-center gap-2 mb-2">
-        <div className={`p-1 rounded bg-${color}-50 text-${color}-600`}>
-          <Icon size={12} />
+    <div className="bg-white border border-slate-100 p-5 rounded-[1.5rem] shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_20px_50px_rgba(0,0,0,0.1)] transition-all duration-500 group relative overflow-hidden">
+      <div className={`absolute top-0 right-0 w-16 h-16 bg-${themeColor}/5 rounded-bl-[4rem] transition-all group-hover:w-20 group-hover:h-20`} />
+      
+      <div className="flex items-center gap-3 mb-5 relative z-10">
+        <div className={`p-2.5 rounded-xl bg-slate-50 text-${themeColor} group-hover:bg-${themeColor} group-hover:text-white transition-all duration-500 shadow-sm`}>
+          <Icon size={16} />
         </div>
-        <p className="text-[9px] font-bold text-slate-400 tracking-wider uppercase">{label}</p>
+        <p className="text-[10px] font-black text-slate-400 tracking-[0.15em] uppercase">{label}</p>
       </div>
-      <div>
-        <h3 className="text-lg font-black text-slate-900 leading-none">{value}</h3>
-        <p className="text-[8px] font-bold text-slate-400 mt-1 uppercase tracking-tighter">{subValue}</p>
+      
+      <div className="relative z-10">
+        <h3 className="text-2xl font-black text-slate-900 leading-none tracking-tighter">{value}</h3>
+        <p className="text-[10px] font-bold text-slate-400 mt-3 uppercase tracking-wider opacity-60 border-t border-slate-50 pt-2 flex items-center gap-2">
+          <span className={`w-1 h-1 rounded-full bg-${themeColor}`} />
+          {subValue}
+        </p>
       </div>
     </div>
   );
 };
 
 const ModuleCard = ({ module, index, onSelect }: any) => {
+  const { config } = useTheme();
   return (
     <motion.div
       initial={{ opacity: 0, y: 5 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: index * 0.02 }}
-      whileHover={{ y: -2 }}
-      className="group bg-white border border-slate-100 p-4 rounded-xl shadow-sm hover:shadow-md hover:border-teal-200 transition-all cursor-pointer flex flex-col h-full"
+      whileHover={{ y: -4, scale: 1.02 }}
+      className={`group bg-white border border-slate-100 p-5 rounded-[1.5rem] shadow-sm hover:shadow-xl hover:border-${config.accent}/30 transition-all cursor-pointer flex flex-col h-full`}
       onClick={() => onSelect(module.url || module.id)}
     >
-      <div className="flex items-center gap-3 mb-3">
-        <div className="p-2 bg-slate-50 text-slate-400 group-hover:bg-teal-600 group-hover:text-white rounded-lg transition-colors">
-          <LucideIcon name={module.icon} size={16} />
+      <div className="flex items-center gap-3 mb-4">
+        <div className={`p-2.5 bg-slate-50 text-slate-400 group-hover:bg-${config.primary} group-hover:text-white rounded-xl transition-all duration-300 shadow-sm group-hover:shadow-${config.primary}/20`}>
+          <LucideIcon name={module.icon} size={18} />
         </div>
         {module.badge && (
-          <span className="ml-auto px-1 py-0.5 bg-teal-50 text-teal-600 text-[7px] font-black tracking-widest uppercase rounded">
+          <span className={`ml-auto px-2 py-0.5 bg-${config.accent}/5 text-${config.accent} text-[7px] font-black tracking-widest uppercase rounded-lg border border-${config.accent}/10`}>
             {module.badge}
           </span>
         )}
       </div>
 
       <div className="flex-1">
-        <h3 className="text-xs font-black text-slate-900 mb-1 group-hover:text-teal-600 transition-colors uppercase tracking-tight">
+        <h3 className={`text-xs font-black text-slate-900 mb-1.5 group-hover:text-${config.accent} transition-colors uppercase tracking-tight`}>
           {module.title}
         </h3>
-        <p className="text-[10px] text-slate-400 font-medium leading-tight line-clamp-2">
+        <p className="text-[10px] text-slate-500 font-medium leading-relaxed line-clamp-2">
           {module.description}
         </p>
       </div>
 
-      <div className="mt-3 pt-2 border-t border-slate-50 flex items-center justify-end">
-        <ChevronRight size={12} className="text-slate-300 group-hover:text-teal-400 transition-colors" />
+      <div className="mt-4 pt-3 border-t border-slate-50 flex items-center justify-between">
+        <span className="text-[7px] font-black text-slate-300 uppercase tracking-widest group-hover:text-slate-400 transition-colors">Initialize</span>
+        <ChevronRight size={14} className={`text-slate-300 group-hover:text-${config.accent} group-hover:translate-x-1 transition-all`} />
       </div>
     </motion.div>
   );
