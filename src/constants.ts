@@ -107,8 +107,18 @@ export const MODULES = [
     badge: 'Technical',
     description: 'Maintenance scheduling and tracking.',
     items: [
-      { id: 'motor-maintenance', title: 'Motor Maintenance', url: 'https://script.google.com/macros/s/AKfycbyTVrSrywo014fXvzEH0_DmtzniEHh5Nm6zoswFla1uxgyJ9UyvAwzwQAhTKsYMc57ooQ/exec' }
+      { id: 'motor-maintenance', title: 'Motor Maintenance', url: 'https://script.google.com/macros/s/AKfycbyTVrSrywo014fXvzEH0_DmtzniEHh5Nm6zoswFla1uxgyJ9UyvAwzwQAhTKsYMc57ooQ/exec' },
+      { id: 'compressor-erp', title: 'Compressor ERP', url: 'https://script.google.com/macros/s/AKfycbzCYI_qAmrdMLFdY6Rzv3BLFJ7mm5P4tYRBpFiHynjrXFZPE4BzHC_lgCnHBDpI6Ymk/exec' },
+      { id: 'transformer-maintenance', title: 'Transformer Maintenance', url: 'https://script.google.com/macros/s/AKfycbyOsve89lPHm1o4wPrzM-R_VdqVwAzRiRPqjKWT_uJO_DpO3SNOAjU2Gq0-C_HGnlsi/exec' }
     ]
+  },
+  {
+    id: 'vendor-master',
+    title: 'Vendor Master',
+    icon: 'UserCog',
+    badge: 'Procurement',
+    url: 'https://mis-yajur.github.io/vendor_master',
+    description: 'Centralized vendor database and master management.'
   }
 ];
 
@@ -177,6 +187,17 @@ export const THEME_PLATES: Record<ThemePlate, {
     sidebarGradient: 'from-teal-800 to-slate-900',
     sidebarText: 'white',
     sidebarActive: 'bg-white/10'
+  },
+  emerald: {
+    name: 'Industrial Emerald',
+    primary: 'emerald-600',
+    bg: 'white',
+    text: 'slate-900',
+    accent: 'emerald-500',
+    sidebar: 'emerald-800',
+    sidebarGradient: 'from-emerald-700 to-emerald-900',
+    sidebarText: 'white',
+    sidebarActive: 'bg-white/20'
   }
 };
 
