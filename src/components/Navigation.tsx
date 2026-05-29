@@ -74,14 +74,14 @@ export const Navigation = ({ user, onLogout, activeModuleUrl, onSelectModule, ro
           width: isCollapsed ? 64 : 240,
           x: isMobileMenuOpen ? 0 : (typeof window !== 'undefined' && window.innerWidth < 1024 ? -240 : 0)
         }}
-        className={`h-screen bg-gradient-to-br ${config.sidebarGradient} z-[95] flex flex-col transition-all duration-500 shadow-2xl relative flex-shrink-0 text-${config.sidebarText}`}
+        className={`h-screen bg-gradient-to-br ${config.sidebarGradient} border-r border-slate-200/60 z-[95] flex flex-col transition-all duration-500 shadow-xl relative flex-shrink-0 text-slate-700`}
       >
         {/* Superior Branding */}
-        <div className={`p-6 flex items-center justify-between relative border-b border-white/10 mb-4`}>
+        <div className={`p-6 flex items-center justify-between relative border-b border-slate-200/80 mb-4`}>
           <div className="flex items-center gap-4 overflow-hidden">
             <motion.div 
               whileHover={{ rotate: -5, scale: 1.1 }}
-              className={`flex-shrink-0 w-10 h-10 rounded-2xl bg-white p-2 shadow-2xl shadow-black/20 relative z-10 transition-transform`}
+              className={`flex-shrink-0 w-10 h-10 rounded-2xl bg-white p-2 shadow-lg border border-slate-100 relative z-10 transition-transform`}
             >
               <img src="https://i.ibb.co/KxMxh3Hw/logo.png" alt="Logo" className="w-full h-full object-contain" />
             </motion.div>
@@ -91,15 +91,15 @@ export const Navigation = ({ user, onLogout, activeModuleUrl, onSelectModule, ro
                 animate={{ opacity: 1, x: 0 }}
                 className="whitespace-nowrap"
               >
-                <h1 className="text-sm font-black text-white tracking-[0.2em] leading-none uppercase">YAJUR</h1>
-                <div className={`h-1 w-full bg-white/40 mt-2 rounded-full shadow-[0_0_10px_rgba(255,255,255,0.3)]`} />
+                <h1 className="text-sm font-black text-slate-800 tracking-[0.2em] leading-none uppercase">YAJUR</h1>
+                <div className={`h-1 w-full bg-${config.accent}/30 mt-2 rounded-full shadow-[0_0_10px_rgba(251,113,133,0.15)]`} />
               </motion.div>
             )}
           </div>
           
           <button 
             onClick={() => setIsCollapsed(!isCollapsed)}
-            className={`hidden lg:flex absolute -right-3 top-8 w-6 h-6 bg-white border border-slate-100 rounded-full items-center justify-center text-slate-800 shadow-2xl transition-all hover:scale-110 z-[110]`}
+            className={`hidden lg:flex absolute -right-3 top-8 w-6 h-6 bg-white border border-slate-200/80 rounded-full items-center justify-center text-slate-600 hover:text-slate-800 shadow-md transition-all hover:scale-110 z-[110]`}
           >
             {isCollapsed ? <ChevronRight size={12} /> : <ChevronLeft size={12} />}
           </button>
@@ -110,7 +110,9 @@ export const Navigation = ({ user, onLogout, activeModuleUrl, onSelectModule, ro
           <button
             onClick={() => { onSelectModule(null); setIsMobileMenuOpen(false); }}
             className={`w-full flex items-center gap-2.5 p-2.5 rounded-lg transition-all group
-              ${!activeModuleUrl ? `bg-white/20 text-white shadow-lg` : `text-white/60 hover:bg-white/10 hover:text-white`}`}
+              ${!activeModuleUrl 
+                ? `bg-${config.accent}/10 text-${config.accent} font-extrabold shadow-sm` 
+                : `text-slate-600 hover:bg-slate-500/5 hover:text-slate-900 font-medium`}`}
           >
             <LayoutDashboard size={16} />
             {!isCollapsed && <span className="text-[10px] font-bold tracking-wider uppercase truncate">Overview</span>}
@@ -118,9 +120,9 @@ export const Navigation = ({ user, onLogout, activeModuleUrl, onSelectModule, ro
         </div>
 
         {/* Main Resource Grid */}
-        <div className="flex-1 px-2 overflow-y-auto custom-scrollbar-dark space-y-0.5">
+        <div className="flex-1 px-2 overflow-y-auto custom-scrollbar-light space-y-0.5">
           {!isCollapsed && (
-            <p className={`px-2.5 py-1.5 text-[8px] font-black text-${config.sidebarText}/40 tracking-[0.2em] uppercase`}>Enterprise Nodes</p>
+            <p className={`px-2.5 py-1.5 text-[8px] font-black text-slate-400 tracking-[0.2em] uppercase`}>Enterprise Nodes</p>
           )}
           
           {filteredModules.map((module) => {
@@ -140,15 +142,15 @@ export const Navigation = ({ user, onLogout, activeModuleUrl, onSelectModule, ro
                   }}
                   className={`w-full flex items-center gap-2.5 p-2.5 rounded-lg transition-all group relative
                     ${isActive 
-                      ? `bg-${config.sidebarActive} text-white shadow-sm` 
-                      : `text-${config.sidebarText}/60 hover:bg-white/5 hover:text-white`}`}
+                      ? `${config.sidebarActive} shadow-sm font-bold` 
+                      : `text-slate-600 hover:bg-slate-500/5 hover:text-slate-900 font-medium`}`}
                 >
-                  <div className={`transition-transform duration-300 ${isActive ? 'scale-110' : `group-hover:scale-110 text-${config.sidebarText}/40 group-hover:text-${config.accent}`}`}>
+                  <div className={`transition-transform duration-300 ${isActive ? 'scale-110 text-current' : `group-hover:scale-110 text-slate-400 group-hover:text-${config.accent}`}`}>
                     <LucideIcon name={module.icon} size={16} />
                   </div>
                   {!isCollapsed && (
                     <div className="flex-1 text-left">
-                      <p className={`text-[10px] font-bold tracking-wide uppercase truncate ${isActive ? 'text-white' : ''}`}>
+                      <p className={`text-[10px] font-bold tracking-wide uppercase truncate ${isActive ? 'text-current font-extrabold' : 'text-slate-700'}`}>
                         {module.title}
                       </p>
                     </div>
@@ -169,7 +171,7 @@ export const Navigation = ({ user, onLogout, activeModuleUrl, onSelectModule, ro
                       initial={{ height: 0, opacity: 0 }}
                       animate={{ height: 'auto', opacity: 1 }}
                       exit={{ height: 0, opacity: 0 }}
-                      className={`overflow-hidden space-y-1 ml-4 border-l border-${config.sidebarText}/10 pl-4 py-1`}
+                      className={`overflow-hidden space-y-1 ml-4 border-l border-slate-200 pl-4 py-1`}
                     >
                       {module.items.map(item => (
                         <button
@@ -177,8 +179,8 @@ export const Navigation = ({ user, onLogout, activeModuleUrl, onSelectModule, ro
                           onClick={() => { onSelectModule(item.url); setIsMobileMenuOpen(false); }}
                           className={`w-full text-left p-2 rounded-lg text-[10px] font-bold tracking-widest uppercase transition-all
                             ${activeModuleUrl === item.url 
-                              ? `text-${config.accent} bg-${config.accent}/10` 
-                              : `text-${config.sidebarText}/40 hover:text-white hover:bg-white/5`}`}
+                              ? `text-${config.accent} bg-${config.accent}/10 font-bold` 
+                              : `text-slate-500 hover:text-slate-800 hover:bg-slate-100/50`}`}
                         >
                           {item.title}
                         </button>
@@ -192,17 +194,17 @@ export const Navigation = ({ user, onLogout, activeModuleUrl, onSelectModule, ro
         </div>
 
         {/* User / Profile Section */}
-        <div className={`p-2 border-t border-${config.sidebarText}/10 bg-black/10 mt-auto`}>
-          <div className={`flex items-center gap-2 p-2 rounded-lg bg-white/5 border border-${config.sidebarText}/10 ${isCollapsed ? 'justify-center' : ''}`}>
-            <div className={`w-7 h-7 rounded bg-${config.primary} flex items-center justify-center text-white text-[10px] font-black shrink-0 shadow-lg`}>
+        <div className={`p-2 border-t border-slate-200 bg-slate-500/5 mt-auto`}>
+          <div className={`flex items-center gap-2 p-2 rounded-lg bg-white/80 border border-slate-200/60 ${isCollapsed ? 'justify-center' : ''}`}>
+            <div className={`w-7 h-7 rounded bg-${config.primary} flex items-center justify-center text-white text-[10px] font-black shrink-0 shadow-md`}>
               {user.username.charAt(0)}
             </div>
             {!isCollapsed && (
               <div className="min-w-0 flex-1">
-                <p className="text-[10px] font-bold text-white truncate">{user.username}</p>
+                <p className="text-[10px] font-bold text-slate-800 truncate">{user.username}</p>
                 <div className="flex items-center gap-1">
                   <ShieldCheck size={8} className={`text-${config.accent}`} />
-                  <p className={`text-[8px] font-bold text-${config.sidebarText}/40 tracking-widest uppercase truncate`}>{role}</p>
+                  <p className={`text-[8px] font-bold text-slate-400 tracking-widest uppercase truncate`}>{role}</p>
                 </div>
               </div>
             )}
@@ -210,7 +212,7 @@ export const Navigation = ({ user, onLogout, activeModuleUrl, onSelectModule, ro
           
           <button
             onClick={onLogout}
-            className={`w-full flex items-center gap-2.5 p-2.5 mt-1 rounded-lg text-white/60 hover:text-white hover:bg-white/10 transition-all font-bold text-[9px] tracking-widest uppercase group ${isCollapsed ? 'justify-center' : ''}`}
+            className={`w-full flex items-center gap-2.5 p-2.5 mt-1 rounded-lg text-rose-650 hover:bg-rose-50 hover:text-rose-700 transition-all font-bold text-[9px] tracking-widest uppercase group ${isCollapsed ? 'justify-center' : ''}`}
           >
             <LogOut size={16} className="group-hover:-translate-x-1 transition-transform" />
             {!isCollapsed && <span>End Session</span>}
