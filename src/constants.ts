@@ -54,7 +54,7 @@ export const MODULES = [
     url: 'https://script.google.com/macros/s/AKfycbwA-KQ6BZlfc69YgClBcjaxoxIQQBEDLH7TW_GTw89XKfQq6ugXwtHmvMudL50uekgv/exec',
     items: [
       { id: 'expense-request', title: 'Expense Request (Yasoda)', url: 'https://script.google.com/macros/s/AKfycbyG19e0V5VmLLwN52zHPD5xQ--mKNSKdlB-_-cp1-fCITr4F_nWtlK4vYWcliKplNsE/exec' },
-      { id: 'project-management', title: 'Project Management', url: 'https://script.google.com/macros/s/AKfycbx8LMHDMa6ziSH5Vzv5C1E_C45LhXyfiaTqNXShesT8BAxZTsduoOBEdtB5nPU6Q5lqAg/exec' }
+      { id: 'project-management', title: 'Project Management', url: 'https://mis-yajur.github.io/Project-Management/' }
     ]
   },
   {
@@ -139,10 +139,10 @@ export const THEME_PLATES: Record<ThemePlate, {
     bg: 'white',
     text: 'slate-900',
     accent: 'pink-500',
-    sidebar: 'pink-600',
-    sidebarGradient: 'from-pink-500 via-rose-500 to-fuchsia-600',
-    sidebarText: 'white',
-    sidebarActive: 'bg-white/20'
+    sidebar: 'pink-50',
+    sidebarGradient: 'from-slate-50 via-pink-50/40 to-rose-50/30',
+    sidebarText: 'slate-600',
+    sidebarActive: 'bg-pink-500/10 text-pink-700'
   },
   amethyst: {
     name: 'Royal Purple',
@@ -150,10 +150,10 @@ export const THEME_PLATES: Record<ThemePlate, {
     bg: 'white',
     text: 'slate-900',
     accent: 'purple-500',
-    sidebar: 'purple-600',
-    sidebarGradient: 'from-purple-600 to-violet-700',
-    sidebarText: 'white',
-    sidebarActive: 'bg-white/20'
+    sidebar: 'purple-50',
+    sidebarGradient: 'from-slate-50 via-purple-50/40 to-violet-50/30',
+    sidebarText: 'slate-600',
+    sidebarActive: 'bg-purple-500/10 text-purple-700'
   },
   ocean: {
     name: 'Berylline',
@@ -161,10 +161,10 @@ export const THEME_PLATES: Record<ThemePlate, {
     bg: 'white',
     text: 'slate-900',
     accent: 'cyan-500',
-    sidebar: 'cyan-600',
-    sidebarGradient: 'from-cyan-500 to-blue-600',
-    sidebarText: 'white',
-    sidebarActive: 'bg-white/20'
+    sidebar: 'cyan-50',
+    sidebarGradient: 'from-slate-50 via-cyan-50/40 to-blue-50/30',
+    sidebarText: 'slate-600',
+    sidebarActive: 'bg-cyan-500/10 text-cyan-700'
   },
   slate: {
     name: 'Enterprise Orange',
@@ -172,10 +172,10 @@ export const THEME_PLATES: Record<ThemePlate, {
     bg: 'white',
     text: 'slate-900',
     accent: 'orange-500',
-    sidebar: 'orange-600',
-    sidebarGradient: 'from-orange-400 to-orange-600',
-    sidebarText: 'white',
-    sidebarActive: 'bg-white/20'
+    sidebar: 'orange-50',
+    sidebarGradient: 'from-slate-50 via-orange-50/40 to-rose-50/30',
+    sidebarText: 'slate-600',
+    sidebarActive: 'bg-orange-500/10 text-orange-700'
   },
   midnight: {
     name: 'Midnight Teal',
@@ -183,10 +183,10 @@ export const THEME_PLATES: Record<ThemePlate, {
     bg: 'slate-50',
     text: 'slate-900',
     accent: 'teal-500',
-    sidebar: 'teal-800',
-    sidebarGradient: 'from-teal-800 to-slate-900',
-    sidebarText: 'white',
-    sidebarActive: 'bg-white/10'
+    sidebar: 'teal-50',
+    sidebarGradient: 'from-slate-50 via-teal-50/40 to-slate-100/30',
+    sidebarText: 'slate-600',
+    sidebarActive: 'bg-teal-500/10 text-teal-700'
   },
   emerald: {
     name: 'Industrial Emerald',
@@ -194,10 +194,10 @@ export const THEME_PLATES: Record<ThemePlate, {
     bg: 'white',
     text: 'slate-900',
     accent: 'emerald-500',
-    sidebar: 'emerald-800',
-    sidebarGradient: 'from-emerald-700 to-emerald-900',
-    sidebarText: 'white',
-    sidebarActive: 'bg-white/20'
+    sidebar: 'emerald-50',
+    sidebarGradient: 'from-slate-50 via-emerald-50/40 to-green-50/30',
+    sidebarText: 'slate-600',
+    sidebarActive: 'bg-emerald-500/10 text-emerald-700'
   }
 };
 
