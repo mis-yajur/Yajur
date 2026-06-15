@@ -31,12 +31,15 @@ export const Navigation = ({ user, onLogout, activeModuleUrl, onSelectModule, ro
   const { config } = useTheme();
 
   const filteredModules = MODULES.filter(module => {
+    if (user.allowedModules) {
+      return user.allowedModules.includes(module.id);
+    }
     if (role === 'admin') return true;
     if (role === 'store') return module.id === 'ims';
     if (role === 'hr') return module.id === 'hr';
-    if (role === 'production') return module.id === 'production';
+    if (role === 'production') return module.id === 'production' || module.id === 'lifting';
     if (role === 'pms') return module.id === 'pms';
-    if (role === 'sales') return module.id === 'sales';
+    if (role === 'sales') return module.id === 'sales' || module.id === 'lifting';
     if (role === 'office') return module.id === 'task';
     return false;
   });
@@ -212,7 +215,7 @@ export const Navigation = ({ user, onLogout, activeModuleUrl, onSelectModule, ro
           
           <button
             onClick={onLogout}
-            className={`w-full flex items-center gap-2.5 p-2.5 mt-1 rounded-lg text-rose-650 hover:bg-rose-50 hover:text-rose-700 transition-all font-bold text-[9px] tracking-widest uppercase group ${isCollapsed ? 'justify-center' : ''}`}
+            className={`w-full flex items-center gap-2.5 p-2.5 mt-1 rounded-lg text-rose-600 hover:bg-rose-50 hover:text-rose-700 transition-all font-bold text-[9px] tracking-widest uppercase group ${isCollapsed ? 'justify-center' : ''}`}
           >
             <LogOut size={16} className="group-hover:-translate-x-1 transition-transform" />
             {!isCollapsed && <span>End Session</span>}

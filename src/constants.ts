@@ -42,7 +42,7 @@ export const MODULES = [
     badge: 'Inventory',
     description: 'Stock management and inventory tracking.',
     items: [
-      { id: 'ims-pro', title: 'IMS-PRO', url: 'https://mis-yajur.github.io/IMS-Pro/' }
+      { id: 'ims-pro', title: 'IMS-PRO', url: 'https://ims-pro-blond.vercel.app/' }
     ]
   },
   {

@@ -4,20 +4,93 @@ import { Navigation } from './components/Navigation';
 import { Dashboard } from './components/Dashboard';
 import { ModuleFrame } from './components/ModuleFrame';
 import { Login } from './components/Login';
-import { User, Module } from './types';
+import { User, Module, RecentActivity, UserCredential } from './types';
 import { ThemeProvider, useTheme } from './context/ThemeContext';
-import { MODULES } from './constants';
+import { MODULES, THEME_PLATES } from './constants';
+
+const getModuleNameByUrl = (url: string | null): string => {
+  if (!url) return '';
+  for (const m of MODULES) {
+    if (m.url === url || m.id === url) return m.title;
+    if (m.items) {
+      for (const sub of m.items) {
+        if (sub.url === url || sub.id === url) return `${m.title} > ${sub.title}`;
+      }
+    }
+  }
+  return url;
+};
 
 function AppContent() {
   const [user, setUser] = useState<User | null>(null);
+  const [usersList, setUsersList] = useState<UserCredential[]>(() => {
+    const saved = localStorage.getItem('yajur-users');
+    if (saved) return JSON.parse(saved);
+    const defaults: UserCredential[] = [
+      { username: 'Admin', pass: '1234', role: 'admin', allowedModules: MODULES.map(m => m.id) },
+      { username: 'Manager', pass: '1234', role: 'admin', allowedModules: MODULES.map(m => m.id) },
+      { username: 'Store', pass: '1234', role: 'store', allowedModules: ['ims'] },
+      { username: 'Hr', pass: '1234', role: 'hr', allowedModules: ['hr'] },
+      { username: 'SQC', pass: '1234', role: 'production', allowedModules: ['production', 'lifting'] },
+      { username: 'Office', pass: '1234', role: 'office', allowedModules: ['task'] },
+      { username: 'Yasoda', pass: '1234', role: 'pms', allowedModules: ['pms'] },
+      { username: 'Sales', pass: '1234', role: 'sales', allowedModules: ['sales', 'lifting'] },
+    ];
+    localStorage.setItem('yajur-users', JSON.stringify(defaults));
+    return defaults;
+  });
+
+  const handleUpdateUsersList = (newUsers: UserCredential[]) => {
+    setUsersList(newUsers);
+    localStorage.setItem('yajur-users', JSON.stringify(newUsers));
+    const currentInNewList = newUsers.find(u => u.username.toLowerCase() === user?.username.toLowerCase());
+    if (currentInNewList && user) {
+      setUser({
+        username: currentInNewList.username,
+        role: currentInNewList.role,
+        allowedModules: currentInNewList.allowedModules
+      });
+    }
+  };
+
   const [activeModuleUrl, setActiveModuleUrl] = useState<string | null>(null);
   const [modules, setModules] = useState<Module[]>(() => {
     const savedPins = localStorage.getItem('yajur-pins');
     const pinIds = savedPins ? JSON.parse(savedPins) : [];
     return MODULES.map(m => ({ ...m, pinned: pinIds.includes(m.id) }));
   });
+  const [activities, setActivities] = useState<RecentActivity[]>(() => {
+    const saved = localStorage.getItem('yajur-activities');
+    return saved ? JSON.parse(saved) : [];
+  });
 
-  const { config } = useTheme();
+  const { theme, config } = useTheme();
+  const [lastTheme, setLastTheme] = useState<string>(theme);
+
+  const logActivity = (action: string, moduleName?: string, customUser?: User) => {
+    const activeUser = customUser || user;
+    if (!activeUser) return;
+    const newActivity: RecentActivity = {
+      id: Math.random().toString(36).substring(2, 11),
+      username: activeUser.username,
+      role: activeUser.role,
+      action,
+      moduleName,
+      timestamp: new Date().toISOString()
+    };
+    setActivities(prev => {
+      const updated = [newActivity, ...prev].slice(0, 50);
+      localStorage.setItem('yajur-activities', JSON.stringify(updated));
+      return updated;
+    });
+  };
+
+  useEffect(() => {
+    if (user && lastTheme !== theme) {
+      logActivity('Updated Theme Preset', THEME_PLATES[theme]?.name || theme);
+      setLastTheme(theme);
+    }
+  }, [theme, user, lastTheme]);
 
   useEffect(() => {
     const pinIds = modules.filter(m => m.pinned).map(m => m.id);
@@ -25,20 +98,45 @@ function AppContent() {
   }, [modules]);
 
   const togglePin = (moduleId: string) => {
+    const isCurrentlyPinned = modules.find(m => m.id === moduleId)?.pinned;
+    const name = modules.find(m => m.id === moduleId)?.title || moduleId;
+    logActivity(isCurrentlyPinned ? 'Unpinned Node' : 'Pinned Node', name);
     setModules(prev => prev.map(m => 
       m.id === moduleId ? { ...m, pinned: !m.pinned } : m
     ));
   };
 
+  const handleSelectModule = (url: string | null) => {
+    if (url) {
+      const name = getModuleNameByUrl(url);
+      logActivity('Accessed Node', name);
+    } else {
+      if (activeModuleUrl) {
+        logActivity('Returned to Overview');
+      }
+    }
+    setActiveModuleUrl(url);
+  };
+
+  const handleClearActivities = () => {
+    setActivities([]);
+    localStorage.removeItem('yajur-activities');
+  };
+
+  const handleLogin = (newUser: User) => {
+    setUser(newUser);
+    logActivity('Authenticated into Node', undefined, newUser);
+  };
+
   if (!user) {
-    return <Login onLogin={setUser} />;
+    return <Login onLogin={handleLogin} />;
   }
 
   const renderContent = () => {
     if (activeModuleUrl) {
       return (
         <div className="relative w-full h-full">
-          <ModuleFrame url={activeModuleUrl} onBack={() => setActiveModuleUrl(null)} />
+          <ModuleFrame url={activeModuleUrl} onBack={() => handleSelectModule(null)} />
         </div>
       );
     }
@@ -47,8 +145,12 @@ function AppContent() {
       <Dashboard 
         user={user}
         modules={modules}
-        onSelectModule={(url) => setActiveModuleUrl(url)} 
+        onSelectModule={handleSelectModule} 
         onTogglePin={togglePin}
+        activities={activities}
+        onClearActivities={handleClearActivities}
+        usersList={usersList}
+        onUpdateUsersList={handleUpdateUsersList}
       />
     );
   };
@@ -64,9 +166,13 @@ function AppContent() {
         <Navigation 
           user={user} 
           role={user.role}
-          onLogout={() => { setUser(null); setActiveModuleUrl(null); }} 
+          onLogout={() => {
+            logActivity('Terminated Session / Logged Out');
+            setUser(null);
+            setActiveModuleUrl(null);
+          }} 
           activeModuleUrl={activeModuleUrl}
-          onSelectModule={setActiveModuleUrl}
+          onSelectModule={handleSelectModule}
         />
         
         {/* Module View Floating Edge Toggle */}

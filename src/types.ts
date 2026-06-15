@@ -5,6 +5,14 @@ export type ThemePlate = 'slate' | 'midnight' | 'emerald' | 'amethyst' | 'rose' 
 export interface User {
   username: string;
   role: Role;
+  allowedModules?: string[];
+}
+
+export interface UserCredential {
+  username: string;
+  pass: string;
+  role: Role;
+  allowedModules: string[];
 }
 
 export interface Module {
@@ -35,3 +43,13 @@ export interface TaskStats {
   pending: number;
   done: number;
 }
+
+export interface RecentActivity {
+  id: string;
+  username: string;
+  role: Role;
+  action: string;
+  moduleName?: string;
+  timestamp: string; // ISO string
+}
+

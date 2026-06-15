@@ -37,9 +37,49 @@ export const Login = ({ onLogin }: LoginProps) => {
     setError('');
     
     setTimeout(() => {
-      const userFound = USER_CREDENTIALS[username];
-      if (userFound && userFound.pass === password) {
-        onLogin({ username, role: userFound.role });
+      const savedUsers = localStorage.getItem('yajur-users');
+      let userFound = null;
+
+      // Check if there is already a localized list of user credentials
+      if (savedUsers) {
+        const usersList = JSON.parse(savedUsers);
+        // case insensitive match for username for easier/flexible logins
+        const match = usersList.find(
+          (u: any) => u.username.toLowerCase() === username.trim().toLowerCase() && u.pass === password
+        );
+        if (match) {
+          userFound = { 
+            username: match.username, 
+            role: match.role, 
+            allowedModules: match.allowedModules 
+          };
+        }
+      } else {
+        // Fallback to constants.ts credentials
+        const match = USER_CREDENTIALS[username];
+        if (match && match.pass === password) {
+          let allowed: string[] = [];
+          if (match.role === 'admin') {
+            allowed = ['task', 'checklist', 'ims', 'pms', 'hr', 'production', 'sales', 'lifting', 'maintenance', 'vendor-master'];
+          } else if (match.role === 'store') {
+            allowed = ['ims'];
+          } else if (match.role === 'hr') {
+            allowed = ['hr'];
+          } else if (match.role === 'production') {
+            allowed = ['production', 'lifting']; // SQC gets production & lifting ERP
+          } else if (match.role === 'pms') {
+            allowed = ['pms'];
+          } else if (match.role === 'sales') {
+            allowed = ['sales', 'lifting']; // Sales gets sales & lifting ERP
+          } else if (match.role === 'office') {
+            allowed = ['task'];
+          }
+          userFound = { username, role: match.role, allowedModules: allowed };
+        }
+      }
+
+      if (userFound) {
+        onLogin(userFound);
       } else {
         setError('Verification Failed: Access Denied to Node.');
         setIsLoading(false);
