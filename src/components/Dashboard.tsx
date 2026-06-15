@@ -344,7 +344,6 @@ export const Dashboard = ({
       admin: ['SuperAdmin', 'ITSystemManager'],
       store: ['StoreSup', 'InvProcurement'],
       hr: ['HRDirector', 'PersonnelExec'],
-      role: ['GenericUser'],
       production: ['SQCSupervisor', 'YajurProdEng'],
       pms: ['ProjectLeadYasoda', 'ProjectCoordinator'],
       sales: ['SalesVP', 'AccountsManager'],
@@ -498,13 +497,310 @@ export const Dashboard = ({
 
       {/* Dynamic User Access & Operator Matrix (Admin-Only Panel) */}
       {user.role === 'admin' && (
-        <section className="space-y-4">
-          <div className="flex items-center gap-2 opacity-50">
-            <Shield size={12} className="text-slate-600" />
-            <h2 className="text-[9px] font-black text-slate-500 tracking-[0.2em] uppercase">
-              Operator Access & Node Matrix Control
-            </h2>
-          </div>
+        <>
+          {/* Integrated Business Intelligence (BI) Analytics Suite */}
+          <section className="space-y-4 animate-fadeIn">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              <div className="flex items-center gap-2.5 opacity-60">
+                <BarChart3 size={15} className={`text-${config.accent}`} />
+                <div>
+                  <h2 className="text-[10px] font-black text-slate-800 tracking-[0.2em] uppercase">
+                    Advanced BI Node Telemetry & Usage Analytics
+                  </h2>
+                  <p className="text-[8px] text-slate-400 font-bold uppercase tracking-wider">Historical access trends & department allocation indexes</p>
+                </div>
+              </div>
+
+              <div className="flex flex-wrap items-center gap-2.5">
+                {/* Simulated traffic trigger */}
+                <button
+                  type="button"
+                  onClick={handleSimulateAccess}
+                  className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-[9px] font-black uppercase tracking-wider text-white bg-slate-900 hover:bg-black transition-all hover:scale-[1.02] shadow-[0_4px_12px_rgba(0,0,0,0.15)] active:scale-95 cursor-pointer`}
+                >
+                  <Sparkles size={11} className="text-amber-400 animate-spin" />
+                  Simulate Live Hit
+                </button>
+
+                {simulatedActivities.length > 0 && (
+                  <button
+                    type="button"
+                    onClick={handleClearSimulation}
+                    className="flex items-center gap-1.5 px-3 py-2 text-[9px] font-black tracking-wider uppercase text-slate-500 hover:text-slate-800 hover:bg-slate-50 rounded-xl transition-all border border-slate-200 cursor-pointer"
+                  >
+                    <RefreshCw size={10} />
+                    Reset Sim Trails
+                  </button>
+                )}
+              </div>
+            </div>
+
+            {/* Simulated telemetry toast alert when hitting simulate */}
+            <AnimatePresence>
+              {simulationLog && (
+                <motion.div
+                  initial={{ opacity: 0, y: -15, scale: 0.95 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: -10, scale: 0.95 }}
+                  className={`p-3 bg-gradient-to-r from-slate-900 to-slate-800 border border-slate-700 text-white rounded-2xl text-[10px] font-bold shadow-[0_20px_40px_rgba(0,0,0,0.3)] flex items-center justify-between gap-4 z-50`}
+                >
+                  <div className="flex items-center gap-2.5">
+                    <span className="flex h-2 w-2 relative">
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
+                      <span className="relative inline-flex rounded-full h-2 w-2 bg-cyan-500"></span>
+                    </span>
+                    <span className="font-mono text-cyan-400">[{simulationLog.role.toUpperCase()}]</span>
+                    <span className="text-slate-350">{simulationLog.username} accessed</span>
+                    <span className={`text-${config.accent} font-black uppercase tracking-tight`}>{simulationLog.moduleName}</span>
+                  </div>
+                  <span className="text-[8px] opacity-40 font-mono">Telemetry Registered</span>
+                </motion.div>
+              )}
+            </AnimatePresence>
+
+            {/* Quick KPI Overview Tiles (BI Accent Grid) with custom glows! */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              <div className="bg-white/90 p-5 rounded-2xl border border-slate-100 flex items-center justify-between shadow-[0_10px_25px_rgba(71,85,105,0.03)] hover:shadow-[0_20px_40px_rgba(71,85,105,0.12)] hover:border-slate-350 group transition-all duration-300">
+                <div>
+                  <p className="text-[8px] font-black text-slate-400 uppercase tracking-widest leading-none mb-1">AGGREGATED HITS</p>
+                  <h4 className="text-2xl font-black text-slate-800 leading-none">{totalAccesses}</h4>
+                  <p className="text-[8px] text-slate-400 font-bold uppercase tracking-wider mt-1">Live + Baseline Sum</p>
+                </div>
+                <div className="p-3 bg-slate-50 text-slate-700 rounded-xl group-hover:scale-110 transition-transform">
+                  <BarChart3 size={15} />
+                </div>
+              </div>
+
+              <div className="bg-white/95 p-5 rounded-2xl border border-teal-100/40 flex items-center justify-between shadow-[0_10px_25px_rgba(13,148,136,0.04)] hover:shadow-[0_20px_40px_rgba(13,148,136,0.18)] hover:border-teal-300 group transition-all duration-300">
+                <div>
+                  <p className="text-[8px] font-black text-teal-600/80 uppercase tracking-widest leading-none mb-1">TOP MODULE</p>
+                  <h4 className="text-[13px] font-black text-slate-800 leading-tight truncate max-w-[150px]">{topModuleName}</h4>
+                  <p className="text-[8px] text-teal-600 font-bold uppercase tracking-wider mt-1">{topModuleCount} requests</p>
+                </div>
+                <div className="p-3 bg-teal-50 text-teal-600 rounded-xl group-hover:scale-110 transition-transform">
+                  <Zap size={15} />
+                </div>
+              </div>
+
+              <div className="bg-white/95 p-5 rounded-2xl border border-violet-100/40 flex items-center justify-between shadow-[0_10px_25px_rgba(139,92,246,0.04)] hover:shadow-[0_20px_40px_rgba(139,92,246,0.18)] hover:border-violet-300 group transition-all duration-300">
+                <div>
+                  <p className="text-[8px] font-black text-violet-600/80 uppercase tracking-widest leading-none mb-1">MOST ACTIVE DIVISION</p>
+                  <h4 className="text-[13px] font-black text-slate-800 leading-snug truncate max-w-[150px]">{topDeptName}</h4>
+                  <p className="text-[8px] text-violet-600 font-bold uppercase tracking-wider mt-1">{topDeptCount} operations</p>
+                </div>
+                <div className="p-3 bg-violet-50 text-violet-600 rounded-xl group-hover:scale-110 transition-transform">
+                  <SlidersHorizontal size={15} />
+                </div>
+              </div>
+
+              <div className="bg-white p-5 rounded-2xl border border-slate-100 flex items-center justify-between shadow-[0_10px_25px_rgba(71,85,105,0.03)] hover:shadow-[0_20px_40px_rgba(71,85,105,0.12)] hover:border-slate-350 group transition-all duration-300">
+                <div>
+                  <p className="text-[8px] font-black text-slate-400 uppercase tracking-widest leading-none mb-1">SYSTEM SIM DATA</p>
+                  <h4 className="text-2xl font-black text-slate-800 leading-none">{simulatedActivities.length} Hits</h4>
+                  <p className="text-[8px] text-slate-400 font-bold uppercase tracking-wider mt-1">Real-time simulation</p>
+                </div>
+                <div className="p-3 bg-slate-50 text-slate-700 rounded-xl group-hover:scale-110 transition-transform">
+                  <Activity size={15} />
+                </div>
+              </div>
+            </div>
+
+            {/* Main Interactive Charts Console */}
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+              {/* Stacked or Grouped Bar Chart of Module Accesses */}
+              <div className="lg:col-span-2 bg-white/70 backdrop-blur-md border border-slate-150 rounded-[2rem] shadow-[0_10px_45px_rgba(71,85,105,0.03)] p-6 space-y-4 flex flex-col justify-between">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-slate-100">
+                  <div>
+                    <h3 className="text-xs font-black text-slate-800 uppercase tracking-wider flex items-center gap-1.5 font-sans">
+                      <BarChart3 size={13} className={`text-${config.accent}`} />
+                      Telemetry Module Hit Distribution
+                    </h3>
+                    <p className="text-[9px] text-slate-400 font-bold uppercase tracking-widest mt-0.5">Segmented access volume cross-referenced by team</p>
+                  </div>
+
+                  <div className="flex items-center gap-2">
+                    <span className="text-[8px] font-black text-slate-400 uppercase tracking-wider">Layout:</span>
+                    <div className="flex items-center p-0.5 bg-slate-100 rounded-xl border border-slate-200">
+                      <button
+                        type="button"
+                        onClick={() => setChartTypeState('stacked')}
+                        className={`px-2.5 py-1 rounded-lg text-[8px] font-black uppercase tracking-wider transition-all cursor-pointer
+                          ${chartTypeState === 'stacked' ? 'bg-white text-slate-800 shadow-sm' : 'text-slate-400'}`}
+                      >
+                        Stacked
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setChartTypeState('grouped')}
+                        className={`px-2.5 py-1 rounded-lg text-[8px] font-black uppercase tracking-wider transition-all cursor-pointer
+                          ${chartTypeState === 'grouped' ? 'bg-white text-slate-800 shadow-sm' : 'text-slate-400'}`}
+                      >
+                        Grouped
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                {/* The Bar Chart element */}
+                <div className="h-[280px] w-full text-[10px] font-mono leading-none">
+                  <ResponsiveContainer width="100%" height="100%">
+                    <BarChart
+                      data={trendData}
+                      margin={{ top: 10, right: 10, left: -25, bottom: 5 }}
+                    >
+                      <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
+                      <XAxis 
+                        dataKey="name" 
+                        tickLine={false} 
+                        axisLine={false} 
+                        stroke="#94a3b8" 
+                        tick={{ fontSize: 9, fontWeight: 700, fill: '#64748b' }}
+                      />
+                      <YAxis 
+                        tickLine={false} 
+                        axisLine={false} 
+                        stroke="#94a3b8"
+                        tick={{ fontSize: 9, fontWeight: 700, fill: '#64748b' }}
+                      />
+                      <Tooltip 
+                        content={({ active, payload, label }) => {
+                          if (active && payload && payload.length) {
+                            return (
+                              <div className="bg-slate-900/95 border border-slate-800 p-3 rounded-xl shadow-xl text-white text-[10px] font-sans antialiased text-left space-y-1.5">
+                                <p className="font-black text-[10px] uppercase tracking-wider border-b border-slate-850 pb-1.5 text-cyan-400">{label}</p>
+                                <div className="space-y-1 max-h-[140px] overflow-y-auto">
+                                  {payload.map((entry: any) => {
+                                    const dptL = DEPARTMENT_LABELS[entry.name || ''] || entry.name;
+                                    return (
+                                      <div key={entry.name} className="flex items-center justify-between gap-6 font-mono text-[9px]">
+                                        <span className="flex items-center gap-1.5 text-slate-350">
+                                          <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: entry.color }} />
+                                          {dptL}
+                                        </span>
+                                        <span className="font-bold text-white">{entry.value} hits</span>
+                                      </div>
+                                    );
+                                  })}
+                                </div>
+                              </div>
+                            );
+                          }
+                          return null;
+                        }}
+                      />
+                      <Legend 
+                        verticalAlign="bottom" 
+                        height={36} 
+                        content={({ payload }) => {
+                          return (
+                            <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1.5 pt-4 text-[9px] font-bold text-slate-500 uppercase tracking-tight">
+                              {payload?.map((entry: any) => {
+                                const deptKey = entry.dataKey;
+                                const label = DEPARTMENT_LABELS[deptKey] || deptKey;
+                                return (
+                                  <div key={deptKey} className="flex items-center gap-1">
+                                    <span className="w-2.5 h-2 rounded" style={{ backgroundColor: entry.color }} />
+                                    <span>{label}</span>
+                                  </div>
+                                );
+                              })}
+                            </div>
+                          );
+                        }}
+                      />
+                      {Object.keys(DEPARTMENT_COLORS).map((dept) => (
+                        <Bar 
+                          key={dept}
+                          dataKey={dept} 
+                          name={dept}
+                          stackId={chartTypeState === 'stacked' ? 'a' : undefined} 
+                          fill={DEPARTMENT_COLORS[dept]} 
+                          radius={chartTypeState === 'stacked' ? [0, 0, 0, 0] : [3, 3, 0, 0]}
+                        />
+                      ))}
+                    </BarChart>
+                  </ResponsiveContainer>
+                </div>
+              </div>
+
+              {/* Pie Chart of Department Engagement */}
+              <div className="bg-white/70 backdrop-blur-md border border-slate-150 rounded-[2rem] shadow-[0_10px_45px_rgba(71,85,105,0.03)] p-6 space-y-4 flex flex-col justify-between">
+                <div>
+                  <h3 className="text-xs font-black text-slate-800 uppercase tracking-wider flex items-center gap-1.5">
+                    <SlidersHorizontal size={13} className="text-indigo-500" />
+                    Share by Department
+                  </h3>
+                  <p className="text-[9px] text-slate-400 font-bold uppercase tracking-widest mt-0.5">Relative transaction slice metrics</p>
+                </div>
+
+                <div className="h-[210px] w-full flex items-center justify-center relative font-mono text-[10px]">
+                  {pieData.length === 0 ? (
+                    <p className="text-slate-400 uppercase tracking-widest font-black text-[9px]">Awaiting hit telemetry</p>
+                  ) : (
+                    <ResponsiveContainer width="100%" height="100%">
+                      <PieChart>
+                        <Pie
+                          data={pieData}
+                          innerRadius={60}
+                          outerRadius={80}
+                          paddingAngle={2}
+                          dataKey="value"
+                        >
+                          {pieData.map((entry, index) => (
+                            <Cell key={`cell-${index}`} fill={DEPARTMENT_COLORS[entry.key] || '#cbd5e1'} />
+                          ))}
+                        </Pie>
+                        <Tooltip 
+                          content={({ active, payload }) => {
+                            if (active && payload && payload.length) {
+                              const data = payload[0].payload;
+                              const share = ((data.value / totalAccesses) * 100).toFixed(1);
+                              return (
+                                <div className="bg-slate-900 border border-slate-800 p-2.5 rounded-xl text-white text-[10px]">
+                                  <p className="font-extrabold uppercase tracking-widest" style={{ color: DEPARTMENT_COLORS[data.key] }}>{data.name}</p>
+                                  <p className="font-mono text-[9px] text-slate-350 mt-0.5">{data.value} accesses ({share}%)</p>
+                                </div>
+                              );
+                            }
+                            return null;
+                          }}
+                        />
+                      </PieChart>
+                    </ResponsiveContainer>
+                  )}
+                  {/* Absolute Center Indicator */}
+                  <div className="absolute flex flex-col items-center justify-center pointer-events-none">
+                    <span className="text-[8px] font-black text-slate-400 uppercase tracking-widest">Aggregate</span>
+                    <span className="text-2xl font-black text-slate-800">{totalAccesses}</span>
+                    <span className="text-[7px] font-bold text-slate-400 uppercase tracking-tight">Access Log</span>
+                  </div>
+                </div>
+
+                {/* Custom list description of Pie Chart segments with custom color badges */}
+                <div className="grid grid-cols-2 gap-2 text-[9px] font-bold uppercase tracking-tight text-slate-500">
+                  {pieData.map((item) => {
+                    const color = DEPARTMENT_COLORS[item.key] || '#cbd5e1';
+                    return (
+                      <div key={item.key} className="flex items-center gap-1.5">
+                        <span className="w-2.5 h-1.5 rounded" style={{ backgroundColor: color }} />
+                        <span className="truncate" title={item.name}>{item.name.replace(/ \/ .*/, '')}</span>
+                        <span className="text-slate-450 font-mono">({Math.round((item.value / totalAccesses) * 100)}%)</span>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* Dynamic User Access & Operator Matrix (Admin-Only Panel) */}
+          <section className="space-y-4">
+            <div className="flex items-center gap-2 opacity-50">
+              <Shield size={12} className="text-slate-600" />
+              <h2 className="text-[9px] font-black text-slate-500 tracking-[0.2em] uppercase">
+                Operator Access & Node Matrix Control
+              </h2>
+            </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             {/* Operator Listing & Permission Configurator */}
@@ -776,7 +1072,7 @@ export const Dashboard = ({
             </div>
           </div>
         </section>
-      )}
+      </>)}
 
       {/* Security & Access Audit Trail */}
       <section className="space-y-4">
@@ -893,9 +1189,29 @@ const formatTimestamp = (isoString: string) => {
   }
 };
 
+const getColorShadow = (color: string) => {
+  const norm = color?.toLowerCase() || '';
+  if (norm.includes('sky') || norm.includes('blue') || norm.includes('cyan')) {
+    return 'shadow-[0_15px_30px_rgba(14,165,233,0.06)] hover:shadow-[0_25px_50px_rgba(14,165,233,0.22)] border-sky-100/50 hover:border-sky-300 bg-white';
+  }
+  if (norm.includes('violet') || norm.includes('purple') || norm.includes('indigo')) {
+    return 'shadow-[0_15px_30px_rgba(139,92,246,0.06)] hover:shadow-[0_25px_50px_rgba(139,92,246,0.22)] border-violet-100/50 hover:border-violet-300 bg-white';
+  }
+  if (norm.includes('emerald') || norm.includes('teal') || norm.includes('green')) {
+    return 'shadow-[0_15px_30px_rgba(16,185,129,0.06)] hover:shadow-[0_25px_50px_rgba(16,185,129,0.22)] border-emerald-100/50 hover:border-emerald-300 bg-white';
+  }
+  if (norm.includes('amber') || norm.includes('yellow') || norm.includes('orange')) {
+    return 'shadow-[0_15px_30px_rgba(245,158,11,0.06)] hover:shadow-[0_25px_50px_rgba(245,158,11,0.22)] border-amber-100/50 hover:border-amber-300 bg-white';
+  }
+  if (norm.includes('rose') || norm.includes('pink') || norm.includes('red')) {
+    return 'shadow-[0_15px_30px_rgba(244,63,94,0.06)] hover:shadow-[0_25px_50px_rgba(244,63,94,0.22)] border-rose-100/50 hover:border-rose-300 bg-white';
+  }
+  return 'shadow-[0_15px_30px_rgba(71,85,105,0.06)] hover:shadow-[0_25px_50px_rgba(71,85,105,0.18)] border-slate-100/80 hover:border-slate-300 bg-white';
+};
+
 const InsightCard = ({ label, value, subValue, icon: Icon, themeColor }: any) => {
   return (
-    <div className="bg-white/70 backdrop-blur-md border border-slate-100 p-6 rounded-[2rem] shadow-[0_4px_24px_rgb(0,0,0,0.03)] hover:shadow-[0_32px_64px_-16px_rgba(0,0,0,0.1)] transition-all duration-500 group relative overflow-hidden">
+    <div className={`backdrop-blur-md border p-6 rounded-[2rem] ${getColorShadow(themeColor)} transition-all duration-500 group relative overflow-hidden`}>
       <div className={`absolute top-0 right-0 w-24 h-24 bg-${themeColor}/5 rounded-bl-[5rem] transition-all group-hover:w-32 group-hover:h-32 group-hover:bg-${themeColor}/10`} />
       
       <div className="flex items-center justify-between mb-8 relative z-10">
