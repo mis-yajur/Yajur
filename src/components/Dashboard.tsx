@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { motion } from 'motion/react';
+import { motion, AnimatePresence } from 'motion/react';
 import { 
   Search,
   Zap,
@@ -21,8 +21,27 @@ import {
   Shield,
   KeyRound,
   Check,
-  X
+  X,
+  BarChart3,
+  Filter,
+  Info,
+  Sparkles,
+  RefreshCw,
+  SlidersHorizontal
 } from 'lucide-react';
+import { 
+  ResponsiveContainer, 
+  BarChart, 
+  Bar, 
+  XAxis, 
+  YAxis, 
+  CartesianGrid, 
+  Tooltip, 
+  Legend, 
+  PieChart, 
+  Pie, 
+  Cell 
+} from 'recharts';
 import { Module, User, ThemePlate, TaskStats, SalesData, RecentActivity, UserCredential, Role } from '../types';
 import { LucideIcon } from './LucideIcon';
 import { useTheme } from '../context/ThemeContext';
@@ -68,6 +87,12 @@ export const Dashboard = ({
   const [tempPassword, setTempPassword] = useState('');
   const [adminError, setAdminError] = useState('');
   const [adminSuccess, setAdminSuccess] = useState('');
+
+  // Recharts usage trends analytics states
+  const [selectedDeptFilter, setSelectedDeptFilter] = useState<string>('all');
+  const [chartTypeState, setChartTypeState] = useState<'stacked' | 'grouped'>('stacked');
+  const [simulatedActivities, setSimulatedActivities] = useState<RecentActivity[]>([]);
+  const [simulationLog, setSimulationLog] = useState<RecentActivity | null>(null);
 
   // Automatically sync createAllowedModules defaults when role changes
   useEffect(() => {
@@ -236,6 +261,121 @@ export const Dashboard = ({
     setEditPasswordUserId(null);
     setTempPassword('');
     setAdminSuccess(`Access key updated for node: ${targetUsername}`);
+  };
+
+  // Dynamic computation of trend metrics combining real system logs with a rich baseline dataset
+  const computeTrendData = () => {
+    // Deep clone baseline data
+    const chartData = BASELINE_TRENDS.map(item => ({ ...item }));
+    
+    // Add real logs & simulated logs to our trend counts
+    const allLogs = [...simulatedActivities, ...activities];
+    allLogs.forEach(act => {
+      // Catch 'Accessed Node' or simulated accesses
+      if (act.action.includes('Accessed') || act.action.includes('Launch') || act.action.includes('Telemetry')) {
+        const modName = act.moduleName;
+        if (!modName) return;
+        
+        // Find matching module by comparing partial strings or exact
+        const found = chartData.find(m => 
+          m.name.toLowerCase() === modName.toLowerCase() || 
+          m.id.toLowerCase() === modName.toLowerCase() ||
+          modName.toLowerCase().includes(m.name.toLowerCase()) ||
+          m.name.toLowerCase().includes(modName.toLowerCase())
+        );
+        
+        if (found) {
+          const dptKey = act.role.toLowerCase();
+          if (dptKey in found) {
+            (found as any)[dptKey] += 1;
+          }
+        }
+      }
+    });
+    
+    return chartData;
+  };
+
+  const trendData = computeTrendData();
+
+  // Calculate statistics summaries for visual KPI indicator cards
+  const totalAccessesByModule = trendData.map(m => {
+    const sum = m.sales + m.production + m.hr + m.store + m.pms + m.office + m.admin;
+    return { ...m, total: sum };
+  });
+
+  const totalAccesses = totalAccessesByModule.reduce((acc, curr) => acc + curr.total, 0);
+
+  const totalByDept = {
+    sales: trendData.reduce((acc, curr) => acc + curr.sales, 0),
+    production: trendData.reduce((acc, curr) => acc + curr.production, 0),
+    hr: trendData.reduce((acc, curr) => acc + curr.hr, 0),
+    store: trendData.reduce((acc, curr) => acc + curr.store, 0),
+    pms: trendData.reduce((acc, curr) => acc + curr.pms, 0),
+    office: trendData.reduce((acc, curr) => acc + curr.office, 0),
+    admin: trendData.reduce((acc, curr) => acc + curr.admin, 0),
+  };
+
+  // Identify top module
+  const topModuleItem = [...totalAccessesByModule].sort((a, b) => b.total - a.total)[0];
+  const topModuleName = topModuleItem ? topModuleItem.name : 'N/A';
+  const topModuleCount = topModuleItem ? topModuleItem.total : 0;
+
+  // Identify top department
+  const topDeptEntry = Object.entries(totalByDept).sort((a, b) => b[1] - a[1])[0];
+  const topDeptKey = topDeptEntry ? topDeptEntry[0] : 'n/a';
+  const topDeptName = DEPARTMENT_LABELS[topDeptKey] || 'N/A';
+  const topDeptCount = topDeptEntry ? topDeptEntry[1] : 0;
+  const topDeptColor = DEPARTMENT_COLORS[topDeptKey] || '#475569';
+
+  // Prepare PieChart share distribution
+  const pieData = Object.entries(totalByDept).map(([key, val]) => ({
+    name: DEPARTMENT_LABELS[key] || key,
+    value: val,
+    key: key
+  })).filter(d => d.value > 0);
+
+  // Simulated traffic trigger
+  const handleSimulateAccess = () => {
+    const randomModule = MODULES[Math.floor(Math.random() * MODULES.length)];
+    const roles: Role[] = ['store', 'hr', 'production', 'pms', 'sales', 'office', 'admin'];
+    const randomRole = roles[Math.floor(Math.random() * roles.length)];
+    const operators: Record<Role, string[]> = {
+      admin: ['SuperAdmin', 'ITSystemManager'],
+      store: ['StoreSup', 'InvProcurement'],
+      hr: ['HRDirector', 'PersonnelExec'],
+      role: ['GenericUser'],
+      production: ['SQCSupervisor', 'YajurProdEng'],
+      pms: ['ProjectLeadYasoda', 'ProjectCoordinator'],
+      sales: ['SalesVP', 'AccountsManager'],
+      office: ['OfficeAsst', 'ReceptionHost']
+    };
+    const possibleNames = operators[randomRole] || ['StaffOperator'];
+    const randomName = possibleNames[Math.floor(Math.random() * possibleNames.length)];
+    
+    const newSimulated: RecentActivity = {
+      id: 'sim-' + Math.random().toString(36).substring(2, 11),
+      username: randomName,
+      role: randomRole,
+      action: 'Telemetry Simulated Access',
+      moduleName: randomModule.title,
+      timestamp: new Date().toISOString()
+    };
+    
+    setSimulatedActivities(prev => {
+      const updated = [newSimulated, ...prev].slice(0, 50);
+      return updated;
+    });
+    setSimulationLog(newSimulated);
+    
+    // Auto clear toast after 3s
+    setTimeout(() => {
+      setSimulationLog(prev => prev && prev.id === newSimulated.id ? null : prev);
+    }, 3000);
+  };
+
+  const handleClearSimulation = () => {
+    setSimulatedActivities([]);
   };
 
   const filteredOther = filteredModulesByRole.filter(m => 
@@ -790,6 +930,39 @@ const InsightCard = ({ label, value, subValue, icon: Icon, themeColor }: any) =>
       </div>
     </div>
   );
+};
+
+const BASELINE_TRENDS = [
+  { id: 'lifting', name: 'Lifting ERP', sales: 12, production: 45, hr: 2, store: 8, pms: 5, office: 3, admin: 15 },
+  { id: 'task', name: 'Task Delegation', sales: 25, production: 50, hr: 18, store: 22, pms: 30, office: 15, admin: 10 },
+  { id: 'checklist', name: 'Check List', sales: 5, production: 65, hr: 8, store: 12, pms: 15, office: 10, admin: 12 },
+  { id: 'ims', name: 'IMS', sales: 10, production: 35, hr: 3, store: 70, pms: 12, office: 5, admin: 14 },
+  { id: 'pms', name: 'PMS', sales: 15, production: 20, hr: 5, store: 10, pms: 80, office: 12, admin: 20 },
+  { id: 'hr', name: 'HR', sales: 8, production: 12, hr: 65, store: 5, pms: 15, office: 25, admin: 18 },
+  { id: 'production', name: 'Production', sales: 10, production: 95, hr: 5, store: 30, pms: 18, office: 5, admin: 15 },
+  { id: 'sales', name: 'Sales', sales: 85, production: 15, hr: 8, store: 10, pms: 22, office: 12, admin: 14 },
+  { id: 'maintenance', name: 'Maintenance', sales: 2, production: 55, hr: 2, store: 18, pms: 10, office: 4, admin: 25 },
+  { id: 'vendor-master', name: 'Vendor Master', sales: 30, production: 20, hr: 15, store: 40, pms: 25, office: 20, admin: 12 },
+];
+
+const DEPARTMENT_COLORS: Record<string, string> = {
+  sales: '#0d9488',      // Teal 600
+  production: '#ea580c', // Orange 600
+  hr: '#e11d48',         // Rose 600
+  store: '#0284c7',      // Sky 600
+  pms: '#7c3aed',        // Violet 600
+  office: '#d97706',     // Amber 600
+  admin: '#475569',      // Slate 600
+};
+
+const DEPARTMENT_LABELS: Record<string, string> = {
+  sales: 'Sales',
+  production: 'Production / SQC',
+  hr: 'Human Resources',
+  store: 'Store & Inv',
+  pms: 'PMS / Projects',
+  office: 'Office Admin',
+  admin: 'Admin / IT',
 };
 
 const getModuleColorPalette = (id: string, defaultAccent: string) => {
