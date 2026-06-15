@@ -27,7 +27,10 @@ import {
   Info,
   Sparkles,
   RefreshCw,
-  SlidersHorizontal
+  SlidersHorizontal,
+  Bell,
+  CheckCheck,
+  Inbox
 } from 'lucide-react';
 import { 
   ResponsiveContainer, 
@@ -42,10 +45,11 @@ import {
   Pie, 
   Cell 
 } from 'recharts';
-import { Module, User, ThemePlate, TaskStats, SalesData, RecentActivity, UserCredential, Role } from '../types';
+import { Module, User, ThemePlate, TaskStats, SalesData, RecentActivity, UserCredential, Role, AppNotification } from '../types';
 import { LucideIcon } from './LucideIcon';
 import { useTheme } from '../context/ThemeContext';
 import { THEME_PLATES, MODULES } from '../constants';
+import { ModuleUsageReport } from './ModuleUsageReport';
 
 interface DashboardProps {
   user: User;
@@ -56,6 +60,10 @@ interface DashboardProps {
   onClearActivities: () => void;
   usersList?: UserCredential[];
   onUpdateUsersList?: (newUsers: UserCredential[]) => void;
+  notifications?: AppNotification[];
+  onMarkNotificationAsRead?: (id: string) => void;
+  onMarkAllNotificationsAsRead?: (username: string) => void;
+  onClearAllNotifications?: (username: string) => void;
 }
 
 const API_KEY = 'AIzaSyAriKmI0OQAzmO3uH3EAK7598TkQBYT52I';
@@ -70,10 +78,15 @@ export const Dashboard = ({
   activities, 
   onClearActivities,
   usersList = [],
-  onUpdateUsersList
+  onUpdateUsersList,
+  notifications = [],
+  onMarkNotificationAsRead,
+  onMarkAllNotificationsAsRead,
+  onClearAllNotifications
 }: DashboardProps) => {
   const { theme, setTheme, config } = useTheme();
   const [searchQuery, setSearchQuery] = useState('');
+  const [isNotificationPanelOpen, setIsNotificationPanelOpen] = useState(false);
   const [taskStats, setTaskStats] = useState<TaskStats>({ total: 0, pending: 0, done: 0 });
   const [salesData, setSalesData] = useState<SalesData>({ total: 0, target: 24, growth: 0 });
 
@@ -382,6 +395,9 @@ export const Dashboard = ({
     m.description?.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
+  const userNotifications = notifications.filter(n => n.username.toLowerCase() === user.username.toLowerCase());
+  const unreadCount = userNotifications.filter(n => !n.read).length;
+
   return (
     <div className={`p-4 lg:p-10 space-y-10 max-w-[1700px] mx-auto pb-24 transition-all duration-700`}>
       {/* Enterprise Mission Control Header */}
@@ -438,6 +454,105 @@ export const Dashboard = ({
                 />
               ))}
             </div>
+          </div>
+
+          {/* Notifications Bell and dropdown widget */}
+          <div className="relative">
+            <button
+              onClick={() => setIsNotificationPanelOpen(!isNotificationPanelOpen)}
+              className={`p-3 bg-white border ${isNotificationPanelOpen ? `border-${config.accent}` : 'border-slate-150'} rounded-2xl shadow-sm hover:scale-105 active:scale-95 transition-all text-slate-500 hover:text-slate-800 relative cursor-pointer flex items-center justify-center`}
+              title="Workspace Notifications Hub"
+              id="workspace-notifications-bell"
+            >
+              <Bell size={16} className={unreadCount > 0 ? 'animate-pulse text-amber-500' : ''} />
+              {unreadCount > 0 && (
+                <span className="absolute -top-1.5 -right-1.5 flex h-4.5 w-4.5 items-center justify-center rounded-full bg-rose-550 text-white text-[8px] font-black border-2 border-white animate-fadeIn">
+                  {unreadCount}
+                </span>
+              )}
+            </button>
+
+            <AnimatePresence>
+              {isNotificationPanelOpen && (
+                <motion.div
+                  initial={{ opacity: 0, y: 15, scale: 0.95 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                  style={{ top: 'calc(100% + 12px)' }}
+                  className="absolute right-0 w-80 bg-white/95 backdrop-blur-md border border-slate-200 rounded-[2rem] shadow-[0_25px_60px_-15px_rgba(51,65,85,0.2)] z-[100] p-4 font-sans text-left"
+                >
+                  <div className="flex items-center justify-between pb-3 border-b border-slate-100 gap-3">
+                    <div className="flex items-center gap-1.5">
+                      <Bell size={12} className={`text-${config.accent}`} />
+                      <h4 className="text-[9.5px] font-black text-slate-800 uppercase tracking-widest font-sans">Notifications Log</h4>
+                    </div>
+                    <div className="flex gap-2">
+                      {unreadCount > 0 && onMarkAllNotificationsAsRead && (
+                        <button
+                          onClick={() => onMarkAllNotificationsAsRead(user.username)}
+                          className="flex items-center gap-0.5 text-[8px] font-extrabold text-indigo-600 hover:text-indigo-850 uppercase cursor-pointer"
+                        >
+                          <CheckCheck size={10} />
+                          AllRead
+                        </button>
+                      )}
+                      {userNotifications.length > 0 && onClearAllNotifications && (
+                        <button
+                          onClick={() => onClearAllNotifications(user.username)}
+                          className="text-[8px] font-extrabold text-slate-400 hover:text-rose-500 uppercase cursor-pointer"
+                        >
+                          Clear
+                        </button>
+                      )}
+                    </div>
+                  </div>
+
+                  <div className="mt-3.5 max-h-[280px] overflow-y-auto space-y-2.5 pr-1">
+                    {userNotifications.length === 0 ? (
+                      <div className="py-8 text-center flex flex-col items-center justify-center text-slate-400 space-y-2">
+                        <Inbox size={22} className="stroke-1 text-slate-350 opacity-80" />
+                        <p className="text-[8.5px] font-black uppercase tracking-widest leading-none">Inbox Empty</p>
+                        <p className="text-[8px] tracking-tight leading-normal max-w-[200px] font-medium text-slate-450 uppercase">
+                          No workspace assignments generated recently.
+                        </p>
+                      </div>
+                    ) : (
+                      userNotifications.map(n => (
+                        <div 
+                          key={n.id} 
+                          className={`p-3 rounded-2xl border transition-all flex gap-2.5 relative overflow-hidden
+                            ${n.read ? 'bg-slate-50/50 border-slate-100 opacity-60' : 'bg-white border-slate-200'}`}
+                        >
+                          {/* Colored category bar identifier */}
+                          <div className={`absolute top-0 bottom-0 left-0 w-1
+                            ${n.type === 'success' ? 'bg-emerald-500' : (n.type === 'warning' ? 'bg-amber-500' : 'bg-sky-500')}`} 
+                          />
+                          
+                          <div className="flex-1 pl-1.5 space-y-1">
+                            <div className="flex justify-between items-start gap-2">
+                              <span className="text-[9.5px] font-black text-slate-800 uppercase tracking-tight leading-tight block">{n.title}</span>
+                              {!n.read && onMarkNotificationAsRead && (
+                                <button
+                                  onClick={() => onMarkNotificationAsRead(n.id)}
+                                  className="text-[8px] font-extrabold text-indigo-600 hover:text-indigo-850 shrink-0 uppercase cursor-pointer"
+                                  title="Mark as read"
+                                >
+                                  Ack
+                                </button>
+                              )}
+                            </div>
+                            <p className="text-[10px] text-slate-500 font-bold leading-relaxed">{n.message}</p>
+                            <span className="text-[7.5px] font-black font-mono text-slate-400 block pt-0.5">
+                              {new Date(n.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} • SYSTEM BROADCAST
+                            </span>
+                          </div>
+                        </div>
+                      ))
+                    )}
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
         </div>
       </div>
@@ -791,6 +906,11 @@ export const Dashboard = ({
                 </div>
               </div>
             </div>
+          </section>
+
+          {/* Custom Module Usage Report featuring D3.js charting components */}
+          <section className="space-y-4 animate-fadeIn">
+            <ModuleUsageReport />
           </section>
 
           {/* Dynamic User Access & Operator Matrix (Admin-Only Panel) */}

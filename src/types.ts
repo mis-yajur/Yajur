@@ -53,3 +53,18 @@ export interface RecentActivity {
   timestamp: string; // ISO string
 }
 
+export interface AppNotification {
+  id: string;
+  username: string;
+  title: string;
+  message: string;
+  timestamp: string;
+  read: boolean;
+  type: 'info' | 'success' | 'warning';
+  moduleDetails?: {
+    id: string;
+    title: string;
+    action: 'add' | 'remove';
+  };
+}
+

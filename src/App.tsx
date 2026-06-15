@@ -4,7 +4,7 @@ import { Navigation } from './components/Navigation';
 import { Dashboard } from './components/Dashboard';
 import { ModuleFrame } from './components/ModuleFrame';
 import { Login } from './components/Login';
-import { User, Module, RecentActivity, UserCredential } from './types';
+import { User, Module, RecentActivity, UserCredential, AppNotification } from './types';
 import { ThemeProvider, useTheme } from './context/ThemeContext';
 import { MODULES, THEME_PLATES } from './constants';
 
@@ -40,7 +40,77 @@ function AppContent() {
     return defaults;
   });
 
+  const [notifications, setNotifications] = useState<AppNotification[]>(() => {
+    const saved = localStorage.getItem('yajur-notifications');
+    return saved ? JSON.parse(saved) : [];
+  });
+
   const handleUpdateUsersList = (newUsers: UserCredential[]) => {
+    // Diff-check allowedModules per user to generate in-app notifications
+    const newNotifications: AppNotification[] = [];
+    const timestamp = new Date().toISOString();
+
+    newUsers.forEach(u => {
+      const oldU = usersList.find(old => old.username.toLowerCase() === u.username.toLowerCase());
+      if (oldU) {
+        // Find newly added modules
+        const added = u.allowedModules.filter(id => !oldU.allowedModules.includes(id));
+        // Find revoked modules
+        const removed = oldU.allowedModules.filter(id => !u.allowedModules.includes(id));
+
+        added.forEach(modId => {
+          const modTitle = MODULES.find(m => m.id === modId)?.title || modId;
+          newNotifications.push({
+            id: 'notif-' + Math.random().toString(36).substring(2, 11),
+            username: u.username,
+            title: 'New Module Workspace Assigned',
+            message: `An administrator has granted you permission to access the '${modTitle}' module.`,
+            timestamp,
+            read: false,
+            type: 'success',
+            moduleDetails: { id: modId, title: modTitle, action: 'add' }
+          });
+        });
+
+        removed.forEach(modId => {
+          const modTitle = MODULES.find(m => m.id === modId)?.title || modId;
+          newNotifications.push({
+            id: 'notif-' + Math.random().toString(36).substring(2, 11),
+            username: u.username,
+            title: 'Module Workspace Revoked',
+            message: `An administrator has removed your permission to access the '${modTitle}' module.`,
+            timestamp,
+            read: false,
+            type: 'warning',
+            moduleDetails: { id: modId, title: modTitle, action: 'remove' }
+          });
+        });
+      } else {
+        // New user has been set up!
+        u.allowedModules.forEach(modId => {
+          const modTitle = MODULES.find(m => m.id === modId)?.title || modId;
+          newNotifications.push({
+            id: 'notif-' + Math.random().toString(36).substring(2, 11),
+            username: u.username,
+            title: 'Module Workspace Assigned',
+            message: `During initialization, you were provisioned access to the '${modTitle}' module.`,
+            timestamp,
+            read: false,
+            type: 'info',
+            moduleDetails: { id: modId, title: modTitle, action: 'add' }
+          });
+        });
+      }
+    });
+
+    if (newNotifications.length > 0) {
+      setNotifications(prev => {
+        const updated = [...newNotifications, ...prev];
+        localStorage.setItem('yajur-notifications', JSON.stringify(updated));
+        return updated;
+      });
+    }
+
     setUsersList(newUsers);
     localStorage.setItem('yajur-users', JSON.stringify(newUsers));
     const currentInNewList = newUsers.find(u => u.username.toLowerCase() === user?.username.toLowerCase());
@@ -51,6 +121,30 @@ function AppContent() {
         allowedModules: currentInNewList.allowedModules
       });
     }
+  };
+
+  const handleMarkNotificationAsRead = (id: string) => {
+    setNotifications(prev => {
+      const updated = prev.map(n => n.id === id ? { ...n, read: true } : n);
+      localStorage.setItem('yajur-notifications', JSON.stringify(updated));
+      return updated;
+    });
+  };
+
+  const handleMarkAllNotificationsAsRead = (username: string) => {
+    setNotifications(prev => {
+      const updated = prev.map(n => n.username === username ? { ...n, read: true } : n);
+      localStorage.setItem('yajur-notifications', JSON.stringify(updated));
+      return updated;
+    });
+  };
+
+  const handleClearAllNotifications = (username: string) => {
+    setNotifications(prev => {
+      const updated = prev.filter(n => n.username !== username);
+      localStorage.setItem('yajur-notifications', JSON.stringify(updated));
+      return updated;
+    });
   };
 
   const [activeModuleUrl, setActiveModuleUrl] = useState<string | null>(null);
@@ -159,6 +253,10 @@ function AppContent() {
         onClearActivities={handleClearActivities}
         usersList={usersList}
         onUpdateUsersList={handleUpdateUsersList}
+        notifications={notifications}
+        onMarkNotificationAsRead={handleMarkNotificationAsRead}
+        onMarkAllNotificationsAsRead={handleMarkAllNotificationsAsRead}
+        onClearAllNotifications={handleClearAllNotifications}
       />
     );
   };
