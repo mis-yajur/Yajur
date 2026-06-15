@@ -126,6 +126,14 @@ function AppContent() {
   const handleLogin = (newUser: User) => {
     setUser(newUser);
     logActivity('Authenticated into Node', undefined, newUser);
+    
+    // Auto-open Lifting ERP for SQC and Sales on initial login
+    if (newUser.role === 'production' || newUser.role === 'sales') {
+      const liftingModule = MODULES.find(m => m.id === 'lifting');
+      if (liftingModule && liftingModule.url) {
+        setActiveModuleUrl(liftingModule.url);
+      }
+    }
   };
 
   if (!user) {

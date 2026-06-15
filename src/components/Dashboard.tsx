@@ -281,17 +281,24 @@ export const Dashboard = ({
             />
           </div>
 
-          <div className="flex items-center gap-2 p-2 bg-white border border-slate-100 rounded-[1.25rem] shadow-sm">
-            {(Object.keys(THEME_PLATES) as ThemePlate[]).map((p) => (
-              <button
-                key={p}
-                onClick={() => setTheme(p)}
-                className={`w-7 h-7 rounded-xl transition-all transform active:scale-90 relative
-                  ${theme === p ? `ring-2 ring-${THEME_PLATES[p].primary} ring-offset-4 scale-110 shadow-2xl z-10` : 'opacity-10 hover:opacity-100 hover:-rotate-12'} 
-                  bg-${THEME_PLATES[p].primary}`}
-                title={THEME_PLATES[p].name}
-              />
-            ))}
+          <div className="flex items-center gap-3 p-2 bg-white border border-slate-100 rounded-[1.25rem] shadow-sm pl-4 pr-3.5">
+            <div className="flex items-center gap-1.5 opacity-60">
+              <Palette size={13} className="text-slate-500" />
+              <span className="text-[9px] font-black uppercase tracking-wider text-slate-500">Theme</span>
+            </div>
+            <div className="h-4 w-[1px] bg-slate-200 mx-1" />
+            <div className="flex items-center gap-2">
+              {(Object.keys(THEME_PLATES) as ThemePlate[]).map((p) => (
+                <button
+                  key={p}
+                  onClick={() => setTheme(p)}
+                  className={`w-6 h-6 rounded-lg transition-all transform active:scale-90 relative cursor-pointer
+                    ${theme === p ? `ring-2 ring-${THEME_PLATES[p].primary} ring-offset-2 scale-110 shadow-md z-10 opacity-100` : 'opacity-60 hover:opacity-100 hover:scale-105'} 
+                    bg-${THEME_PLATES[p].primary}`}
+                  title={THEME_PLATES[p].name}
+                />
+              ))}
+            </div>
           </div>
         </div>
       </div>

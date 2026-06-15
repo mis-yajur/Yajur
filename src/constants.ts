@@ -13,6 +13,14 @@ export const USER_CREDENTIALS: Record<string, { pass: string; role: Role }> = {
 
 export const MODULES = [
   {
+    id: 'lifting',
+    title: 'Lifting ERP',
+    icon: 'Box',
+    badge: 'Assets',
+    url: 'https://mis-yajur.github.io/yajur-asset-portal/',
+    description: 'Enterprise asset and lifting equipment portal.'
+  },
+  {
     id: 'task',
     title: 'Task Delegation',
     icon: 'Users',
@@ -91,14 +99,6 @@ export const MODULES = [
     items: [
       { id: 'sales-dashboard-sub', title: 'Sales Dashboard', url: 'https://script.google.com/macros/s/AKfycbwqDVCjsl0uwTFETU-H9SJ_YpwJjfyRJJmEiBDcLBU6IZLIbOS5w5rFVrmqCQ-lOJ6Ktw/exec' }
     ]
-  },
-  {
-    id: 'lifting',
-    title: 'Lifting ERP',
-    icon: 'Box',
-    badge: 'Assets',
-    url: 'https://mis-yajur.github.io/yajur-asset-portal/',
-    description: 'Enterprise asset and lifting equipment portal.'
   },
   {
     id: 'maintenance',
