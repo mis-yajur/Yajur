@@ -792,32 +792,147 @@ const InsightCard = ({ label, value, subValue, icon: Icon, themeColor }: any) =>
   );
 };
 
+const getModuleColorPalette = (id: string, defaultAccent: string) => {
+  const schemes: Record<string, {
+    bg: string;
+    badge: string;
+    iconBg: string;
+    bgBlob: string;
+    titleHover: string;
+    dot: string;
+    arrow: string;
+  }> = {
+    lifting: {
+      bg: 'bg-gradient-to-br from-white via-white to-sky-50/50 border-sky-100 hover:border-sky-300 hover:shadow-[0_24px_48px_-15px_rgba(14,165,233,0.14)]',
+      badge: 'bg-sky-50 text-sky-750 border-sky-100 font-extrabold uppercase',
+      iconBg: 'bg-sky-50 text-sky-500 group-hover:bg-gradient-to-br group-hover:from-sky-400 group-hover:to-blue-500 group-hover:text-white group-hover:shadow-[0_10px_25px_rgba(14,165,233,0.25)]',
+      bgBlob: 'bg-sky-400/10',
+      titleHover: 'group-hover:text-sky-600',
+      dot: 'bg-sky-500 shadow-[0_0_8px_rgba(14,165,233,0.6)]',
+      arrow: 'text-slate-300 group-hover:text-sky-500 group-hover:translate-x-1.5'
+    },
+    task: {
+      bg: 'bg-gradient-to-br from-white via-white to-violet-50/50 border-violet-100 hover:border-violet-300 hover:shadow-[0_24px_48px_-15px_rgba(139,92,246,0.14)]',
+      badge: 'bg-violet-50 text-violet-755 border-violet-100 font-extrabold uppercase',
+      iconBg: 'bg-violet-50 text-violet-500 group-hover:bg-gradient-to-br group-hover:from-violet-400 group-hover:to-indigo-505 group-hover:text-white group-hover:shadow-[0_10px_25px_rgba(139,92,246,0.25)]',
+      bgBlob: 'bg-violet-400/10',
+      titleHover: 'group-hover:text-violet-600',
+      dot: 'bg-violet-500 shadow-[0_0_8px_rgba(139,92,246,0.6)]',
+      arrow: 'text-slate-300 group-hover:text-violet-500 group-hover:translate-x-1.5'
+    },
+    checklist: {
+      bg: 'bg-gradient-to-br from-white via-white to-emerald-50/50 border-emerald-100 hover:border-emerald-300 hover:shadow-[0_24px_48px_-15px_rgba(16,185,129,0.14)]',
+      badge: 'bg-emerald-50 text-emerald-755 border-emerald-100 font-extrabold uppercase',
+      iconBg: 'bg-emerald-50 text-emerald-500 group-hover:bg-gradient-to-br group-hover:from-emerald-400 group-hover:to-teal-500 group-hover:text-white group-hover:shadow-[0_10px_25px_rgba(16,185,129,0.25)]',
+      bgBlob: 'bg-emerald-400/10',
+      titleHover: 'group-hover:text-emerald-600',
+      dot: 'bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.6)]',
+      arrow: 'text-slate-300 group-hover:text-emerald-500 group-hover:translate-x-1.5'
+    },
+    ims: {
+      bg: 'bg-gradient-to-br from-white via-white to-amber-50/50 border-amber-100 hover:border-amber-300 hover:shadow-[0_24px_48px_-15px_rgba(245,158,11,0.14)]',
+      badge: 'bg-amber-50 text-amber-755 border-amber-100 font-extrabold uppercase',
+      iconBg: 'bg-amber-50 text-amber-500 group-hover:bg-gradient-to-br group-hover:from-amber-400 group-hover:to-orange-500 group-hover:text-white group-hover:shadow-[0_10px_25px_rgba(245,158,11,0.25)]',
+      bgBlob: 'bg-amber-400/10',
+      titleHover: 'group-hover:text-amber-600',
+      dot: 'bg-amber-500 shadow-[0_0_8px_rgba(245,158,11,0.6)]',
+      arrow: 'text-slate-300 group-hover:text-amber-500 group-hover:translate-x-1.5'
+    },
+    pms: {
+      bg: 'bg-gradient-to-br from-white via-white to-indigo-50/55 border-indigo-100 hover:border-indigo-300 hover:shadow-[0_24px_48px_-15px_rgba(99,102,241,0.14)]',
+      badge: 'bg-indigo-50 text-indigo-755 border-indigo-100 font-extrabold uppercase',
+      iconBg: 'bg-indigo-50 text-indigo-500 group-hover:bg-gradient-to-br group-hover:from-indigo-400 group-hover:to-purple-500 group-hover:text-white group-hover:shadow-[0_10px_25px_rgba(99,102,241,0.25)]',
+      bgBlob: 'bg-indigo-400/10',
+      titleHover: 'group-hover:text-indigo-600',
+      dot: 'bg-indigo-500 shadow-[0_0_8px_rgba(99,102,241,0.6)]',
+      arrow: 'text-slate-300 group-hover:text-indigo-500 group-hover:translate-x-1.5'
+    },
+    hr: {
+      bg: 'bg-gradient-to-br from-white via-white to-rose-50/50 border-rose-100 hover:border-rose-300 hover:shadow-[0_24px_48px_-15px_rgba(244,63,94,0.14)]',
+      badge: 'bg-rose-50 text-rose-755 border-rose-100 font-extrabold uppercase',
+      iconBg: 'bg-rose-50 text-rose-500 group-hover:bg-gradient-to-br group-hover:from-rose-400 group-hover:to-pink-500 group-hover:text-white group-hover:shadow-[0_10px_25px_rgba(244,63,94,0.25)]',
+      bgBlob: 'bg-rose-400/10',
+      titleHover: 'group-hover:text-rose-600',
+      dot: 'bg-rose-500 shadow-[0_0_8px_rgba(244,63,94,0.6)]',
+      arrow: 'text-slate-300 group-hover:text-rose-500 group-hover:translate-x-1.5'
+    },
+    production: {
+      bg: 'bg-gradient-to-br from-white via-white to-orange-50/50 border-orange-100 hover:border-orange-300 hover:shadow-[0_24px_48px_-15px_rgba(249,115,22,0.14)]',
+      badge: 'bg-orange-50 text-orange-755 border-orange-100 font-extrabold uppercase',
+      iconBg: 'bg-orange-50 text-orange-500 group-hover:bg-gradient-to-br group-hover:from-orange-400 group-hover:to-red-500 group-hover:text-white group-hover:shadow-[0_10px_25px_rgba(249,115,22,0.25)]',
+      bgBlob: 'bg-orange-400/10',
+      titleHover: 'group-hover:text-orange-600',
+      dot: 'bg-orange-500 shadow-[0_0_8px_rgba(249,115,22,0.6)]',
+      arrow: 'text-slate-300 group-hover:text-orange-500 group-hover:translate-x-1.5'
+    },
+    sales: {
+      bg: 'bg-gradient-to-br from-white via-white to-teal-50/50 border-teal-100 hover:border-teal-300 hover:shadow-[0_24px_48px_-15px_rgba(20,184,166,0.14)]',
+      badge: 'bg-teal-50 text-teal-755 border-teal-100 font-extrabold uppercase',
+      iconBg: 'bg-teal-50 text-teal-500 group-hover:bg-gradient-to-br group-hover:from-teal-400 group-hover:to-emerald-555 group-hover:text-white group-hover:shadow-[0_10px_25px_rgba(20,184,166,0.25)]',
+      bgBlob: 'bg-teal-400/10',
+      titleHover: 'group-hover:text-teal-600',
+      dot: 'bg-teal-500 shadow-[0_0_8px_rgba(20,184,166,0.6)]',
+      arrow: 'text-slate-300 group-hover:text-teal-500 group-hover:translate-x-1.5'
+    },
+    maintenance: {
+      bg: 'bg-gradient-to-br from-white via-white to-amber-50/40 border-yellow-150 hover:border-yellow-405 hover:shadow-[0_24px_48px_-15px_rgba(234,179,8,0.14)]',
+      badge: 'bg-yellow-50 text-amber-755 border-yellow-200/50 font-extrabold uppercase',
+      iconBg: 'bg-yellow-50 text-amber-500 group-hover:bg-gradient-to-br group-hover:from-yellow-400 group-hover:to-amber-500 group-hover:text-white group-hover:shadow-[0_10px_25px_rgba(234,179,8,0.25)]',
+      bgBlob: 'bg-yellow-400/10',
+      titleHover: 'group-hover:text-amber-600',
+      dot: 'bg-amber-500 shadow-[0_0_8px_rgba(234,179,8,0.6)]',
+      arrow: 'text-slate-300 group-hover:text-yellow-500 group-hover:translate-x-1.5'
+    },
+    'vendor-master': {
+      bg: 'bg-gradient-to-br from-white via-white to-cyan-50/50 border-cyan-100 hover:border-cyan-300 hover:shadow-[0_24px_48px_-15px_rgba(6,182,212,0.14)]',
+      badge: 'bg-cyan-50 text-cyan-755 border-cyan-100 font-extrabold uppercase',
+      iconBg: 'bg-cyan-50 text-cyan-500 group-hover:bg-gradient-to-br group-hover:from-cyan-400 group-hover:to-sky-500 group-hover:text-white group-hover:shadow-[0_10px_25px_rgba(6,182,212,0.25)]',
+      bgBlob: 'bg-cyan-400/10',
+      titleHover: 'group-hover:text-cyan-600',
+      dot: 'bg-cyan-500 shadow-[0_0_8px_rgba(6,182,212,0.6)]',
+      arrow: 'text-slate-300 group-hover:text-cyan-500 group-hover:translate-x-1.5'
+    }
+  };
+
+  return schemes[id] || {
+    bg: `bg-white/80 backdrop-blur-sm border border-slate-100 hover:border-${defaultAccent}/40 hover:shadow-[0_24px_48px_-15px_rgba(0,0,0,0.08)]`,
+    badge: `bg-${defaultAccent}/5 text-${defaultAccent} border-${defaultAccent}/10`,
+    iconBg: `bg-slate-50 text-slate-400 group-hover:bg-${defaultAccent} group-hover:text-white`,
+    bgBlob: `bg-${defaultAccent}/5`,
+    titleHover: `group-hover:text-${defaultAccent}`,
+    dot: `bg-${defaultAccent}`,
+    arrow: `text-slate-300 group-hover:text-${defaultAccent} group-hover:translate-x-1.5`
+  };
+};
+
 const ModuleCard = ({ module, index, onSelect }: any) => {
   const { config } = useTheme();
+  const palette = getModuleColorPalette(module.id, config.accent);
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: index * 0.03 }}
       whileHover={{ y: -8, scale: 1.03 }}
-      className={`group bg-white/80 backdrop-blur-sm border border-slate-100 p-6 rounded-[2rem] shadow-[0_8px_30px_rgb(0,0,0,0.02)] hover:shadow-[0_40px_80px_-20px_rgba(0,0,0,0.12)] hover:border-${config.accent}/40 transition-all duration-500 cursor-pointer flex flex-col h-full relative overflow-hidden`}
+      className={`group backdrop-blur-sm p-6 rounded-[2rem] transition-all duration-500 cursor-pointer flex flex-col h-full relative overflow-hidden shadow-sm border ${palette.bg}`}
       onClick={() => onSelect(module.url || module.id)}
     >
-      <div className={`absolute -right-10 -bottom-10 w-24 h-24 bg-${config.accent}/5 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity`} />
+      <div className={`absolute -right-10 -bottom-10 w-24 h-24 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity ${palette.bgBlob}`} />
       
       <div className="flex items-center gap-4 mb-6 relative z-10">
-        <div className={`p-3.5 bg-slate-50 text-slate-400 group-hover:bg-${config.primary} group-hover:text-white rounded-2xl transition-all duration-500 shadow-sm group-hover:shadow-[0_10px_25px_rgba(0,0,0,0.15)] group-hover:-rotate-6`}>
+        <div className={`p-3.5 rounded-2xl transition-all duration-500 shadow-sm group-hover:-rotate-6 ${palette.iconBg}`}>
           <LucideIcon name={module.icon} size={20} />
         </div>
         {module.badge && (
-          <span className={`ml-auto px-3 py-1 bg-${config.accent}/5 text-${config.accent} text-[8px] font-black tracking-widest uppercase rounded-full border border-${config.accent}/10 shadow-sm`}>
+          <span className={`ml-auto px-3 py-1 text-[8px] font-black tracking-widest uppercase rounded-full border shadow-sm transition-all duration-300 ${palette.badge}`}>
             {module.badge}
           </span>
         )}
       </div>
 
       <div className="flex-1 relative z-10">
-        <h3 className={`text-sm font-black text-slate-900 mb-2 group-hover:text-${config.accent} transition-colors uppercase tracking-tight`}>
+        <h3 className={`text-sm font-black text-slate-900 mb-2 transition-colors uppercase tracking-tight ${palette.titleHover}`}>
           {module.title}
         </h3>
         <p className="text-[11px] text-slate-500 font-medium leading-relaxed line-clamp-2 opacity-80">
@@ -827,10 +942,10 @@ const ModuleCard = ({ module, index, onSelect }: any) => {
 
       <div className="mt-6 pt-4 border-t border-slate-50/50 flex items-center justify-between relative z-10">
         <div className="flex items-center gap-1.5">
-          <div className={`w-1.5 h-1.5 rounded-full bg-${config.accent} scale-0 group-hover:scale-100 transition-transform duration-500`} />
+          <div className={`w-1.5 h-1.5 rounded-full scale-0 group-hover:scale-100 transition-transform duration-500 ${palette.dot}`} />
           <span className="text-[8px] font-black text-slate-300 uppercase tracking-[0.2em] group-hover:text-slate-900 transition-colors">Launch Module</span>
         </div>
-        <ChevronRight size={16} className={`text-slate-300 group-hover:text-${config.accent} group-hover:translate-x-1.5 transition-all duration-500`} />
+        <ChevronRight size={16} className={`transition-all duration-500 ${palette.arrow}`} />
       </div>
     </motion.div>
   );
