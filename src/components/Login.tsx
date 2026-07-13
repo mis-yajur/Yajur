@@ -23,7 +23,7 @@ export const Login = ({ onLogin }: LoginProps) => {
   const [bgImage, setBgImage] = useState(INDUSTRIAL_ASSETS[0]);
   
   // Database Setup states
-  const [showDbSetup, setShowDbSetup] = useState(!getWebAppUrl());
+  const [showDbSetup, setShowDbSetup] = useState(false);
   const [dbUrlInput, setDbUrlInput] = useState(getWebAppUrl() || '');
 
   useEffect(() => {
@@ -76,7 +76,7 @@ export const Login = ({ onLogin }: LoginProps) => {
       setError(err.message || 'Failed to query the users database. Check connection.');
       
       if (err.message && err.message.includes('Database not configured')) {
-        setShowDbSetup(true);
+        setError('Database not configured. Please click the gear icon in the top right to set your Web App URL.');
       }
     } finally {
       setIsLoading(false);

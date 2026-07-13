@@ -7,7 +7,9 @@ export interface SheetUser {
   Designation: string;
 }
 
-export const getWebAppUrl = () => localStorage.getItem('sheet_web_app_url');
+export const getWebAppUrl = () => {
+  return localStorage.getItem('sheet_web_app_url') || 'https://script.google.com/macros/s/AKfycbws51cV9iRG26mtjwUcmUrgU8BBhdz8Br-gMrEmMfutqpN0zq_bXnxoxS80wglk4HPA/exec';
+};
 export const setWebAppUrl = (url: string) => localStorage.setItem('sheet_web_app_url', url);
 
 export async function fetchUsersFromSheet(): Promise<SheetUser[]> {
