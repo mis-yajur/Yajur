@@ -55,7 +55,7 @@ export const Login = ({ onLogin }: LoginProps) => {
       const sheetUsers = await fetchUsersFromSheet();
       
       const match = sheetUsers.find(
-        (u) => u.UserId.trim().toLowerCase() === username.trim().toLowerCase() && u.Password === password
+        (u) => String(u.UserId).trim().toLowerCase() === username.trim().toLowerCase() && String(u.Password).trim() === password.trim()
       );
       
       if (match) {
