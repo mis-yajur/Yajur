@@ -1,6 +1,43 @@
 const SHEET_NAME = 'User';
+const HEADERS = ["Full_Name", "User Id", "Password", "Modules", "Role", "designation"];
 
-// Handles GET requests to fetch all users
+// 1. SELECT this function from the dropdown in the Apps Script editor toolbar.
+// 2. CLICK "Run" to automatically generate the sheet, headers, and default users.
+function initialSetup() {
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  let sheet = ss.getSheetByName(SHEET_NAME);
+  
+  // Create sheet if it doesn't exist
+  if (!sheet) {
+    sheet = ss.insertSheet(SHEET_NAME);
+  }
+  
+  // Set headers
+  sheet.getRange(1, 1, 1, HEADERS.length).setValues([HEADERS]);
+  sheet.getRange(1, 1, 1, HEADERS.length).setFontWeight("bold");
+  sheet.getRange(1, 1, 1, HEADERS.length).setBackground("#f3f4f6");
+  
+  // If the sheet is empty (only headers), insert default users
+  if (sheet.getLastRow() <= 1) {
+    const defaultUsers = [
+      ["System Admin", "Admin", "1234", "lifting, task, checklist, ims, pms, hr, production, sales, maintenance, vendor-master", "Admin", "Administrator"],
+      ["Manager", "Manager", "1234", "lifting, task, checklist, ims, pms, hr, production, sales, maintenance, vendor-master", "Admin", "Manager"],
+      ["Store Keeper", "Store", "1234", "ims", "Store", "Inventory"],
+      ["HR Manager", "Hr", "1234", "hr", "Hr", "Human Resources"],
+      ["Production SQC", "SQC", "1234", "production, lifting", "Production", "Quality Control"],
+      ["Office Staff", "Office", "1234", "task", "Office", "Clerk"],
+      ["PMS User", "Yasoda", "1234", "pms", "Pms", "PMS Staff"],
+      ["Sales Rep", "Sales", "1234", "sales, lifting", "Sales", "Sales Executive"]
+    ];
+    
+    sheet.getRange(2, 1, defaultUsers.length, HEADERS.length).setValues(defaultUsers);
+    
+    // Auto-resize columns for better visibility
+    sheet.autoResizeColumns(1, HEADERS.length);
+  }
+}
+
+// Handles GET requests to fetch all users (Not strictly needed since the app reads directly via Sheets API, but good for testing)
 function doGet(e) {
   const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(SHEET_NAME);
   
