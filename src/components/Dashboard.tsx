@@ -1164,79 +1164,81 @@ export const Dashboard = ({
         </section>
       </>)}
 
-      {/* Security & Access Audit Trail */}
-      <section className="space-y-4">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2 opacity-50">
-            <Activity size={12} className="text-slate-600" />
-            <h2 className="text-[9px] font-black text-slate-500 tracking-[0.2em] uppercase">
-              Security & Access Audit Trail
-            </h2>
+      {user.role === 'admin' && (
+        <section className="space-y-4">
+          {/* Security & Access Audit Trail */}
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2 opacity-50">
+              <Activity size={12} className="text-slate-600" />
+              <h2 className="text-[9px] font-black text-slate-500 tracking-[0.2em] uppercase">
+                Security & Access Audit Trail
+              </h2>
+            </div>
+            
+            {activities.length > 0 && (
+              <button 
+                onClick={onClearActivities}
+                className="flex items-center gap-1.5 px-3 py-1 text-[9px] font-black tracking-wider uppercase text-rose-500 hover:text-rose-700 hover:bg-rose-50/50 rounded-xl transition-all border border-rose-100/60 hover:border-rose-200"
+              >
+                <Trash2 size={10} />
+                Clear Audit Log
+              </button>
+            )}
           </div>
-          
-          {user.role === 'admin' && activities.length > 0 && (
-            <button 
-              onClick={onClearActivities}
-              className="flex items-center gap-1.5 px-3 py-1 text-[9px] font-black tracking-wider uppercase text-rose-500 hover:text-rose-700 hover:bg-rose-50/50 rounded-xl transition-all border border-rose-100/60 hover:border-rose-200"
-            >
-              <Trash2 size={10} />
-              Clear Audit Log
-            </button>
-          )}
-        </div>
 
-        <div className="bg-white/70 backdrop-blur-md border border-slate-150/85 rounded-[2rem] shadow-[0_4px_24px_rgb(0,0,0,0.02)] overflow-hidden">
-          {activities.length === 0 ? (
-            <div className="p-12 text-center">
-              <p className="text-slate-400 font-bold uppercase tracking-widest text-[10px]">No security logs recorded</p>
-            </div>
-          ) : (
-            <div className="divide-y divide-slate-100/70 max-h-[400px] overflow-y-auto custom-scrollbar-light">
-              {activities.map((act) => {
-                const actionIcon = getActionIcon(act.action);
-                const iconColorClasses = getIconColor(act.action);
-                
-                return (
-                  <div key={act.id} className="p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4 hover:bg-slate-50/40 transition-colors">
-                    <div className="flex items-center gap-4">
-                      <div className={`p-2.5 rounded-xl ${iconColorClasses} shrink-0 shadow-sm flex items-center justify-center`}>
-                        {actionIcon}
-                      </div>
-                      <div>
-                        <div className="flex items-center gap-2 flex-wrap">
-                          <p className="text-xs font-black text-slate-800 uppercase tracking-tight">{act.action}</p>
-                          {act.moduleName && (
-                            <span className={`px-2 py-0.5 rounded text-[9px] font-black uppercase tracking-wider bg-${config.accent}/10 text-${config.accent}`}>
-                              {act.moduleName}
-                            </span>
-                          )}
+          <div className="bg-white/70 backdrop-blur-md border border-slate-150/85 rounded-[2rem] shadow-[0_4px_24px_rgb(0,0,0,0.02)] overflow-hidden">
+            {activities.length === 0 ? (
+              <div className="p-12 text-center">
+                <p className="text-slate-400 font-bold uppercase tracking-widest text-[10px]">No security logs recorded</p>
+              </div>
+            ) : (
+              <div className="divide-y divide-slate-100/70 max-h-[400px] overflow-y-auto custom-scrollbar-light">
+                {activities.map((act) => {
+                  const actionIcon = getActionIcon(act.action);
+                  const iconColorClasses = getIconColor(act.action);
+                  
+                  return (
+                    <div key={act.id} className="p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4 hover:bg-slate-50/40 transition-colors">
+                      <div className="flex items-center gap-4">
+                        <div className={`p-2.5 rounded-xl ${iconColorClasses} shrink-0 shadow-sm flex items-center justify-center`}>
+                          {actionIcon}
                         </div>
-                        <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-0.5">
-                          Operator: <span className="text-slate-700 font-black">{act.username}</span> 
-                          <span className="mx-2 text-slate-300">|</span> 
-                          Node: <span className="text-slate-500 font-extrabold uppercase">{act.role}</span>
-                        </p>
+                        <div>
+                          <div className="flex items-center gap-2 flex-wrap">
+                            <p className="text-xs font-black text-slate-800 uppercase tracking-tight">{act.action}</p>
+                            {act.moduleName && (
+                              <span className={`px-2 py-0.5 rounded text-[9px] font-black uppercase tracking-wider bg-${config.accent}/10 text-${config.accent}`}>
+                                {act.moduleName}
+                              </span>
+                            )}
+                          </div>
+                          <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-0.5">
+                            Operator: <span className="text-slate-700 font-black">{act.username}</span> 
+                            <span className="mx-2 text-slate-300">|</span> 
+                            Node: <span className="text-slate-500 font-extrabold uppercase">{act.role}</span>
+                          </p>
+                        </div>
+                      </div>
+                      
+                      <div className="flex items-center gap-4 shrink-0 sm:text-right">
+                        <div className="hidden sm:block">
+                          <span className={`px-2.5 py-1 rounded-full border text-[8px] font-extrabold uppercase tracking-widest bg-emerald-50 text-emerald-600 border-emerald-100/80`}>
+                            SECURE NODE
+                          </span>
+                        </div>
+                        <div className="flex items-center gap-1.5 text-slate-500">
+                          <Clock size={11} className="text-slate-400" />
+                          <span className="text-[10px] font-mono font-bold text-slate-500">{formatTimestamp(act.timestamp)}</span>
+                        </div>
                       </div>
                     </div>
-                    
-                    <div className="flex items-center gap-4 shrink-0 sm:text-right">
-                      <div className="hidden sm:block">
-                        <span className={`px-2.5 py-1 rounded-full border text-[8px] font-extrabold uppercase tracking-widest bg-emerald-50 text-emerald-600 border-emerald-100/80`}>
-                          SECURE NODE
-                        </span>
-                      </div>
-                      <div className="flex items-center gap-1.5 text-slate-500">
-                        <Clock size={11} className="text-slate-400" />
-                        <span className="text-[10px] font-mono font-bold text-slate-500">{formatTimestamp(act.timestamp)}</span>
-                      </div>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          )}
-        </div>
-      </section>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+        </section>
+      )}
     </div>
   );
 };
