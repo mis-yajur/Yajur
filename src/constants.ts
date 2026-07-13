@@ -1,16 +1,5 @@
 import { Role, ThemePlate } from './types';
 
-export const USER_CREDENTIALS: Record<string, { pass: string; role: Role }> = {
-  'Admin': { pass: '1234', role: 'admin' },
-  'Manager': { pass: '1234', role: 'admin' },
-  'Store': { pass: '1234', role: 'store' },
-  'Hr': { pass: '1234', role: 'hr' },
-  'SQC': { pass: '1234', role: 'production' },
-  'Office': { pass: '1234', role: 'office' },
-  'Yasoda': { pass: '1234', role: 'pms' },
-  'Sales': { pass: '1234', role: 'sales' }
-};
-
 export const MODULES = [
   {
     id: 'lifting',

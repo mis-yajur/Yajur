@@ -557,37 +557,7 @@ export const Dashboard = ({
         </div>
       </div>
 
-      {/* Overview Cards */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <InsightCard 
-          label="Sales Intelligence" 
-          value={`₹${salesData.total.toFixed(1)} Cr`} 
-          subValue="Revenue Realization"
-          icon={TrendingUp}
-          themeColor={config.accent}
-        />
-        <InsightCard 
-          label="Operations Queue" 
-          value={taskStats.pending} 
-          subValue="Active Delegations"
-          icon={Activity}
-          themeColor="slate-400"
-        />
-        <InsightCard 
-          label="Core Engine" 
-          value="SYNCED" 
-          subValue="Connection Status"
-          icon={Zap}
-          themeColor={config.primary}
-        />
-        <InsightCard 
-          label="Access Level" 
-          value={user.role.toUpperCase()} 
-          subValue="Security Clearance"
-          icon={ShieldCheck}
-          themeColor="slate-900"
-        />
-      </div>
+
 
       {/* Main Grid */}
       <section className="space-y-3">

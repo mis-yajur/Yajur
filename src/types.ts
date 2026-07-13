@@ -6,6 +6,7 @@ export interface User {
   username: string;
   role: Role;
   allowedModules?: string[];
+  designation?: string;
 }
 
 export interface UserCredential {
@@ -13,6 +14,7 @@ export interface UserCredential {
   pass: string;
   role: Role;
   allowedModules: string[];
+  designation?: string;
 }
 
 export interface Module {

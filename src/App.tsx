@@ -23,29 +23,54 @@ const getModuleNameByUrl = (url: string | null): string => {
 
 function AppContent() {
   const [user, setUser] = useState<User | null>(null);
-  const [usersList, setUsersList] = useState<UserCredential[]>(() => {
-    const saved = localStorage.getItem('yajur-users');
-    if (saved) return JSON.parse(saved);
-    const defaults: UserCredential[] = [
-      { username: 'Admin', pass: '1234', role: 'admin', allowedModules: MODULES.map(m => m.id) },
-      { username: 'Manager', pass: '1234', role: 'admin', allowedModules: MODULES.map(m => m.id) },
-      { username: 'Store', pass: '1234', role: 'store', allowedModules: ['ims'] },
-      { username: 'Hr', pass: '1234', role: 'hr', allowedModules: ['hr'] },
-      { username: 'SQC', pass: '1234', role: 'production', allowedModules: ['production', 'lifting'] },
-      { username: 'Office', pass: '1234', role: 'office', allowedModules: ['task'] },
-      { username: 'Yasoda', pass: '1234', role: 'pms', allowedModules: ['pms'] },
-      { username: 'Sales', pass: '1234', role: 'sales', allowedModules: ['sales', 'lifting'] },
-    ];
-    localStorage.setItem('yajur-users', JSON.stringify(defaults));
-    return defaults;
-  });
+  const [usersList, setUsersList] = useState<UserCredential[]>([]);
+  const [isUsersLoading, setIsUsersLoading] = useState(false);
+
+  useEffect(() => {
+    // We only load users if an admin is logged in and they are viewing the dashboard
+    if (user?.role === 'admin') {
+      import('./lib/sheets').then(({ fetchUsersFromSheet }) => {
+        setIsUsersLoading(true);
+        fetchUsersFromSheet()
+          .then((sheetUsers) => {
+            const mapped: UserCredential[] = sheetUsers.map(su => ({
+              username: su.UserId, // use UserId for the form
+              pass: su.Password,
+              role: su.Role.toLowerCase() as any,
+              allowedModules: su.Modules ? su.Modules.split(',').map(m => m.trim()).filter(Boolean) : []
+            }));
+            setUsersList(mapped);
+          })
+          .catch(console.error)
+          .finally(() => setIsUsersLoading(false));
+      });
+    }
+  }, [user]);
 
   const [notifications, setNotifications] = useState<AppNotification[]>(() => {
     const saved = localStorage.getItem('yajur-notifications');
     return saved ? JSON.parse(saved) : [];
   });
 
-  const handleUpdateUsersList = (newUsers: UserCredential[]) => {
+  const handleUpdateUsersList = async (newUsers: UserCredential[]) => {
+    try {
+      const { updateAllUsersInSheet } = await import('./lib/sheets');
+      await updateAllUsersInSheet(newUsers.map(u => ({
+        FullName: u.username,
+        UserId: u.username,
+        Password: u.pass,
+        Modules: u.allowedModules.join(', '),
+        Role: u.role.charAt(0).toUpperCase() + u.role.slice(1),
+        Designation: ''
+      })));
+    } catch (err) {
+      console.error('Failed to update Google Sheet', err);
+      alert('Failed to update Google Sheet. Please check the console.');
+      return; // don't update local state if it fails
+    }
+
+    setUsersList(newUsers);
+
     // Diff-check allowedModules per user to generate in-app notifications
     const newNotifications: AppNotification[] = [];
     const timestamp = new Date().toISOString();
@@ -111,8 +136,13 @@ function AppContent() {
       });
     }
 
+    // Since we handle the users in handleUpdateUsersList above, 
+    // the duplicated setUsersList(newUsers) should be removed to avoid double rendering.
+    // However, we just kept it here. Let's just remove the localStorage call.
+    
+    // We already setUsersList earlier in handleUpdateUsersList but just in case:
     setUsersList(newUsers);
-    localStorage.setItem('yajur-users', JSON.stringify(newUsers));
+    
     const currentInNewList = newUsers.find(u => u.username.toLowerCase() === user?.username.toLowerCase());
     if (currentInNewList && user) {
       setUser({
